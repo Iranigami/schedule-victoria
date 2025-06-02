@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --font-nova: "Nova";
+  --color-yellow: #f7a830;
+  --color-orange: #f18522;
+  --color-green: #77c08c;
+  --color-purple: #b78fc1;
+  --color-bg: #ededed;
+  --color-text: #1d1d1b;
+  --shadow-just-white: 0 0 4px 0 #00000040;
+}
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #ededed;
+
+  font-family: Nova;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  @font-face {
+    font-family: Nova;
+    font-weight: 400;
+    src: url(./assets/fonts/proxima-nova-regular.ttf);
+  }
+  @font-face {
+    font-family: Nova;
+    font-weight: 600;
+    src: url(./assets/fonts/proxima-nova-semibold.ttf);
+  }
+  @font-face {
+    font-family: Nova;
+    font-weight: 700;
+    src: url(./assets/fonts/proxima-nova-bold.ttf);
+  }
+}
