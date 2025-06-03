@@ -45,3 +45,16 @@ export interface Article {
   desc: string;
   fullDesc?: string;
 }
+
+export interface LessonClass {
+  schedule: LessonSection;
+  title: string;
+  address: string;
+  age: string;
+  learnTime: string;
+  conditions: string;
+  desc: string;
+  additionalInfo: string;
+  teacher: Teacher;
+  code: string;
+}
