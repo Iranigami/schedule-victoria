@@ -6,7 +6,7 @@ import linkIcon from "../assets/images/icons/link.svg";
 export default function Lesson() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({
+  const [data] = useState({
     title: "Я хочу спать",
     teacherId: "0",
     photo:

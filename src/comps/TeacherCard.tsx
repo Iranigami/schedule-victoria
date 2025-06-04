@@ -1,7 +1,7 @@
 type Props = {
   onClick: () => void;
   photo: string;
-  lesson: string;
+  lesson: string[];
   name: string;
 };
 

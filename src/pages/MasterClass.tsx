@@ -5,7 +5,7 @@ import type { MCClass } from "../types";
 
 export default function MasterClass() {
   const navigate = useNavigate();
-  const [data, setData] = useState<MCClass>({
+  const [data] = useState<MCClass>({
     photo: "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
     title: "Основы веб-разработки",
     date: "15.11.2025",

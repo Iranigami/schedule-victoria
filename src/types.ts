@@ -17,15 +17,30 @@ export interface Lesson {
 export interface LessonSection extends Array<Lesson> {}
 
 export interface Teacher {
-  photo: string;
-  name: string;
-  post: string;
-  speciality: string;
-  phone: string;
-  email: string;
-  cabinet: string;
-  classes: string[];
-  awards: string;
+  id: number;
+  fullName?: string,
+  name?: string;
+  surname?: string;
+  patronymic?: string;
+  image: string;
+  division?: string[];
+  direction: string[];
+  unities?: {
+    id: number;
+    title: string;
+  }[];
+  position?: string;
+  phone?: string;
+  email?: string;
+  teacherInfos?: {
+    id: number;
+    title: string;
+    text: string;
+  }[];
+  cabinet?: {
+    id: number;
+    number: string;
+  }[];
 }
 
 export interface MCClass {

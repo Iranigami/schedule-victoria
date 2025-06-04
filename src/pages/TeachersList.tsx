@@ -16,143 +16,34 @@ export default function TeachersList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTeachersList([
-      {
-        photo: "/img/teachers/photo1.jpg",
-        name: "Игорь Сергеевич Петров",
-        post: "Учитель математики",
-        speciality: "Математика",
-        phone: "+7 (987) 654-32-10",
-        email: "petrov@school.ru",
-        cabinet: "Кабинет №101",
-        classes: ["9А класс", "10Б класс"],
-        awards: "Победитель конкурса 'Лучший учитель математики' региона",
-      },
-      {
-        photo: "/img/teachers/photo2.jpg",
-        name: "Анна Владимировна Смирнова",
-        post: "Учитель русского языка и литературы",
-        speciality: "Русский язык и литература",
-        phone: "+7 (987) 654-32-11",
-        email: "smirnova@school.ru",
-        cabinet: "Кабинет №102",
-        classes: ["8В класс", "11Г класс"],
-        awards: "Участник всероссийского семинара учителей русской словесности",
-      },
-      {
-        photo: "/img/teachers/photo3.jpg",
-        name: "Дмитрий Андреевич Иванов",
-        post: "Учитель физики",
-        speciality: "Физика",
-        phone: "+7 (987) 654-32-12",
-        email: "ivanov@school.ru",
-        cabinet: "Кабинет №103",
-        classes: ["7Д класс", "10Е класс"],
-        awards: "",
-      },
-      {
-        photo: "/img/teachers/photo4.jpg",
-        name: "Ольга Сергеевна Кузнецова",
-        post: "Учитель химии",
-        speciality: "Химия",
-        phone: "+7 (987) 654-32-13",
-        email: "kuznetsova@school.ru",
-        cabinet: "Кабинет №104",
-        classes: ["8Ж класс", "11З класс"],
-        awards: "Обладатель премии школы за лучший урок химии",
-      },
-      {
-        photo: "/img/teachers/photo1.jpg",
-        name: "Игорь Сергеевич Петров",
-        post: "Учитель математики",
-        speciality: "Математика",
-        phone: "+7 (987) 654-32-10",
-        email: "petrov@school.ru",
-        cabinet: "Кабинет №101",
-        classes: ["9А класс", "10Б класс"],
-        awards: "Победитель конкурса 'Лучший учитель математики' региона",
-      },
-      {
-        photo:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4Sxi8I2_lLSrV7ZAI3cjtItYBkVslh14urg&s",
-        name: "Анна Владимировна Смирнова",
-        post: "Учитель русского языка и литературы",
-        speciality: "Русский язык и литература",
-        phone: "+7 (987) 654-32-11",
-        email: "smirnova@school.ru",
-        cabinet: "Кабинет №102",
-        classes: ["8В класс", "11Г класс"],
-        awards: "Участник всероссийского семинара учителей русской словесности",
-      },
-      {
-        photo:
-          "https://i.ytimg.com/vi/RL11Cf73QVY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBzLyw4peKKK5WhfRcXDuA1COeVHQ",
-        name: "Дмитрий Андреевич Иванов",
-        post: "Учитель физики",
-        speciality: "Физика",
-        phone: "+7 (987) 654-32-12",
-        email: "ivanov@school.ru",
-        cabinet: "Кабинет №103",
-        classes: ["7Д класс", "10Е класс"],
-        awards: "",
-      },
-      {
-        photo:
-          "https://i.pinimg.com/236x/c8/cc/24/c8cc24bba37a25c009647b8875aae0e3.jpg",
-        name: "Ольга Сергеевна Кузнецова",
-        post: "Учитель химии",
-        speciality: "Химия",
-        phone: "+7 (987) 654-32-13",
-        email: "kuznetsova@school.ru",
-        cabinet: "Кабинет №104",
-        classes: ["8Ж класс", "11З класс"],
-        awards: "Обладатель премии школы за лучший урок химии",
-      },
-      {
-        photo: "/img/teachers/photo1.jpg",
-        name: "Игорь Сергеевич Петров",
-        post: "Учитель математики",
-        speciality: "Математика",
-        phone: "+7 (987) 654-32-10",
-        email: "petrov@school.ru",
-        cabinet: "Кабинет №101",
-        classes: ["9А класс", "10Б класс"],
-        awards: "Победитель конкурса 'Лучший учитель математики' региона",
-      },
-      {
-        photo: "/img/teachers/photo2.jpg",
-        name: "Анна Владимировна Смирнова",
-        post: "Учитель русского языка и литературы",
-        speciality: "Русский язык и литература",
-        phone: "+7 (987) 654-32-11",
-        email: "smirnova@school.ru",
-        cabinet: "Кабинет №102",
-        classes: ["8В класс", "11Г класс"],
-        awards: "Участник всероссийского семинара учителей русской словесности",
-      },
-      {
-        photo: "/img/teachers/photo3.jpg",
-        name: "Дмитрий Андреевич Иванов",
-        post: "Учитель физики",
-        speciality: "Физика",
-        phone: "+7 (987) 654-32-12",
-        email: "ivanov@school.ru",
-        cabinet: "Кабинет №103",
-        classes: ["7Д класс", "10Е класс"],
-        awards: "",
-      },
-      {
-        photo: "/img/teachers/photo4.jpg",
-        name: "Ольга Сергеевна Кузнецова",
-        post: "Учитель химии",
-        speciality: "Химия",
-        phone: "+7 (987) 654-32-13",
-        email: "kuznetsova@school.ru",
-        cabinet: "Кабинет №104",
-        classes: ["8Ж класс", "11З класс"],
-        awards: "Обладатель премии школы за лучший урок химии",
-      },
-    ]);
+    setTeachersList(
+      [
+        {
+          "id": 3,
+          "fullName": "Бутолин Владислав Семонович",
+          "direction": [
+            "literary_club"
+          ],
+          "image": "/teacher/frame-14-1-683da88757d0a090396568.png"
+        },
+        {
+          "id": 4,
+          "fullName": "Лермонтов Сергей Генадьевич",
+          "direction": [
+            "music_club"
+          ],
+          "image": "/teacher/logo-1-1-683da96bd3648367087687.png"
+        },
+        {
+          "id": 5,
+          "fullName": "Тронин Андрей Аркадьевич",
+          "direction": [
+            "sports_section"
+          ],
+          "image": "/teacher/image-1-683da9c6a4321956474504.png"
+        }
+      ]
+    );
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -195,9 +86,9 @@ export default function TeachersList() {
               <TeacherCard
                 key={index}
                 onClick={() => navigate(`/teacher?id=${index}`)}
-                photo={teacher.photo}
-                name={teacher.name}
-                lesson={teacher.speciality}
+                photo={teacher.image}
+                name={teacher.fullName!}
+                lesson={teacher.direction!}
               />
             ))}
           </div>

@@ -7,15 +7,44 @@ import LessonCard from "../comps/LessonCard";
 
 export default function LessonsList() {
   const testTeacher: Teacher = {
-    photo: "https://example.com/teacher_photo.jpg",
-    name: "Игорь Сергеевич Петров",
-    post: "Преподаватель информатики",
-    speciality: "Информатика и информационные технологии",
-    phone: "+7 (987) 654-32-10",
-    email: "petrov@example.ru",
-    cabinet: "Кабинет №301",
-    classes: ["информатика", "математика"],
-    awards: "Лучший учитель года",
+    id: 4,
+    name: "Сергей",
+    surname: "Лермонтов",
+    patronymic: "Генадьевич",
+    image: "/teacher/logo-1-1-683da96bd3648367087687.png",
+    division: ["annino", "gas_pipeline"],
+    direction: ["music_club"],
+    unities: [
+      {
+        id: 2,
+        title: "юннти 2",
+      },
+    ],
+    position: "Главный Бухгалтер особо важных бумаг",
+    phone: "+8952493876",
+    email: "213@yandex.ru",
+    teacherInfos: [
+      {
+        id: 3,
+        title: "Заслуги",
+        text: "Считает деньги как китаец",
+      },
+      {
+        id: 4,
+        title: "Пример",
+        text: "Лучше не брать",
+      },
+    ],
+    cabinet: [
+      {
+        id: 1,
+        number: "101",
+      },
+      {
+        id: 2,
+        number: "102",
+      },
+    ],
   };
   const lessonClassesArray: LessonClasses[] = [
     {
@@ -131,10 +160,11 @@ export default function LessonsList() {
   ];
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState<string | undefined>(
-    undefined,
-  );
-  const [lessonsList, setLessonList] = useState(lessonClassesArray);
+  //const [selectedLesson, setSelectedLesson] = useState<string | undefined>(
+  //  undefined,
+  //);
+  const [lessonsList] = useState(lessonClassesArray);
+  isFilterOpen; //lmao
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div
@@ -168,7 +198,7 @@ export default function LessonsList() {
             {lessonsList.map((lesson, index: number) => (
               <LessonCard
                 key={index}
-                teacher={lesson.teacher.name}
+                teacher={lesson.teacher.fullName!}
                 title={lesson.title}
                 time={lesson.learnTime}
                 address={lesson.address}

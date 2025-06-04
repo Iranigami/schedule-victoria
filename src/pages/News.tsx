@@ -4,7 +4,7 @@ import type { Article } from "../types";
 import { useNavigate } from "react-router-dom";
 
 export default function News() {
-  const [newsList, setNewsList] = useState<Article[]>([
+  const [newsList] = useState<Article[]>([
     {
       photo:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToWiH3hZCawR24AVEfU9Z2NrfGXUAKNVDtiw&s",

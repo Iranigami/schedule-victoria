@@ -10,10 +10,10 @@ import FilterModal from "../comps/FilterModal";
 export default function MasterClassesList() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [selectedClass, setSelectedClass] = useState<string | undefined>(
-    undefined,
-  );
-  const [MCList, setMCList] = useState<MCClass[]>([
+  //const [selectedClass, setSelectedClass] = useState<string | undefined>(
+  //  undefined,
+  //);
+  const [MCList] = useState<MCClass[]>([
     {
       photo: "/img/class1.jpg",
       title: "Урок программирования на Python",

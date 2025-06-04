@@ -4,20 +4,48 @@ import { useState } from "react";
 import type { Teacher } from "../types";
 
 export default function Teacher() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState<Teacher>({
-    photo:
-      "https://cs10.pikabu.ru/post_img/big/2019/06/25/8/15614688111117407.jpg",
-    name: "Игорь Сергеевич Петров",
-    post: "Учитель математики",
-    speciality: "Математика",
-    phone: "+7 (987) 654-32-10",
-    email: "petrov@school.ru",
-    cabinet: "Кабинет №101",
-    classes: ["9А класс", "10Б класс"],
-    awards:
-      "Lorem ipsum dolor sit amet consectetur. Nullam euismod turpis placerat a. Sociis nisl mi rhoncus fringilla diam congue morbi. Arcu laoreet natoque justo non erat. A purus felis commodo lacinia lorem. Ac volutpat posuere aenean in. Malesuada risus blandit urna non molestie pellentesque fringilla amet mollis. Egestas a morbi venenatis volutpat. Nec et a eget sit erat fringilla eget pharetra. Risus sed curabitur purus eu pharetra id. Tempor dis nunc ridiculus leo pellentesque. Quam leo risus donec orci curabitur a. Nunc gravida gravida dictum neque donec. Orci sed amet interdum sit senectus. Convallis facilisis malesuada odio nunc at. Quisque netus a varius dictum augue. Dignissim ut nibh sapien justo eu nisl tempus lorem. Eleifend praesent quis justo nibh elementum erat posuere congue viverra. Metus massa et condimentum purus. Penatibus volutpat accumsan erat dolor sit lectus consectetur sodales. Aenean odio congue in mollis. Elit eu turpis morbi egestas tincidunt. Malesuada cras quis ornare interdum porttitor scelerisque consequat. Orci scelerisque adipiscing lorem nisi proin eget elementum mauris. Mollis cursus sollicitudin aenean tempor molestie mauris. Orci scelerisque adipiscing lorem nisi proin eget elementum mauris. Mollis cursus sollicitudin aenean tempor molestie mauris.",
+  const [data] = useState<Teacher>({
+    id: 4,
+    name: "Сергей",
+    surname: "Лермонтов",
+    patronymic: "Генадьевич",
+    image: "/teacher/logo-1-1-683da96bd3648367087687.png",
+    division: ["annino", "gas_pipeline"],
+    direction: ["music_club"],
+    unities: [
+      {
+        id: 2,
+        title: "юннти 2",
+      },
+    ],
+    position: "Главный Бухгалтер особо важных бумаг",
+    phone: "+8952493876",
+    email: "213@yandex.ru",
+    teacherInfos: [
+      {
+        id: 3,
+        title: "Заслуги",
+        text: "Считает деньги как китаец",
+      },
+      {
+        id: 4,
+        title: "Пример",
+        text: "Лучше не брать",
+      },
+    ],
+    cabinet: [
+      {
+        id: 1,
+        number: "101",
+      },
+      {
+        id: 2,
+        number: "102",
+      },
+    ],
   });
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -29,7 +57,7 @@ export default function Teacher() {
           <img src={arrIcon} alt="back" className="size-[24px] rotate-90" />
         </button>
         <div className="text-orange text-[40px] w-[920px] font-bold leading-[100%]">
-          {data?.name}
+          {data.surname + " " + data?.name + " " + data.patronymic}
         </div>
         <div className="w-[504px] h-[64px] rounded-[20px] bg-white gap-[8px] flex p-[8px]">
           <div
@@ -54,7 +82,7 @@ export default function Teacher() {
           <div className="w-[1480px] h-[904px] flex gap-[16px]">
             <div className="w-[678px] h-[904px] rounded-[20px] overflow-hidden">
               <img
-                src={data.photo}
+                src={apiUrl + data.image}
                 alt="image"
                 className="w-full h-full object-cover"
               />
@@ -66,7 +94,7 @@ export default function Teacher() {
                     Должность
                   </div>
                   <div className="text-[32px] font-semibold mt-[8px] leading-[100%]">
-                    {data.post}
+                    {data.position}
                   </div>
                 </div>
                 <div className="flex gap-[8px] mt-[16px]">
@@ -75,7 +103,7 @@ export default function Teacher() {
                       Специальность
                     </div>
                     <div className="text-[32px] font-semibold mt-[8px] leading-[100%]">
-                      {data.speciality}
+                      {data.direction}
                     </div>
                   </div>
                   <div className="w-[379px] rounded-[20px] bg-[#F1852233] p-[24px] text-text">
@@ -101,7 +129,12 @@ export default function Teacher() {
                       Кабинет
                     </div>
                     <div className="text-[32px] font-semibold mt-[8px] leading-[100%]">
-                      {data.cabinet}
+                      {data.cabinet!.map((cab, index: number) => (
+                        <span key={index}>
+                          {cab.number}
+                          {index + 1 !== data.cabinet!.length && ", "}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -110,25 +143,27 @@ export default function Teacher() {
                     Кружки
                   </div>
                   <div className="text-[32px] font-semibold mt-[8px] leading-[100%]">
-                    {data.classes.map((lesson, index: number) => (
+                    {data.unities!.map((unity, index: number) => (
                       <span key={index}>
-                        {lesson}
-                        {index + 1 !== data.classes.length && ", "}
+                        {unity.title}
+                        {index + 1 !== data.unities!.length && ", "}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div
-                  hidden={!data.awards}
-                  className="w-[766px] rounded-[20px] bg-[#F1852233] p-[24px] text-text mt-[16px]"
-                >
-                  <div className="text-[32px] font-semibold leading-[100%]">
-                    Заслуги
+                {data.teacherInfos!.map((info, index: number) => (
+                  <div
+                    key={index}
+                    className="w-[766px] rounded-[20px] bg-[#F1852233] p-[24px] text-text mt-[16px]"
+                  >
+                    <div className="text-[32px] font-semibold leading-[100%]">
+                      {info.title}
+                    </div>
+                    <div className="text-[24px] font-normal mt-[8px] leading-[100%]">
+                      {info.text}
+                    </div>
                   </div>
-                  <div className="text-[24px] font-normal mt-[8px] leading-[100%]">
-                    {data?.awards}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
