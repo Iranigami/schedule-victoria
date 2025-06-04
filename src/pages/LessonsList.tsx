@@ -7,126 +7,126 @@ import LessonCard from "../comps/LessonCard";
 
 export default function LessonsList() {
   const testTeacher: Teacher = {
-    photo: 'https://example.com/teacher_photo.jpg',
-    name: 'Игорь Сергеевич Петров',
-    post: 'Преподаватель информатики',
-    speciality: 'Информатика и информационные технологии',
-    phone: '+7 (987) 654-32-10',
-    email: 'petrov@example.ru',
-    cabinet: 'Кабинет №301',
-    classes: ['информатика', 'математика'],
-    awards: 'Лучший учитель года'
+    photo: "https://example.com/teacher_photo.jpg",
+    name: "Игорь Сергеевич Петров",
+    post: "Преподаватель информатики",
+    speciality: "Информатика и информационные технологии",
+    phone: "+7 (987) 654-32-10",
+    email: "petrov@example.ru",
+    cabinet: "Кабинет №301",
+    classes: ["информатика", "математика"],
+    awards: "Лучший учитель года",
   };
   const lessonClassesArray: LessonClasses[] = [
     {
-      schedule:   {
+      schedule: {
         code: 102,
-        title: 'Английский язык',
-        teacher: 'Анна Смирнова',
-        cabinet: 'К-202',
-        age: 'От 10 лет',
+        title: "Английский язык",
+        teacher: "Анна Смирнова",
+        cabinet: "К-202",
+        age: "От 10 лет",
         group: 2,
-        tuesday: '12:00–13:30',
-        thursday: '12:00–13:30',
-        saturday: '14:00–15:30'
+        tuesday: "12:00–13:30",
+        thursday: "12:00–13:30",
+        saturday: "14:00–15:30",
       },
-      title: 'Основы программирования',
-      address: 'ул. Ленина, д. 10',
-      age: 'от 12 лет',
-      learnTime: '2 часа',
-      conditions: 'Бесплатное обучение',
-      desc: 'Знакомство с основами программирования.',
-      additionalInfo: 'Необходим ноутбук',
+      title: "Основы программирования",
+      address: "ул. Ленина, д. 10",
+      age: "от 12 лет",
+      learnTime: "2 часа",
+      conditions: "Бесплатное обучение",
+      desc: "Знакомство с основами программирования.",
+      additionalInfo: "Необходим ноутбук",
       teacher: testTeacher,
-      code: 'INF-101'
+      code: "INF-101",
     },
     {
-      schedule:   {
+      schedule: {
         code: 102,
-        title: 'Английский язык',
-        teacher: 'Анна Смирнова',
-        cabinet: 'К-202',
-        age: 'От 10 лет',
+        title: "Английский язык",
+        teacher: "Анна Смирнова",
+        cabinet: "К-202",
+        age: "От 10 лет",
         group: 2,
-        tuesday: '12:00–13:30',
-        thursday: '12:00–13:30',
-        saturday: '14:00–15:30'
+        tuesday: "12:00–13:30",
+        thursday: "12:00–13:30",
+        saturday: "14:00–15:30",
       },
-      title: 'Основы программирования',
-      address: 'ул. Ленина, д. 10',
-      age: 'от 12 лет',
-      learnTime: '2 часа',
-      conditions: 'Бесплатное обучение',
-      desc: 'Знакомство с основами программирования.',
-      additionalInfo: 'Необходим ноутбук',
+      title: "Основы программирования",
+      address: "ул. Ленина, д. 10",
+      age: "от 12 лет",
+      learnTime: "2 часа",
+      conditions: "Бесплатное обучение",
+      desc: "Знакомство с основами программирования.",
+      additionalInfo: "Необходим ноутбук",
       teacher: testTeacher,
-      code: 'INF-101'
+      code: "INF-101",
     },
     {
-      schedule:   {
+      schedule: {
         code: 102,
-        title: 'Английский язык',
-        teacher: 'Анна Смирнова',
-        cabinet: 'К-202',
-        age: 'От 10 лет',
+        title: "Английский язык",
+        teacher: "Анна Смирнова",
+        cabinet: "К-202",
+        age: "От 10 лет",
         group: 2,
-        tuesday: '12:00–13:30',
-        thursday: '12:00–13:30',
-        saturday: '14:00–15:30'
+        tuesday: "12:00–13:30",
+        thursday: "12:00–13:30",
+        saturday: "14:00–15:30",
       },
-      title: 'Основы программирования',
-      address: 'ул. Ленина, д. 10',
-      age: 'от 12 лет',
-      learnTime: '2 часа',
-      conditions: 'Бесплатное обучение',
-      desc: 'Знакомство с основами программирования.',
-      additionalInfo: 'Необходим ноутбук',
+      title: "Основы программирования",
+      address: "ул. Ленина, д. 10",
+      age: "от 12 лет",
+      learnTime: "2 часа",
+      conditions: "Бесплатное обучение",
+      desc: "Знакомство с основами программирования.",
+      additionalInfo: "Необходим ноутбук",
       teacher: testTeacher,
-      code: 'INF-101'
+      code: "INF-101",
     },
     {
-      schedule:   {
+      schedule: {
         code: 102,
-        title: 'Английский язык',
-        teacher: 'Анна Смирнова',
-        cabinet: 'К-202',
-        age: 'От 10 лет',
+        title: "Английский язык",
+        teacher: "Анна Смирнова",
+        cabinet: "К-202",
+        age: "От 10 лет",
         group: 2,
-        tuesday: '12:00–13:30',
-        thursday: '12:00–13:30',
-        saturday: '14:00–15:30'
+        tuesday: "12:00–13:30",
+        thursday: "12:00–13:30",
+        saturday: "14:00–15:30",
       },
-      title: 'Основы программирования',
-      address: 'ул. Ленина, д. 10',
-      age: 'от 12 лет',
-      learnTime: '2 часа',
-      conditions: 'Бесплатное обучение',
-      desc: 'Знакомство с основами программирования.',
-      additionalInfo: 'Необходим ноутбук',
+      title: "Основы программирования",
+      address: "ул. Ленина, д. 10",
+      age: "от 12 лет",
+      learnTime: "2 часа",
+      conditions: "Бесплатное обучение",
+      desc: "Знакомство с основами программирования.",
+      additionalInfo: "Необходим ноутбук",
       teacher: testTeacher,
-      code: 'INF-101'
+      code: "INF-101",
     },
     {
-      schedule:   {
+      schedule: {
         code: 102,
-        title: 'Английский язык',
-        teacher: 'Анна Смирнова',
-        cabinet: 'К-202',
-        age: 'От 10 лет',
+        title: "Английский язык",
+        teacher: "Анна Смирнова",
+        cabinet: "К-202",
+        age: "От 10 лет",
         group: 2,
-        tuesday: '12:00–13:30',
-        thursday: '12:00–13:30',
-        saturday: '14:00–15:30'
+        tuesday: "12:00–13:30",
+        thursday: "12:00–13:30",
+        saturday: "14:00–15:30",
       },
-      title: 'Основы программирования',
-      address: 'ул. Ленина, д. 10',
-      age: 'от 12 лет',
-      learnTime: '2 часа',
-      conditions: 'Бесплатное обучение',
-      desc: 'Знакомство с основами программирования.',
-      additionalInfo: 'Необходим ноутбук',
+      title: "Основы программирования",
+      address: "ул. Ленина, д. 10",
+      age: "от 12 лет",
+      learnTime: "2 часа",
+      conditions: "Бесплатное обучение",
+      desc: "Знакомство с основами программирования.",
+      additionalInfo: "Необходим ноутбук",
       teacher: testTeacher,
-      code: 'INF-101'
+      code: "INF-101",
     },
   ];
   const [isFilterOpen, setFilterOpen] = useState(false);
@@ -166,7 +166,18 @@ export default function LessonsList() {
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
           <div className="w-[1460px] grid grid-cols-1 gap-[16px]">
             {lessonsList.map((lesson, index: number) => (
-              <LessonCard key={index} teacher={lesson.teacher.name} title={lesson.title} time={lesson.learnTime} address={lesson.address} additional={lesson.additionalInfo} desc={lesson.desc} age={lesson.age} conds={lesson.conditions} code={lesson.code}/>
+              <LessonCard
+                key={index}
+                teacher={lesson.teacher.name}
+                title={lesson.title}
+                time={lesson.learnTime}
+                address={lesson.address}
+                additional={lesson.additionalInfo}
+                desc={lesson.desc}
+                age={lesson.age}
+                conds={lesson.conditions}
+                code={lesson.code}
+              />
             ))}
           </div>
         </div>

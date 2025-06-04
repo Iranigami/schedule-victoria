@@ -8,7 +8,7 @@ import type { MCClass } from "../types";
 import FilterModal from "../comps/FilterModal";
 
 export default function MasterClassesList() {
-  const [isFilterOpen, setFilterOpen] = useState(false); 
+  const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedClass, setSelectedClass] = useState<string | undefined>(
     undefined,
@@ -57,9 +57,7 @@ export default function MasterClassesList() {
   const navigate = useNavigate();
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
-      {isFilterOpen && 
-        <FilterModal onClose={() => setFilterOpen(false)}/>
-      }
+      {isFilterOpen && <FilterModal onClose={() => setFilterOpen(false)} />}
       <div
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >
