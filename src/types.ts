@@ -46,8 +46,8 @@ export interface Article {
   fullDesc?: string;
 }
 
-export interface LessonClass {
-  schedule: LessonSection;
+export interface LessonClasses {
+  schedule: Lesson;
   title: string;
   address: string;
   age: string;

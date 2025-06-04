@@ -29,6 +29,10 @@
   scrollbar-color: #f18522 #f1852210;
 }
 
+strong {
+  font-size: 28px;
+}
+
 @layer base {
   @font-face {
     font-family: Nova;
