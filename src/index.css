@@ -33,6 +33,31 @@ strong {
   font-size: 28px;
 }
 
+#slider .noUi-connect {
+  background: #f18522;
+}
+
+#slider .noUi-connects {
+  border: none; /* Убираем границы */
+  background-color: white; /* Серый фон для трека */
+}
+
+#slider .noUi-handle {
+  background: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 4px solid #f18522;
+  box-shadow: none;
+  transform: translateY(-5px);
+}
+.slider .noUi-handle::after {
+  display: none;
+}
+.slider .noUi-handle::before {
+  display: none;
+}
+
 @layer base {
   @font-face {
     font-family: Nova;

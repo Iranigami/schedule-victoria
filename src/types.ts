@@ -18,7 +18,7 @@ export interface LessonSection extends Array<Lesson> {}
 
 export interface Teacher {
   id: number;
-  fullName?: string,
+  fullName?: string;
   name?: string;
   surname?: string;
   patronymic?: string;

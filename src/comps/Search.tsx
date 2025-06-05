@@ -11,7 +11,6 @@ type Props = {
 export default function Search({ isOpen, onClose }: Props) {
   const [text, setText] = useState("");
   const [isKeyboardOpen, setKeyboardOpen] = useState(true);
-  const inputField = document.getElementById("searchInput")!;
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
@@ -42,16 +41,11 @@ export default function Search({ isOpen, onClose }: Props) {
       <Keyboard
         opened={isKeyboardOpen && isOpen}
         enterButton={(button: string) => {
-          (inputField as HTMLInputElement).value += button;
+          setText((prev) => prev + button);
         }}
         onClose={() => setKeyboardOpen(false)}
         onBackspace={() => {
-          (inputField as HTMLInputElement).value = (
-            inputField as HTMLInputElement
-          ).value.substring(
-            0,
-            (inputField as HTMLInputElement).value.length - 1,
-          );
+          setText((prev) => prev.slice(0, -1));
         }}
       />
     </>

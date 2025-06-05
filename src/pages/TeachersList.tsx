@@ -16,34 +16,26 @@ export default function TeachersList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTeachersList(
-      [
-        {
-          "id": 3,
-          "fullName": "Бутолин Владислав Семонович",
-          "direction": [
-            "literary_club"
-          ],
-          "image": "/teacher/frame-14-1-683da88757d0a090396568.png"
-        },
-        {
-          "id": 4,
-          "fullName": "Лермонтов Сергей Генадьевич",
-          "direction": [
-            "music_club"
-          ],
-          "image": "/teacher/logo-1-1-683da96bd3648367087687.png"
-        },
-        {
-          "id": 5,
-          "fullName": "Тронин Андрей Аркадьевич",
-          "direction": [
-            "sports_section"
-          ],
-          "image": "/teacher/image-1-683da9c6a4321956474504.png"
-        }
-      ]
-    );
+    setTeachersList([
+      {
+        id: 3,
+        fullName: "Бутолин Владислав Семонович",
+        direction: ["literary_club"],
+        image: "/teacher/frame-14-1-683da88757d0a090396568.png",
+      },
+      {
+        id: 4,
+        fullName: "Лермонтов Сергей Генадьевич",
+        direction: ["music_club"],
+        image: "/teacher/logo-1-1-683da96bd3648367087687.png",
+      },
+      {
+        id: 5,
+        fullName: "Тронин Андрей Аркадьевич",
+        direction: ["sports_section"],
+        image: "/teacher/image-1-683da9c6a4321956474504.png",
+      },
+    ]);
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">

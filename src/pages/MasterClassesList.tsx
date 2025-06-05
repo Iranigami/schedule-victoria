@@ -57,7 +57,13 @@ export default function MasterClassesList() {
   const navigate = useNavigate();
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
-      {isFilterOpen && <FilterModal onClose={() => setFilterOpen(false)} />}
+      {isFilterOpen && (
+        <FilterModal
+          filters={[]}
+          onSelect={() => setFilterOpen(false)}
+          onClose={() => setFilterOpen(false)}
+        />
+      )}
       <div
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >

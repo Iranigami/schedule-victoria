@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import searchIcon from "../assets/images/icons/search.svg";
-import FilterList from "../comps/FilterList";
+import filterIcon from "../assets/images/icons/filter.svg";
 import Search from "../comps/Search";
 import type { LessonSection } from "../types";
+import FilterModal from "../comps/FilterModal";
 export default function Main() {
-  const [isAllTeachersFilterOpen, setAllTeachersFilterOpen] = useState(false);
-  const [isAllLessonsFilterOpen, setAllLessonsFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState<string | undefined>(
-    undefined,
-  );
-  const [selectedLesson, setSelectedLesson] = useState<string | undefined>(
-    undefined,
-  );
+  //@ts-ignore
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [isFiltersOpen, setFiltersOpen] = useState(false);
+  //@ts-ignore
+  const [teachersList, setTeachersList] = useState([
+    "Жоский Мужик Жоскович",
+    "Ваще Пиздец Какойта",
+    "Я Хочу Кушать",
+    "Гойдаа Ааааа Ааааа",
+  ]);
+  //@ts-ignore
+  const [lessonsList, setLessonsList] = useState([
+    "Живопись",
+    "Поедание личинок на скорость",
+    "Психотерапия",
+  ]);
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection[]>(
     [],
   );
@@ -110,6 +119,36 @@ export default function Main() {
 
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
+      {isFiltersOpen && (
+        <FilterModal
+          onSelect={(selected) =>
+            console.log("Selected: " + selected.toLocaleString())
+          }
+          onClose={() => setFiltersOpen(false)}
+          filters={[
+            {
+              title: "Группа",
+              type: "check",
+              options: ["1", "2", "3"],
+            },
+            {
+              title: "Кружок",
+              type: "list",
+              options: lessonsList,
+            },
+            {
+              title: "Педагог",
+              type: "list",
+              options: teachersList,
+            },
+            {
+              title: "Test",
+              type: "slider",
+              options: ["1", "18"],
+            },
+          ]}
+        />
+      )}
       <div
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >
@@ -117,38 +156,16 @@ export default function Main() {
           Расписание
         </span>
         <div className="flex gap-[16px]">
-          <FilterList
-            isOpen={isAllTeachersFilterOpen}
-            optionsList={["test1", "test2", "test3"]}
-            selectedOption={selectedTeacher}
-            optionPlaceholder="Все педагоги"
-            onButtonClick={() => {
-              setAllTeachersFilterOpen((prev) => !prev);
-              setAllLessonsFilterOpen(false);
-            }}
-            onSelectOption={(option) => {
-              setSelectedTeacher(option);
-              setAllTeachersFilterOpen(false);
-            }}
-          />
-          <FilterList
-            isOpen={isAllLessonsFilterOpen}
-            optionsList={[]}
-            selectedOption={selectedLesson}
-            optionPlaceholder="ИЗО, ДПИ, Керамика"
-            onButtonClick={() => {
-              setAllLessonsFilterOpen((prev) => !prev);
-              setAllTeachersFilterOpen(false);
-            }}
-            onSelectOption={(option) => {
-              setSelectedLesson(option);
-              setAllLessonsFilterOpen(false);
-            }}
-          />
           <button
             onClick={() => {
-              setAllLessonsFilterOpen(false);
-              setAllTeachersFilterOpen(false);
+              setFiltersOpen(true);
+            }}
+            className="size-[64px] rounded-[20px] p-[20px] bg-white"
+          >
+            <img src={filterIcon} alt="filter" className="size-[24px]" />
+          </button>
+          <button
+            onClick={() => {
               setSearchOpen(true);
             }}
             className="size-[64px] rounded-[20px] p-[20px] bg-white"
