@@ -5,7 +5,7 @@ import { useState } from "react";
 import Slider from "./Slider";
 
 type Props = {
-  onSelect: (selected: { group: string; option: string }[]) => void;
+  onSelect: (selected: { group: string; option: string | [number, number] }[]) => void;
   onClose: () => void;
   filters: {
     title: string;
@@ -16,19 +16,25 @@ type Props = {
 
 export default function FilterModal({ onSelect, onClose, filters }: Props) {
   const [currFilters, setCurrFilters] = useState<
-    { group: string; option: string }[]
+    { group: string; option: string | [number, number] }[]
   >([]);
+  const [isPreClosed, setPreClosed] = useState(false);
+  const [isListPreClosed, setListPreClosed] = useState(false);
   const [indexOfOpenedList, setIndexOfOpenedList] = useState(-1);
   return (
     <div className="w-[1568px] h-[1080px] fixed top-0 left-[352px] flex justify-center items-center">
       <div className="w-full h-full bg-black opacity-40 absolute z-0" />
 
-      <div className="w-[752px] rounded-[36px] bg-[#EDEDED] z-10 p-[24px]">
+      <div className={`animate-appear ${isPreClosed && "translate-y-[1000px]"} duration-300 w-[752px] rounded-[36px] bg-[#EDEDED] z-10 p-[24px] transition`}>
         <div className="w-full justify-between flex">
           <div className="text-orange text-[48px] font-bold leading-[100%] flex items-center justify-left gap-[16px]">
             <button
               hidden={indexOfOpenedList == -1}
-              onClick={() => setIndexOfOpenedList(-1)}
+              onClick={() => {
+                setListPreClosed(true);
+                setTimeout(() => setIndexOfOpenedList(-1), 150);
+                }
+              }
               className="size-[56px] rounded-[20px] bg-white p-[16px]"
             >
               <img src={arrIcon} alt="back" className="size-[24px] rotate-90" />
@@ -38,7 +44,10 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
               : "Фильтры"}
           </div>
           <button
-            onClick={onClose}
+            onClick={() => {
+              setPreClosed(true);
+              setTimeout(onClose, 200);
+            }}
             className="size-[56px] rounded-[20px] bg-white p-[16px]"
           >
             <img src={closeIcon} alt="close" className="size-[24px]" />
@@ -112,7 +121,11 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
 
               {filter.type === "list" && (
                 <div
-                  onClick={() => setIndexOfOpenedList(index)}
+                  onClick={() => 
+                    {
+                      setListPreClosed(false);
+                      setIndexOfOpenedList(index);
+                    }}
                   className={`mt-[20px] w-[704px] h-[60px] rounded-[20px] bg-white text-text text-[28px] leading-[100%] font-bold flex justify-between p-[16px] items-center`}
                 >
                   {filter.title}
@@ -135,16 +148,54 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
               )}
               {filter.type === "slider" && (
                 <div className="w-[678px] ml-[16px]">
+                  <div className="mt-[20px] ml-[-16px] text-text text-[28px] leading-[100%] font-bold">
+                    {filter.title}
+                  </div>
                   <Slider
                     onChange={(min, max) => {
-                      if (min === 1 && max === 18) {
-                        console.log("none");
+                      if (min === Number(filter.options[0]) && max === Number(filter.options[1])) {
+                        const updatedFilters = currFilters.filter(
+                          (item) =>
+                            !(
+                              item.group === filter.title
+                            ),
+                        );
+                        setCurrFilters(updatedFilters);
                       } else {
-                        console.log("filtered");
+                        {
+                          if (
+                            !currFilters.some(
+                              (item) =>
+                                item.group === filter.title
+                            )
+                          ) {
+                            setCurrFilters([
+                              ...currFilters,
+                              {
+                                group: filter.title,
+                                option: [min, max],
+                              },
+                            ]);
+                          } else {
+                            const updatedFilters = currFilters.filter(
+                              (item) =>
+                                !(
+                                  item.group === filter.title
+                                ),
+                            );
+                            setCurrFilters([
+                              ...updatedFilters,
+                              {
+                                group: filter.title,
+                                option: [min, max],
+                              },
+                            ]);
+                          }
+                        };
                       }
                     }}
-                    min={1}
-                    max={18}
+                    min={Number(filter.options[0])}
+                    max={Number(filter.options[1])}
                   />
                 </div>
               )}
@@ -152,7 +203,7 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
           ))}
         </div>
         {indexOfOpenedList !== -1 && (
-          <div className="p-[16px] w-[704x] h-[728px] mt-[24px] overflow-y-auto overflow-x-hidden rounded-[20px] bg-white">
+          <div className={`animate-expand ${isListPreClosed && "duration-300 scale-y-0"} p-[16px] w-[704x] h-[728px] mt-[24px] overflow-y-auto overflow-x-hidden rounded-[20px] bg-white`}>
             <div className="w-[648px] h-[696px]">
               {filters[indexOfOpenedList].options.map(
                 (option, optIndex: number) => (

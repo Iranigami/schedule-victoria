@@ -4,16 +4,16 @@ import { useEffect, useRef, useState } from "react";
 
 type Props = {
   onChange: (min: number, max: number) => void;
-  min: number | string;
-  max: number | string;
+  min: number;
+  max: number;
 };
 
 export default function Slider({ min, max, onChange }: Props) {
   const [isMin, setIsMin] = useState(false);
   isMin;
   var slider = document.getElementById("slider");
-  const start = useRef(1);
-  const end = useRef(18);
+  const start = useRef(min);
+  const end = useRef(max);
   const formatForSlider = {
     from: function (formattedValue: number) {
       return Number(formattedValue);
@@ -52,13 +52,13 @@ export default function Slider({ min, max, onChange }: Props) {
       (formatValues[handle] as HTMLInputElement).value = values[handle];
       start.current = Number(values[0]);
       end.current = Number(values[1]);
-      if (start.current === 1)
+      if (start.current === min)
         (formatValues[0] as HTMLInputElement).className = "text-[#848484]";
       else (formatValues[0] as HTMLInputElement).className = "text-orange";
 
-      if (end.current === 18) {
+      if (end.current === max) {
         (formatValues[1] as HTMLInputElement).className = "text-[#848484]";
-        (formatValues[1] as HTMLInputElement).value = "18+";
+        (formatValues[1] as HTMLInputElement).value = `${max}+`;
       } else (formatValues[1] as HTMLInputElement).className = "text-orange";
     });
     //@ts-ignore

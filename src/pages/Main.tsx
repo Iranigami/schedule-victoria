@@ -6,7 +6,6 @@ import type { LessonSection } from "../types";
 import FilterModal from "../comps/FilterModal";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
-  //@ts-ignore
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   //@ts-ignore
@@ -25,6 +24,26 @@ export default function Main() {
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection[]>(
     [],
   );
+
+  const parseFilters = (data: {
+    group: string;
+    option: string | [number, number];
+}[]) => {
+    
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     setLessonSectionList([
@@ -122,7 +141,7 @@ export default function Main() {
       {isFiltersOpen && (
         <FilterModal
           onSelect={(selected) =>
-            console.log("Selected: " + selected.toLocaleString())
+            console.log((selected))
           }
           onClose={() => setFiltersOpen(false)}
           filters={[
@@ -144,7 +163,7 @@ export default function Main() {
             {
               title: "Test",
               type: "slider",
-              options: ["1", "18"],
+              options: ["20", "32"],
             },
           ]}
         />
