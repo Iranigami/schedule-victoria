@@ -4,27 +4,17 @@ import filterIcon from "../assets/images/icons/filter.svg";
 import Search from "../comps/Search";
 import type { LessonSection } from "../types";
 import FilterModal from "../comps/FilterModal";
+import axios from "axios";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
-  //@ts-ignore
-  const [teachersList, setTeachersList] = useState([
-    "Жоский Мужик Жоскович",
-    "Ваще Пиздец Какойта",
-    "Я Хочу Кушать",
-    "Гойдаа Ааааа Ааааа",
-  ]);
-  //@ts-ignore
-  const [lessonsList, setLessonsList] = useState([
-    "Живопись",
-    "Поедание личинок на скорость",
-    "Психотерапия",
-  ]);
-  const [lessonSectionList, setLessonSectionList] = useState<LessonSection[]>(
+  const [teachersList, setTeachersList] = useState<string[]>([]);
+  const [lessonsList, setLessonsList] = useState<string[]>([]);
+  const [lessonSectionList, setLessonSectionList] = useState<LessonSection>(
     [],
   );
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const parseFilters = (data: {
     group: string;
     option: string | [number, number];
@@ -32,108 +22,14 @@ export default function Main() {
     
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   useEffect(() => {
-    setLessonSectionList([
-      [
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-          monday: "sdfsdfsdfsd",
-        },
-      ],
-      [
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-        },
-        {
-          code: 32423,
-          title: "Тестовый урок 1",
-          teacher: "Учитель 1",
-          cabinet: "314",
-          age: "14-15",
-          group: 1,
-          monday: "sdfsdfsdfsd",
-        },
-      ],
-    ]);
+    axios.get(apiUrl + "api/lessons")
+    .then((response) => {
+      setLessonSectionList(response.data);
+    })
+    .catch(() => {
+      console.error("Ошибка получения информации");
+    });
   }, []);
 
   return (
@@ -196,7 +92,7 @@ export default function Main() {
       <Search isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] h-[944px] mt-[24px] px-[16px] pb-[16px] bg-white rounded-[20px]">
         <div className="text-left w-full h-[48px] flex gap-[32px] p-[16px] font-bold text-[#848484] text-[16px] leading-[100%]">
-          <div className="w-[320px] h-[16px]">Кружок</div>
+          <div className="w-[224px] h-[16px]">Кружок</div>
           <div className="w-[62px] h-[16px]">Возраст</div>
           <div className="w-[54px] h-[16px]">Группа</div>
           <div className="w-[104px] h-[16px]">Понедельник</div>
@@ -208,52 +104,48 @@ export default function Main() {
           <div className="w-[104px] h-[16px]">Воскресенье</div>
         </div>
         <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
-          {lessonSectionList.map((section, index: number) => (
+          {lessonSectionList.map((lesson, index: number) => (
             <div
               key={index}
               className="w-[1468px] mb-[16px] overflow-hidden rounded-[12px]"
             >
-              {section.map((lesson, lessonIndex: number) => (
+              {lesson.groups.map((group, lessonIndex: number) => (
                 <div
                   key={lessonIndex}
                   className={`text-[16px] text-text font-normal leading-[100%] w-[1468px] h-[100px] flex gap-[32px] ${!((index + lessonIndex) % 2) ? "bg-[#FFF9F3]" : "bg-[#FFEFDF]"}`}
                 >
-                  <div className="w-[336px] h-[92px] pl-[16px] py-[16px]">
+                  <div className="w-[224px] h-[92px] pl-[16px] py-[16px]">
                     <div className="text-[#848484] text-[14px]">
-                      {lesson.code}
+                      {lesson.unity.code}
                     </div>
-                    <div className="mt-[8px]">{lesson.title}</div>
-                    <div className="flex justify-between text-[14px] text-[#848484] mt-[8px]">
-                      <div>{lesson.teacher}</div>
-                      <div>кабинет {lesson.cabinet}</div>
-                    </div>
+                    <div className="mt-[8px]">{lesson.unity.name}</div>
                   </div>
                   <div className="w-[94px] mr-[-32px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.age}
+                    {lesson.unity.age_before} - {lesson.unity.age_after} лет
                   </div>
                   <div className="w-[54px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.group}
+                    {group.group_name}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.monday}
+                    {group.schedule.monday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.tuesday}
+                    {group.schedule.tuesday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.wednesday}
+                    {group.schedule.wednesday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.thursday}
+                    {group.schedule.thursday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.friday}
+                    {group.schedule.friday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.saturday}
+                    {group.schedule.saturday?.date}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {lesson.sunday}
+                    {group.schedule.sunday?.date}
                   </div>
                 </div>
               ))}

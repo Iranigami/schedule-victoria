@@ -1,21 +1,26 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import arrIcon from "../assets/images/icons/arrow.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { MCClass } from "../types";
+import axios from "axios";
 
 export default function MasterClass() {
   const navigate = useNavigate();
-  const [data] = useState<MCClass>({
-    photo: "https://masterpiecer-images.s3.yandex.net/5fd531dca6427c7:upscaled",
-    title: "Основы веб-разработки",
-    date: "15.11.2025",
-    desc: "Изучаем HTML, CSS и основы JavaScript для создания простых веб-сайтов.",
-    code: "http://qrcoder.ru/code/?%F2%E5%F1%F2&4&0",
-    time: "14:00–16:00",
-    absDate: "26 мая с 13:00 до 16:00",
-    fullDesc:
-      "Lorem ipsum dolor sit amet consectetur. Pulvinar lacus nibh morbi nunc. Mattis viverra dictum vulputate tristique neque accumsan. Ultrices rutrum porta tempor semper sed nunc quam arcu pellentesque. Id eu non neque diam. Scelerisque id id pretium non in augue gravida. Diam sollicitudin tincidunt feugiat in dui ipsum dui donec in. Urna sapien tristique massa cursus. Sed nec quis ornare fringilla curabitur ipsum amet vitae. Malesuada senectus urna ultrices adipiscing. Dui sed id in tempor adipiscing diam nibh pretium tortor. Aliquam quis aliquet gravida non. Pharetra id ut lectus euismod maecenas mus imperdiet. Cras et rhoncus amet nibh dolor pulvinar at posuere. Tincidunt donec sollicitudin euismod volutpat sodales et pellentesque aliquet. Duis sed imperdiet in ultricies diam ac in. Purus risus tristique tempus sit. Id elit facilisi placerat facilisi. Tristique amet nam cursus integer leo in scelerisque fermentum. At ultrices bibendum dolor a sapien tellus ultricies. Eget id cras vel id nunc sit. Fames augue tempor pretium sit diam. Diam dui sit pharetra amet mollis. Mattis quisque eleifend ipsum consequat turpis ac lectus. Mattis aenean elementum urna at mi aliquam accumsan.",
-  });
+  const [data, setData] = useState<MCClass>();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const [params] = useSearchParams();
+  useEffect(() => {
+    axios.get(apiUrl + `api/master-class/${params.get("id")}`)
+    .then((response) => {
+      setData(response.data);
+      console.log(response.data);
+      document.getElementById("desc")!.innerHTML = response.data.description;
+    })
+    .catch(() => {
+      console.error("Ошибка получения информации");
+    });
+  }, []);
+
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div className="w-[1520px] h-[64px] flex gap-[16px] justify-left items-center">
@@ -34,14 +39,14 @@ export default function MasterClass() {
           <div className="w-[604px] h-[904px]">
             <div className="size-[604px] rounded-[20px] overflow-hidden">
               <img
-                src={data.photo}
+                src={apiUrl + data?.image}
                 alt="image"
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="w-[604px] h-[284px] mt-[16px] rounded-[20px] bg-[#F1852233] flex gap-[16px] items-center justify-center">
               <img
-                src={data.code}
+                src={apiUrl + data?.qr}
                 alt="qr-code"
                 className="rounded-[14px] bg-white size-[252px]"
               />
@@ -65,10 +70,9 @@ export default function MasterClass() {
                 {data?.absDate}
               </div>
               <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-                {data?.desc}
+                {data?.smallDescription}
               </div>
-              <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-                {data?.fullDesc}
+              <div id="desc" className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
               </div>
             </div>
           </div>

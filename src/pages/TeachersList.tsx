@@ -5,8 +5,10 @@ import FilterList from "../comps/FilterList";
 import type { Teacher } from "../types";
 import TeacherCard from "../comps/TeacherCard";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function TeachersList() {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState<string | undefined>(
@@ -15,28 +17,15 @@ export default function TeachersList() {
   const [teachersList, setTeachersList] = useState<Teacher[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTeachersList([
-      {
-        id: 3,
-        fullName: "Бутолин Владислав Семонович",
-        direction: ["literary_club"],
-        image: "/teacher/frame-14-1-683da88757d0a090396568.png",
-      },
-      {
-        id: 4,
-        fullName: "Лермонтов Сергей Генадьевич",
-        direction: ["music_club"],
-        image: "/teacher/logo-1-1-683da96bd3648367087687.png",
-      },
-      {
-        id: 5,
-        fullName: "Тронин Андрей Аркадьевич",
-        direction: ["sports_section"],
-        image: "/teacher/image-1-683da9c6a4321956474504.png",
-      },
-    ]);
-  }, []);
+    useEffect(() => {
+      axios.get(apiUrl + "api/teacher")
+      .then((response) => {
+        setTeachersList(response.data)
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+    }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div
@@ -77,8 +66,8 @@ export default function TeachersList() {
             {teachersList.map((teacher, index: number) => (
               <TeacherCard
                 key={index}
-                onClick={() => navigate(`/teacher?id=${index}`)}
-                photo={teacher.image}
+                onClick={() => navigate(`/teacher?id=${teacher.id}`)}
+                photo={apiUrl + teacher.image}
                 name={teacher.fullName!}
                 lesson={teacher.direction!}
               />

@@ -1,18 +1,4 @@
-export interface Lesson {
-  code: number;
-  title: string;
-  teacher: string;
-  cabinet: string;
-  age: string;
-  group: number;
-  monday?: string;
-  tuesday?: string;
-  wednesday?: string;
-  thursday?: string;
-  friday?: string;
-  saturday?: string;
-  sunday?: string;
-}
+
 
 export interface LessonSection extends Array<Lesson> {}
 
@@ -44,14 +30,17 @@ export interface Teacher {
 }
 
 export interface MCClass {
-  photo: string;
+  id: number;
+  image: string;
   title: string;
   date: string;
-  desc: string;
+  smallDescription: string;
   code: string;
-  time: string;
+  startAt: string;
+  endAt: string;
+  qr: string;
   absDate: string;
-  fullDesc?: string;
+  description: string;
 }
 
 export interface Article {
@@ -72,4 +61,104 @@ export interface LessonClasses {
   additionalInfo: string;
   teacher: Teacher;
   code: string;
+}
+
+
+
+
+
+export interface Unity {
+  code: string,
+  name: string,
+  age_before: number,
+  age_after: number,
+  teacher: string,
+}
+
+export interface Group {
+  group_name: string,
+  schedule: {
+    monday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    tuesday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    wednesday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    thursday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    friday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    saturday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    },
+    sunday?: {
+      id: number,
+      title: string,
+      cabinet: string,
+      teacher: string,
+      start_time: string,
+      end_time: string,
+      is_cancelled: boolean,
+      edit_reason: string,
+      date: string,
+    }
+  }
+}
+
+export interface Lesson {
+  unity: Unity,
+  groups: Group[],
 }
