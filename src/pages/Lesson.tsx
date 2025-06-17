@@ -1,25 +1,29 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import arrIcon from "../assets/images/icons/arrow.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import linkIcon from "../assets/images/icons/link.svg";
+import Loading from "../comps/Loading";
+import type { Unity } from "../types";
+import axios from "axios";
 
 export default function Lesson() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const [data] = useState({
-    title: "Я хочу спать",
-    teacherId: "0",
-    photo:
-      "https://cs10.pikabu.ru/post_img/big/2019/06/25/8/15614688111117407.jpg",
-    teacher: "Игорь Сергеевич Петров",
-    address: "Где-то там",
-    age: "от 8 до 12",
-    time: "много лет",
-    conds: "Бюджет",
-    qr: "",
-    additional: "le zhopa",
-    desc: "Lorem ipsum dolor sit amet consectetur. Nullam euismod turpis placerat a. Sociis nisl mi rhoncus fringilla diam congue morbi. Arcu laoreet natoque justo non erat. A purus felis commodo lacinia lorem. Ac volutpat posuere aenean in. Malesuada risus blandit urna non molestie pellentesque fringilla amet mollis. Egestas a morbi venenatis volutpat. Nec et a eget sit erat fringilla eget pharetra. Risus sed curabitur purus eu pharetra id. Tempor dis nunc ridiculus leo pellentesque. Quam leo risus donec orci curabitur a. Nunc gravida gravida dictum neque donec. Orci sed amet interdum sit senectus. Convallis facilisis malesuada odio nunc at. Quisque netus a varius dictum augue. Dignissim ut nibh sapien justo eu nisl tempus lorem. Eleifend praesent quis justo nibh elementum erat posuere congue viverra. Metus massa et condimentum purus. Penatibus volutpat accumsan erat dolor sit lectus consectetur sodales. Aenean odio congue in mollis. Elit eu turpis morbi egestas tincidunt. Malesuada cras quis ornare interdum porttitor scelerisque consequat. Orci scelerisque adipiscing lorem nisi proin eget elementum mauris. Mollis cursus sollicitudin aenean tempor molestie mauris. Orci scelerisque adipiscing lorem nisi proin eget elementum mauris. Mollis cursus sollicitudin aenean tempor molestie mauris.",
-  });
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState<Unity>();
+  const [params] = useSearchParams();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  useEffect(() => {
+    axios.get(apiUrl + `api/unity/${params.get("id")}`)
+    .then((response) => {
+      setData(response.data)
+      setLoading(false);
+      document.getElementById("desc")!.innerHTML = data!.description
+    })
+    .catch(() => {
+      console.error("Ошибка получения информации");
+    });
+  }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div className="w-[1520px] h-[64px] flex gap-[16px] justify-left items-center">
@@ -58,7 +62,7 @@ export default function Lesson() {
                 Адрес
               </div>
               <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data.title}
+                {data?.title}
               </div>
             </div>
             <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
@@ -66,7 +70,7 @@ export default function Lesson() {
                 Возраст
               </div>
               <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data.age}
+                {data?.ageBefore + " - " + data?.ageAfter + " лет"}
               </div>
             </div>
             <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
@@ -74,7 +78,7 @@ export default function Lesson() {
                 Длительность обучения
               </div>
               <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data.time}
+                {data?.years}
               </div>
             </div>
             <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
@@ -82,21 +86,20 @@ export default function Lesson() {
                 Условия
               </div>
               <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data.conds}
+                {data?.finance ? "Внебюджет" : "Бюджет"}
               </div>
             </div>
           </div>
-          <div className="mt-[20px] text-[24px] text-text font-normal leading-[100%]">
-            {data.desc}
+          <div id="desc" className="mt-[20px] text-[24px] text-text font-normal leading-[100%]">
           </div>
           <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
-            {data.additional}
+            {data?.note}
           </div>
           <div className="w-full h-[120px] flex justify-between mt-[20px]">
             <div className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center">
               <div className="size-[120px] rounded-full overflow-hidden">
                 <img
-                  src={data.photo}
+                  src={data?.photo}
                   alt="photo"
                   className="w-full h-full object-cover"
                 />
@@ -104,9 +107,9 @@ export default function Lesson() {
               <div className="text-[#848484] text-[20px] font-bold leading-[100%] text-left">
                 Педагог
                 <div className="mt-[8px] text-orange text-[32px] font-semibold leading-[100%] flex gap-[16px] items-center">
-                  {data.teacher}
+                  {data?.teachers[0].name}
                   <img
-                    onClick={() => navigate(`/teacher?id=${data.teacherId}`)}
+                    onClick={() => navigate(`/teacher?id=${data?.teachers[0].id}`)}
                     src={linkIcon}
                     alt="img"
                     className="size-[24px]"
@@ -116,7 +119,7 @@ export default function Lesson() {
             </div>
             <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
               <img
-                src={data.qr}
+                src={data?.url}
                 alt="qr-code"
                 className="size-[104px] rounded-[14px] bg-white"
               />
@@ -130,6 +133,7 @@ export default function Lesson() {
           </div>
         </div>
       )}
+      {isLoading && <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center"><Loading/></div>}
     </div>
   );
 }

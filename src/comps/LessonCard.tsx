@@ -5,18 +5,20 @@ import walletIcon from "../assets/images/icons/wallet.svg";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  teacher: string;
+  id: number;
+  teacher?: string;
   title: string;
-  code: string;
+  code: number;
   desc: string;
   additional?: string;
   address: string;
   age: string;
-  time: string;
-  conds: string;
+  time: number;
+  conds: boolean;
 };
 
 export default function LessonCard({
+  id,
   teacher,
   time,
   title,
@@ -68,12 +70,12 @@ export default function LessonCard({
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
             <img src={walletIcon} alt="wallet" className="size-[24px]" />
             <div className="text-text text-[20px] font-normal leading-[100%]">
-              {conds}
+              {conds ? "Внебюджет" : "Бюджет"}
             </div>
           </div>
         </div>
         <button
-          onClick={() => navigate(`/lesson?id=${"3"}`)}
+          onClick={() => navigate(`/lesson?id=${id}`)}
           className="w-[138px] h-[52px] bg-orange rounded-[16px] p-[16px] flex justify-center items-center text-white text-[20px] font-semibold leading-[100%]"
         >
           Подробнее

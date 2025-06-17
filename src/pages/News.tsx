@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArticleCard from "../comps/ArticleCard";
-import type { Article } from "../types";
+import type { News } from "../types";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function News() {
-  const [newsList] = useState<Article[]>([
-    {
-      photo:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToWiH3hZCawR24AVEfU9Z2NrfGXUAKNVDtiw&s",
-      title: "SDFTGSDFGDFGSD",
-      desc: "DFGADSF:GHLDEFH:ALDEKFGHA:LDSKRG:ALSKFG:ADLFKGS:DLKFGSD:LFKGHS:DLFKVBS:DLKBGS:DLFKGHSD:LFKGS:DLFKG",
-    },
-    {
-      photo:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToWiH3hZCawR24AVEfU9Z2NrfGXUAKNVDtiw&s",
-      title: "SDFTGSDFGDFGSD",
-      desc: "DFGADSF:GHLDEFH:ALDEKFGHA:LDSKRG:ALSKFG:ADLFKGS:DLKFGSD:LFKGHS:DLFKVBS:DLKBGS:DLFKGHSD:LFKGS:DLFKG",
-    },
-  ]);
+  const [newsList, setNewsList] = useState<News[]>([]);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  useEffect(() => {
+    axios.get(apiUrl + "api/news")
+    .then((response) => {
+      setNewsList(response.data)
+    })
+    .catch(() => {
+      console.error("Ошибка получения информации");
+    });
+  }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div className={`flex justify-between w-[1520px] h-[64px] duration-150`}>
@@ -32,10 +30,10 @@ export default function News() {
             {newsList.map((article, index: number) => (
               <ArticleCard
                 key={index}
-                onClick={() => navigate(`/article?id=${index}`)}
-                photo={article.photo}
+                onClick={() => navigate(`/article?id=${article.id}`)}
+                photo={apiUrl + article.image}
                 title={article.title}
-                desc={article.desc}
+                desc={"Нет инфы с бэка АААА"}
               />
             ))}
           </div>

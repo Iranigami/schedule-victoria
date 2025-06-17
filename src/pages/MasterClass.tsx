@@ -3,6 +3,7 @@ import arrIcon from "../assets/images/icons/arrow.svg";
 import { useEffect, useState } from "react";
 import type { MCClass } from "../types";
 import axios from "axios";
+import moment from "moment";
 
 export default function MasterClass() {
   const navigate = useNavigate();
@@ -67,10 +68,10 @@ export default function MasterClass() {
                 Дата проведения
               </div>
               <div className="mt-[8px] text-orange text-[48px] font-normal leading-[100%]">
-                {data?.absDate}
+                {moment(data?.date).format('D MMM')} с {moment(data?.endAt).add(20, 'hours').format('HH:mm')} до {moment(data?.startAt).add(20, 'hours').format('HH:mm')}
               </div>
               <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-                {data?.smallDescription}
+                {data?.smallDescription} 
               </div>
               <div id="desc" className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
               </div>

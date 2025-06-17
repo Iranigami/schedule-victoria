@@ -91,17 +91,17 @@ export default function Main() {
       </div>
       <Search isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] h-[944px] mt-[24px] px-[16px] pb-[16px] bg-white rounded-[20px]">
-        <div className="text-left w-full h-[48px] flex gap-[32px] p-[16px] font-bold text-[#848484] text-[16px] leading-[100%]">
-          <div className="w-[224px] h-[16px]">Кружок</div>
+        <div className="w-[1488px] text-left w-full h-[48px] flex gap-[32px] p-[16px] font-bold text-[#848484] text-[16px] leading-[100%]">
+          <div className="w-[208px] h-[16px]">Кружок</div>
           <div className="w-[62px] h-[16px]">Возраст</div>
           <div className="w-[54px] h-[16px]">Группа</div>
-          <div className="w-[104px] h-[16px]">Понедельник</div>
-          <div className="w-[104px] h-[16px]">Вторник</div>
-          <div className="w-[104px] h-[16px]">Среда</div>
-          <div className="w-[104px] h-[16px]">Четверг</div>
-          <div className="w-[104px] h-[16px]">Пятница</div>
-          <div className="w-[104px] h-[16px]">Суббота</div>
-          <div className="w-[104px] h-[16px]">Воскресенье</div>
+          <div className="w-[120px] h-[16px]">Понедельник</div>
+          <div className="w-[120px] h-[16px]">Вторник</div>
+          <div className="w-[120px] h-[16px]">Среда</div>
+          <div className="w-[120px] h-[16px]">Четверг</div>
+          <div className="w-[120px] h-[16px]">Пятница</div>
+          <div className="w-[120px] h-[16px]">Суббота</div>
+          <div className="w-[120px] h-[16px]">Воскресенье</div>
         </div>
         <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
           {lessonSectionList.map((lesson, index: number) => (
@@ -127,7 +127,9 @@ export default function Main() {
                     {group.group_name}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {group.schedule.monday?.date}
+                    {group.schedule.monday && <div>
+                      
+                      </div>}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
                     {group.schedule.tuesday?.date}
