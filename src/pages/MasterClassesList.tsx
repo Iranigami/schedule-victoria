@@ -7,24 +7,28 @@ import { useNavigate } from "react-router-dom";
 import type { MCClass } from "../types";
 import FilterModal from "../comps/FilterModal";
 import axios from "axios";
+import Loading from "../comps/Loading";
 
 export default function MasterClassesList() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
   //const [selectedClass, setSelectedClass] = useState<string | undefined>(
   //  undefined,
   //);
   const apiUrl = import.meta.env.VITE_API_URL;
   const [MCList, setMCList] = useState<MCClass[]>([]);
   useEffect(() => {
-    axios.get(apiUrl + "api/master-class")
-    .then((response) => {
-      
-      setMCList(response.data)
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + "api/master-class")
+      .then((response) => {
+        setMCList(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
   const navigate = useNavigate();
   return (
@@ -78,6 +82,11 @@ export default function MasterClassesList() {
           </div>
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

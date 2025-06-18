@@ -6,6 +6,7 @@ import type { Teacher } from "../types";
 import TeacherCard from "../comps/TeacherCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../comps/Loading";
 
 export default function TeachersList() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,16 +17,19 @@ export default function TeachersList() {
   );
   const [teachersList, setTeachersList] = useState<Teacher[]>([]);
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(true);
 
-    useEffect(() => {
-      axios.get(apiUrl + "api/teacher")
+  useEffect(() => {
+    axios
+      .get(apiUrl + "api/teacher")
       .then((response) => {
-        setTeachersList(response.data)
+        setTeachersList(response.data);
+        setLoading(false);
       })
       .catch(() => {
         console.error("Ошибка получения информации");
       });
-    }, []);
+  }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div
@@ -75,6 +79,11 @@ export default function TeachersList() {
           </div>
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

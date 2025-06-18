@@ -14,8 +14,7 @@
   --animate-expandFrom: expandFrom 0.2s ease-in-out;
   --animate-opacity: appearOpacity 0.2s ease-in-out;
   @keyframes slideUp {
-    0%
-    {
+    0% {
       transform: translateY(1000px);
       opacity: 0;
     }
@@ -26,8 +25,7 @@
   }
 
   @keyframes expand {
-    0%
-    {
+    0% {
       transform: scaleY(25%);
     }
     100% {
@@ -36,8 +34,7 @@
   }
 
   @keyframes expandFrom {
-    0%
-    {
+    0% {
       height: fill;
     }
     100% {
@@ -46,8 +43,7 @@
   }
 
   @keyframes appearOpacity {
-    0%
-    {
+    0% {
       opacity: 0;
     }
     100% {
@@ -55,7 +51,6 @@
     }
   }
 }
-
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

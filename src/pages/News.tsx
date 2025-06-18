@@ -3,19 +3,24 @@ import ArticleCard from "../comps/ArticleCard";
 import type { News } from "../types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loading from "../comps/Loading";
 
 export default function News() {
   const [newsList, setNewsList] = useState<News[]>([]);
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(true);
+
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    axios.get(apiUrl + "api/news")
-    .then((response) => {
-      setNewsList(response.data)
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + "api/news")
+      .then((response) => {
+        setNewsList(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -39,6 +44,11 @@ export default function News() {
           </div>
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

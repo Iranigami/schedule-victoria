@@ -12,14 +12,15 @@ export default function Article() {
   const [params] = useSearchParams();
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    axios.get(apiUrl + `api/news/${params.get("id")}`)
-    .then((response) => {
-      setData(response.data)
-      setLoading(false);
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + `api/news/${params.get("id")}`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
 
   return (
@@ -45,11 +46,8 @@ export default function Article() {
             />
           </div>
           <div className="w-[786px] h-[904px] overflow-x-hidden overflow-y-auto">
-            <div
-              id="textField"
-              className="w-[766px] text-text text-[24px]"
-            >
-              {data?.newsParagraphs?.map((paragraph, index: number)=>(
+            <div id="textField" className="w-[766px] text-text text-[24px]">
+              {data?.newsParagraphs?.map((paragraph, index: number) => (
                 <div key={index} className="mb-[20px]">
                   <div className="font-bold text-[28px] leading-[100%]">
                     {paragraph.title}
@@ -63,8 +61,11 @@ export default function Article() {
           </div>
         </div>
       </div>
-      {isLoading && <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center"><Loading/></div>}
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }
-

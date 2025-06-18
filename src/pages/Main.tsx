@@ -5,40 +5,40 @@ import Search from "../comps/Search";
 import type { LessonSection } from "../types";
 import FilterModal from "../comps/FilterModal";
 import axios from "axios";
+import Loading from "../comps/Loading";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const [teachersList, setTeachersList] = useState<string[]>([]);
   const [lessonsList, setLessonsList] = useState<string[]>([]);
-  const [lessonSectionList, setLessonSectionList] = useState<LessonSection>(
-    [],
-  );
+  const [lessonSectionList, setLessonSectionList] = useState<LessonSection>([]);
+  const [isLoading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const parseFilters = (data: {
-    group: string;
-    option: string | [number, number];
-}[]) => {
-    
-  };
+  const parseFilters = (
+    data: {
+      group: string;
+      option: string | [number, number];
+    }[],
+  ) => {};
 
   useEffect(() => {
-    axios.get(apiUrl + "api/lessons")
-    .then((response) => {
-      setLessonSectionList(response.data);
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + "api/lessons")
+      .then((response) => {
+        setLessonSectionList(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
 
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       {isFiltersOpen && (
         <FilterModal
-          onSelect={(selected) =>
-            console.log((selected))
-          }
+          onSelect={(selected) => console.log(selected)}
           onClose={() => setFiltersOpen(false)}
           filters={[
             {
@@ -127,9 +127,7 @@ export default function Main() {
                     {group.group_name}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
-                    {group.schedule.monday && <div>
-                      
-                      </div>}
+                    {group.schedule.monday && <div></div>}
                   </div>
                   <div className="w-[104px] h-[92px] flex items-center justify-left text-left">
                     {group.schedule.tuesday?.date}
@@ -155,6 +153,11 @@ export default function Main() {
           ))}
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

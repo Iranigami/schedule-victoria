@@ -5,17 +5,21 @@ import Search from "../comps/Search";
 import type { Unity } from "../types";
 import LessonCard from "../comps/LessonCard";
 import axios from "axios";
+import Loading from "../comps/Loading";
 
 export default function LessonsList() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    axios.get(apiUrl + "api/unity")
-    .then((response) => {
-      setLessonClasses(response.data)
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + "api/unity")
+      .then((response) => {
+        setLessonClasses(response.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
@@ -56,9 +60,15 @@ export default function LessonsList() {
           <div className="w-[1460px] grid grid-cols-1 gap-[16px]">
             {lessonsList.map((lesson, index: number) => (
               <LessonCard
-                id = {lesson.id}
+                id={lesson.id}
                 key={index}
-                teacher={lesson.teachers[0].surname + " " + lesson.teachers[0].name + " "+ lesson.teachers[0].patronymic}
+                teacher={
+                  lesson.teachers[0].surname +
+                  " " +
+                  lesson.teachers[0].name +
+                  " " +
+                  lesson.teachers[0].patronymic
+                }
                 title={lesson.title}
                 time={lesson.years}
                 address={lesson.division}
@@ -72,6 +82,11 @@ export default function LessonsList() {
           </div>
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

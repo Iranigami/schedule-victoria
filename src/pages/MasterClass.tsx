@@ -4,22 +4,26 @@ import { useEffect, useState } from "react";
 import type { MCClass } from "../types";
 import axios from "axios";
 import moment from "moment";
+import Loading from "../comps/Loading";
 
 export default function MasterClass() {
   const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<MCClass>();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [params] = useSearchParams();
   useEffect(() => {
-    axios.get(apiUrl + `api/master-class/${params.get("id")}`)
-    .then((response) => {
-      setData(response.data);
-      console.log(response.data);
-      document.getElementById("desc")!.innerHTML = response.data.description;
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + `api/master-class/${params.get("id")}`)
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+        document.getElementById("desc")!.innerHTML = response.data.description;
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
 
   return (
@@ -68,17 +72,26 @@ export default function MasterClass() {
                 Дата проведения
               </div>
               <div className="mt-[8px] text-orange text-[48px] font-normal leading-[100%]">
-                {moment(data?.date).format('D MMM')} с {moment(data?.endAt).add(20, 'hours').format('HH:mm')} до {moment(data?.startAt).add(20, 'hours').format('HH:mm')}
+                {moment(data?.date).format("D MMM")} с{" "}
+                {moment(data?.endAt).add(20, "hours").format("HH:mm")} до{" "}
+                {moment(data?.startAt).add(20, "hours").format("HH:mm")}
               </div>
               <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-                {data?.smallDescription} 
+                {data?.smallDescription}
               </div>
-              <div id="desc" className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-              </div>
+              <div
+                id="desc"
+                className="mt-[20px] text-text text-[24px] font-normal leading-[100%]"
+              ></div>
             </div>
           </div>
         </div>
       </div>
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }

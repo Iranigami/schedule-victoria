@@ -3,22 +3,26 @@ import arrIcon from "../assets/images/icons/arrow.svg";
 import { useEffect, useState } from "react";
 import type { Teacher } from "../types";
 import axios from "axios";
+import Loading from "../comps/Loading";
 
 export default function Teacher() {
-
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<Teacher>();
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [isLoading, setLoading] = useState(true);
+
   const [params] = useSearchParams();
   useEffect(() => {
-    axios.get(apiUrl + `api/teacher/${params.get("id")}`)
-    .then((response) => {
-      setData(response.data);
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + `api/teacher/${params.get("id")}`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -140,6 +144,11 @@ export default function Teacher() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
         </div>
       )}
     </div>

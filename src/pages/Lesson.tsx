@@ -14,15 +14,16 @@ export default function Lesson() {
   const [params] = useSearchParams();
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
-    axios.get(apiUrl + `api/unity/${params.get("id")}`)
-    .then((response) => {
-      setData(response.data)
-      setLoading(false);
-      document.getElementById("desc")!.innerHTML = data!.description
-    })
-    .catch(() => {
-      console.error("Ошибка получения информации");
-    });
+    axios
+      .get(apiUrl + `api/unity/${params.get("id")}`)
+      .then((response) => {
+        setData(response.data);
+        document.getElementById("desc")!.innerHTML = response.data.description;
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -90,8 +91,10 @@ export default function Lesson() {
               </div>
             </div>
           </div>
-          <div id="desc" className="mt-[20px] text-[24px] text-text font-normal leading-[100%]">
-          </div>
+          <div
+            id="desc"
+            className="mt-[20px] text-[24px] text-text font-normal leading-[100%]"
+          ></div>
           <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
             {data?.note}
           </div>
@@ -99,7 +102,7 @@ export default function Lesson() {
             <div className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center">
               <div className="size-[120px] rounded-full overflow-hidden">
                 <img
-                  src={data?.photo}
+                  src={data?.teachers[0].photo}
                   alt="photo"
                   className="w-full h-full object-cover"
                 />
@@ -107,9 +110,15 @@ export default function Lesson() {
               <div className="text-[#848484] text-[20px] font-bold leading-[100%] text-left">
                 Педагог
                 <div className="mt-[8px] text-orange text-[32px] font-semibold leading-[100%] flex gap-[16px] items-center">
-                  {data?.teachers[0].name}
+                  {data?.teachers[0].surname +
+                    " " +
+                    data?.teachers[0].name +
+                    " " +
+                    data?.teachers[0].patronymic}
                   <img
-                    onClick={() => navigate(`/teacher?id=${data?.teachers[0].id}`)}
+                    onClick={() =>
+                      navigate(`/teacher?id=${data?.teachers[0].id}`)
+                    }
                     src={linkIcon}
                     alt="img"
                     className="size-[24px]"
@@ -118,11 +127,13 @@ export default function Lesson() {
               </div>
             </div>
             <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
-              <img
-                src={data?.url}
-                alt="qr-code"
-                className="size-[104px] rounded-[14px] bg-white"
-              />
+              <div className="size-[104px] rounded-[14px] bg-white flex justify-center items-center">
+                <img
+                  src={apiUrl + data?.qr}
+                  alt="qr-code"
+                  className="size-[98px]"
+                />
+              </div>
               <div className="text-orange text-[32px] font-bold leading-[100%]">
                 Сканируй код
                 <div className="mt-[8px] text-text font-normal leading-[100%]">
@@ -133,7 +144,11 @@ export default function Lesson() {
           </div>
         </div>
       )}
-      {isLoading && <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center"><Loading/></div>}
+      {isLoading && (
+        <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 }
