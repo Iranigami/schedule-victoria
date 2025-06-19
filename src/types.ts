@@ -9,7 +9,10 @@ export interface Teacher {
   image?: string;
   division?: string[];
   direction?: string[];
-  unities?: string[];
+  unities?: {
+    id: number;
+    title: string;
+  }[];
   position?: string;
   phone?: string;
   email?: string;

@@ -36,7 +36,7 @@ export default function News() {
               <ArticleCard
                 key={index}
                 onClick={() => navigate(`/article?id=${article.id}`)}
-                photo={apiUrl + article.image}
+                photo={article.image}
                 title={article.title}
                 desc={"Нет инфы с бэка АААА"}
               />

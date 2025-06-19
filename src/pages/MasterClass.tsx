@@ -5,6 +5,7 @@ import type { MCClass } from "../types";
 import axios from "axios";
 import moment from "moment";
 import Loading from "../comps/Loading";
+import photoPlaceholder from "../assets/images/master class none.png";
 
 export default function MasterClass() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function MasterClass() {
           <div className="w-[604px] h-[904px]">
             <div className="size-[604px] rounded-[20px] overflow-hidden">
               <img
-                src={apiUrl + data?.image}
+                src={!!data?.image ? apiUrl + data?.image : photoPlaceholder}
                 alt="image"
                 className="w-full h-full object-cover"
               />

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import linkIcon from "../assets/images/icons/link.svg";
 import Loading from "../comps/Loading";
 import type { Unity } from "../types";
+import photoPlaceholder from "../assets/images/user none.png";
 import axios from "axios";
 
 export default function Lesson() {
@@ -55,54 +56,60 @@ export default function Lesson() {
           </button>
         </div>
       </div>
-      {page && (
-        <div className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]">
-          <div className="w-[1480px] flex gap-[16px]">
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-                Адрес
-              </div>
-              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data?.title}
-              </div>
+      <div
+        hidden={page === 0}
+        className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]"
+      >
+        <div className="w-[1480px] flex gap-[16px]">
+          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+              Адрес
             </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-                Возраст
-              </div>
-              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data?.ageBefore + " - " + data?.ageAfter + " лет"}
-              </div>
-            </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-                Длительность обучения
-              </div>
-              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data?.years}
-              </div>
-            </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-                Условия
-              </div>
-              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-                {data?.finance ? "Внебюджет" : "Бюджет"}
-              </div>
+            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+              {data?.title}
             </div>
           </div>
-          <div
-            id="desc"
-            className="mt-[20px] text-[24px] text-text font-normal leading-[100%]"
-          ></div>
-          <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
-            {data?.note}
+          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+              Возраст
+            </div>
+            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+              {data?.ageBefore + " - " + data?.ageAfter + " лет"}
+            </div>
           </div>
-          <div className="w-full h-[120px] flex justify-between mt-[20px]">
-            <div className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center">
-              <div className="size-[120px] rounded-full overflow-hidden">
+          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+              Длительность обучения
+            </div>
+            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+              {data?.years}
+            </div>
+          </div>
+          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+              Условия
+            </div>
+            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+              {data?.finance ? "Внебюджет" : "Бюджет"}
+            </div>
+          </div>
+        </div>
+        <div
+          id="desc"
+          className="mt-[20px] text-[24px] text-text font-normal leading-[100%]"
+        ></div>
+        <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
+          {data?.note}
+        </div>
+        <div className="w-full grid grid-cols-2 gap-[16px] mt-[20px]">
+          {data?.teachers.map((teacher, index: number) => (
+            <div
+              key={index}
+              className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center"
+            >
+              <div className="bg-[#ededed] size-[120px] rounded-full overflow-hidden">
                 <img
-                  src={data?.teachers[0].photo}
+                  src={!!teacher.photo ? teacher.photo : photoPlaceholder}
                   alt="photo"
                   className="w-full h-full object-cover"
                 />
@@ -110,15 +117,13 @@ export default function Lesson() {
               <div className="text-[#848484] text-[20px] font-bold leading-[100%] text-left">
                 Педагог
                 <div className="mt-[8px] text-orange text-[32px] font-semibold leading-[100%] flex gap-[16px] items-center">
-                  {data?.teachers[0].surname +
+                  {teacher.surname +
                     " " +
-                    data?.teachers[0].name +
+                    teacher.name +
                     " " +
-                    data?.teachers[0].patronymic}
+                    teacher.patronymic}
                   <img
-                    onClick={() =>
-                      navigate(`/teacher?id=${data?.teachers[0].id}`)
-                    }
+                    onClick={() => navigate(`/teacher?id=${teacher.id}`)}
                     src={linkIcon}
                     alt="img"
                     className="size-[24px]"
@@ -126,24 +131,24 @@ export default function Lesson() {
                 </div>
               </div>
             </div>
-            <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
-              <div className="size-[104px] rounded-[14px] bg-white flex justify-center items-center">
-                <img
-                  src={apiUrl + data?.qr}
-                  alt="qr-code"
-                  className="size-[98px]"
-                />
-              </div>
-              <div className="text-orange text-[32px] font-bold leading-[100%]">
-                Сканируй код
-                <div className="mt-[8px] text-text font-normal leading-[100%]">
-                  Для записи на кружок
-                </div>
+          ))}
+          <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
+            <div className="size-[104px] rounded-[14px] bg-white flex justify-center items-center">
+              <img
+                src={apiUrl + data?.qr}
+                alt="qr-code"
+                className="size-[98px]"
+              />
+            </div>
+            <div className="text-orange text-[32px] font-bold leading-[100%]">
+              Сканируй код
+              <div className="mt-[8px] text-text font-normal leading-[100%]">
+                Для записи на кружок
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />

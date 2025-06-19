@@ -1,12 +1,13 @@
 import arrIcon from "../assets/images/icons/arrow.svg";
+import type { Unity } from "../types";
 
 type Props = {
-  optionsList: string[];
-  selectedOption?: string;
+  optionsList: Unity[];
+  selectedOption?: Unity;
   isOpen: boolean;
   optionPlaceholder: string;
   onButtonClick: () => void;
-  onSelectOption: (option: string) => void;
+  onSelectOption: (option: Unity) => void;
 };
 
 export default function FilterList({
@@ -24,7 +25,7 @@ export default function FilterList({
         className={`${isOpen && "shadow-[0_2px_12px_0_#00000026]"} w-[368px] h-[64px] bg-white rounded-[20px] flex justify-between items-center px-[26px] text-[20px] text-[#848484] leading-[100%] font-bold`}
       >
         <span hidden={!!selectedOption}>{optionPlaceholder}</span>
-        {!!selectedOption && selectedOption}
+        {!!selectedOption && selectedOption.title}
         <img
           src={arrIcon}
           alt="img"
@@ -40,7 +41,7 @@ export default function FilterList({
             onClick={() => onSelectOption(option)}
             className={`${selectedOption === option ? "bg-orange text-white" : "bg-white text-[#848484]"} w-[336px] h-[52px] rounded-[12px] p-[16px] text-[20px] font-semibold leading-[100%]`}
           >
-            {option}
+            {option.title}
           </div>
         ))}
       </div>

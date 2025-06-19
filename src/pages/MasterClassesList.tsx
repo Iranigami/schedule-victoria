@@ -72,7 +72,7 @@ export default function MasterClassesList() {
               <MCCard
                 key={index}
                 onClick={() => navigate(`/masterclass?id=${mClass.id}`)}
-                photo={apiUrl + mClass.image}
+                photo={mClass.image}
                 title={mClass.title}
                 desc={mClass.smallDescription}
                 date={mClass.date}

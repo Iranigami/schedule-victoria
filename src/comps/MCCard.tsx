@@ -1,3 +1,5 @@
+import photoPlaceholder from "../assets/images/master class none.png";
+
 type Props = {
   onClick: () => void;
   photo: string;
@@ -15,13 +17,18 @@ export default function MCCard({
   date,
   desc,
 }: Props) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   return (
     <div
       onClick={onClick}
       className="w-[722px] h-[252px] rounded-[20px] bg-white p-[16px] flex gap-[20px] items-start justify-left overflow-hidden"
     >
       <div className="min-w-[220px] size-[220px] overflow-hidden rounded-[12px]">
-        <img src={photo} alt="photo" className="object-cover w-full h-full" />
+        <img
+          src={!!photo ? apiUrl + photo : photoPlaceholder}
+          alt="photo"
+          className="object-cover w-full h-full"
+        />
       </div>
       <div className="w-[514px] h-[60px]">
         <div className="flex justify-between text-[24px] text-[#848484] font-semibold leading-[100%]">

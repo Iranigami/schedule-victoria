@@ -62,13 +62,6 @@ export default function LessonsList() {
               <LessonCard
                 id={lesson.id}
                 key={index}
-                teacher={
-                  lesson.teachers[0].surname +
-                  " " +
-                  lesson.teachers[0].name +
-                  " " +
-                  lesson.teachers[0].patronymic
-                }
                 title={lesson.title}
                 time={lesson.years}
                 address={lesson.division}

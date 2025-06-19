@@ -8,19 +8,20 @@ import axios from "axios";
 import Loading from "../comps/Loading";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  //const [selectedFilters, setSelectedFilters] = useState([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
-  const [teachersList, setTeachersList] = useState<string[]>([]);
-  const [lessonsList, setLessonsList] = useState<string[]>([]);
+  const [teachersList] = useState<string[]>([]);
+  const [lessonsList] = useState<string[]>([]);
+  //const [groups, setGroups] = useState<string[]>([]);
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection>([]);
   const [isLoading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const parseFilters = (
+/*   const parseFilters = (
     data: {
       group: string;
       option: string | [number, number];
     }[],
-  ) => {};
+  ) => {}; */
 
   useEffect(() => {
     axios

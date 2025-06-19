@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import type { News } from "../types";
 import Loading from "../comps/Loading";
+import photoPlaceholder from "../assets/images/news none.png";
 
 export default function Article() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function Article() {
         <div className="w-[1480px] h-[904px] flex gap-[16px]">
           <div className="w-[678px] h-[904px] rounded-[20px] overflow-hidden">
             <img
-              src={apiUrl + data?.image}
+              src={!!data?.image ? apiUrl + data?.image : photoPlaceholder}
               alt="image"
               className="w-full h-full object-cover"
             />

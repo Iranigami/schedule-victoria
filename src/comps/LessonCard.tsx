@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
   id: number;
-  teacher?: string;
   title: string;
   code: number;
   desc: string;
@@ -19,7 +18,6 @@ type Props = {
 
 export default function LessonCard({
   id,
-  teacher,
   time,
   title,
   code,
@@ -33,11 +31,10 @@ export default function LessonCard({
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
-        <div>{teacher}</div>
+        <div className="text-orange text-[32px] font-bold leading-[100%]">
+          {title}
+        </div>
         <div>Код для записи на mos.ru {code}</div>
-      </div>
-      <div className="text-orange text-[32px] font-bold leading-[100%] mt-[8px]">
-        {title}
       </div>
       <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
         {desc}

@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import arrIcon from "../assets/images/icons/arrow.svg";
+import photoPlaceholder from "../assets/images/user none 4_3.png";
 import { useEffect, useState } from "react";
 import type { Teacher } from "../types";
 import axios from "axios";
@@ -59,7 +60,7 @@ export default function Teacher() {
           <div className="w-[1480px] h-[904px] flex gap-[16px]">
             <div className="w-[678px] h-[904px] rounded-[20px] overflow-hidden">
               <img
-                src={apiUrl + data?.image}
+                src={!!data?.image ? apiUrl + data?.image : photoPlaceholder}
                 alt="image"
                 className="w-full h-full object-cover"
               />

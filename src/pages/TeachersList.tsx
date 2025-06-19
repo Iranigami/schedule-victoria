@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import searchIcon from "../assets/images/icons/search.svg";
 import Search from "../comps/Search";
 import FilterList from "../comps/FilterList";
-import type { Teacher } from "../types";
+import type { Teacher, Unity } from "../types";
 import TeacherCard from "../comps/TeacherCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,16 +12,18 @@ export default function TeachersList() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  const [selectedTeacher, setSelectedTeacher] = useState<string | undefined>(
+  const [filterList, setFilterList] = useState<Unity[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<Unity | undefined>(
     undefined,
   );
   const [teachersList, setTeachersList] = useState<Teacher[]>([]);
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const getTeachers = (filterId?: number) => {
+    const url = apiUrl + `api/teacher?${!!filterId ? `unity=${filterId}` : ""}`;
     axios
-      .get(apiUrl + "api/teacher")
+      .get(url)
       .then((response) => {
         setTeachersList(response.data);
         setLoading(false);
@@ -29,6 +31,17 @@ export default function TeachersList() {
       .catch(() => {
         console.error("Ошибка получения информации");
       });
+  };
+  useEffect(() => {
+    axios
+      .get(apiUrl + "api/unity")
+      .then((response) => {
+        setFilterList(response.data);
+      })
+      .catch(() => {
+        console.error("Ошибка получения фильтров");
+      });
+    getTeachers();
   }, []);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
@@ -41,14 +54,15 @@ export default function TeachersList() {
         <div className="flex gap-[16px]">
           <FilterList
             isOpen={isFilterOpen}
-            optionsList={["test1", "test2", "test3"]}
-            selectedOption={selectedTeacher}
-            optionPlaceholder="Все педагоги"
+            optionsList={filterList}
+            selectedOption={selectedFilter}
+            optionPlaceholder="Все кружки"
             onButtonClick={() => {
               setFilterOpen((prev) => !prev);
             }}
             onSelectOption={(option) => {
-              setSelectedTeacher(option);
+              setSelectedFilter(option);
+              getTeachers(option.id);
               setFilterOpen(false);
             }}
           />
@@ -71,7 +85,7 @@ export default function TeachersList() {
               <TeacherCard
                 key={index}
                 onClick={() => navigate(`/teacher?id=${teacher.id}`)}
-                photo={apiUrl + teacher.image}
+                photo={teacher.image!}
                 name={teacher.fullName!}
                 lesson={teacher.direction!}
               />
