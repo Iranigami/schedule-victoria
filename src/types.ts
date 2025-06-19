@@ -207,7 +207,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     tuesday?: {
       id: number;
       title: string;
@@ -218,7 +218,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     wednesday?: {
       id: number;
       title: string;
@@ -229,7 +229,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     thursday?: {
       id: number;
       title: string;
@@ -240,7 +240,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     friday?: {
       id: number;
       title: string;
@@ -251,7 +251,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     saturday?: {
       id: number;
       title: string;
@@ -262,7 +262,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
     sunday?: {
       id: number;
       title: string;
@@ -273,7 +273,7 @@ export interface Group {
       is_cancelled: boolean;
       edit_reason: string;
       date: string;
-    };
+    }[];
   };
 }
 
