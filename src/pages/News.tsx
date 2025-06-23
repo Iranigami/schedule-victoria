@@ -34,6 +34,7 @@ export default function News() {
           <div className="w-[1460px] grid grid-cols-2 gap-[16px]">
             {newsList.map((article, index: number) => (
               <ArticleCard
+                id = {article.id} 
                 key={index}
                 onClick={() => navigate(`/article?id=${article.id}`)}
                 photo={article.image}

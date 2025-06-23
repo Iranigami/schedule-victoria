@@ -2,16 +2,17 @@ import { useEffect } from "react";
 import photoPlaceholder from "../assets/images/news none.png";
 
 type Props = {
+  id: number;
   onClick: () => void;
   photo: string;
   title: string;
   desc: string;
 };
 
-export default function ArticleCard({ onClick, photo, title, desc }: Props) {
+export default function ArticleCard({ id, onClick, photo, title, desc }: Props) {
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(()=>{
-    document.getElementById("desc")!.innerHTML = desc;
+    document.getElementById(`desc${id}`)!.innerHTML = desc;
   }, [])
   return (
     <div
@@ -29,7 +30,7 @@ export default function ArticleCard({ onClick, photo, title, desc }: Props) {
         <div className="text-[32px] text-orange font-bold leading-[100%] mt-[16px]">
           {title}
         </div>
-        <div id="desc" className="text-[24px] text-text font-normal leading-[100%] mt-[10px]">
+        <div id={`desc${id}`} className="text-[24px] text-text font-normal leading-[100%] mt-[10px]">
         </div>
       </div>
     </div>

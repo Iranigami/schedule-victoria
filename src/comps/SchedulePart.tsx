@@ -8,7 +8,7 @@ type Props = {
 
 export default function SchedulePart({teacher, startTime, endTime, cab}: Props){
     return(
-        <div className="w-[120px] h-[96px] py-[16px]">
+        <div className="w-[120px] min-h-[96px] py-[16px]">
             <div className="text-[#848484] text-[14px] font-normal font-nova leading-[100%]">
                 {teacher}
             </div>

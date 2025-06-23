@@ -30,7 +30,7 @@ export default function LessonCard({
 }: Props) {
   const navigate = useNavigate();
   useEffect(()=>{
-    document.getElementById("desc")!.innerHTML = desc;
+    document.getElementById(`desc${id}`)!.innerHTML = desc;
   },[])
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
@@ -40,7 +40,7 @@ export default function LessonCard({
         </div>
         <div>Код для записи на mos.ru {code}</div>
       </div>
-      <div id="desc" className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
+      <div id={`desc${id}`} className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
       </div>
       {additional && (
         <div className="mt-[8px] text-[#BFBFBF] text-[20px] font-bold">
