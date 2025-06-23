@@ -1,3 +1,4 @@
+import moment from "moment";
 import photoPlaceholder from "../assets/images/master class none.png";
 
 type Props = {
@@ -32,7 +33,7 @@ export default function MCCard({
       </div>
       <div className="w-[514px] h-[60px]">
         <div className="flex justify-between text-[24px] text-[#848484] font-semibold leading-[100%]">
-          <div>{date}</div>
+          <div>{moment(date).format("D MMM")}</div>
           <div>{time}</div>
         </div>
         <div className="text-[32px] text-orange font-bold leading-[100%] mt-[10px]">

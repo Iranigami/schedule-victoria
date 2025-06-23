@@ -8,6 +8,7 @@ import type { MCClass } from "../types";
 import FilterModal from "../comps/FilterModal";
 import axios from "axios";
 import Loading from "../comps/Loading";
+import moment from "moment";
 
 export default function MasterClassesList() {
   const [isFilterOpen, setFilterOpen] = useState(false);
@@ -76,7 +77,7 @@ export default function MasterClassesList() {
                 title={mClass.title}
                 desc={mClass.smallDescription}
                 date={mClass.date}
-                time={mClass.startAt + " - " + mClass.endAt}
+                time={moment(mClass.endAt).add(20, "hours").format("HH:mm") + " - " + moment(mClass.startAt).add(20, "hours").format("HH:mm")}
               />
             ))}
           </div>

@@ -20,6 +20,7 @@ export default function Lesson() {
       .then((response) => {
         setData(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
+        console.log(response.data);
         setLoading(false);
       })
       .catch(() => {
@@ -56,8 +57,7 @@ export default function Lesson() {
           </button>
         </div>
       </div>
-      <div
-        hidden={page === 0}
+      {page === 1 && <div
         className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]"
       >
         <div className="w-[1480px] flex gap-[16px]">
@@ -149,6 +149,45 @@ export default function Lesson() {
           </div>
         </div>
       </div>
+      }
+      {page === 0 && 
+        <div className="w-[1520px] max-h-[944px] bg-white rounded-[20px] mt-[24px] p-[16px]">
+              <div className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold">
+                <div className="leading-[100%] w-[68px] h-[16px]">
+                  Кабинет
+                </div>
+                <div className="leading-[100%] w-[54px] h-[16px]">
+                  Группа
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Понедельник
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Вторник
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Среда
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Четверг
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Пятница
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Суббота
+                </div>
+                <div className="leading-[100%] w-[154px] h-[16px]">
+                  Воскресенье
+                </div>
+              </div>
+          <div className="rounded-[12px] w-[1488px] max-h-[912px] overflow-hidden">
+            <div className="w-full">
+
+            </div>
+          </div>
+        </div>
+      }
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />

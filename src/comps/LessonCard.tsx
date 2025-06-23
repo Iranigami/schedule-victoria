@@ -3,6 +3,7 @@ import userIcon from "../assets/images/icons/user.svg";
 import timeIcon from "../assets/images/icons/time.svg";
 import walletIcon from "../assets/images/icons/wallet.svg";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 type Props = {
   id: number;
@@ -28,6 +29,9 @@ export default function LessonCard({
   conds,
 }: Props) {
   const navigate = useNavigate();
+  useEffect(()=>{
+    document.getElementById("desc")!.innerHTML = desc;
+  },[])
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
@@ -36,8 +40,7 @@ export default function LessonCard({
         </div>
         <div>Код для записи на mos.ru {code}</div>
       </div>
-      <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-        {desc}
+      <div id="desc" className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
       </div>
       {additional && (
         <div className="mt-[8px] text-[#BFBFBF] text-[20px] font-bold">

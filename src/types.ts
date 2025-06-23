@@ -292,9 +292,5 @@ export interface News {
   id: number;
   title: string;
   image: string;
-  newsParagraphs: {
-    id: number;
-    title: string;
-    text: string;
-  }[];
+  description: string;
 }

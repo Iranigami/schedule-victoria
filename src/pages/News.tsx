@@ -38,7 +38,7 @@ export default function News() {
                 onClick={() => navigate(`/article?id=${article.id}`)}
                 photo={article.image}
                 title={article.title}
-                desc={"Нет инфы с бэка АААА"}
+                desc={article.description}
               />
             ))}
           </div>

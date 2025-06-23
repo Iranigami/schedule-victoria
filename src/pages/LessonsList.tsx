@@ -65,8 +65,8 @@ export default function LessonsList() {
                 title={lesson.title}
                 time={lesson.years}
                 address={lesson.division}
-                additional={"Не передается с бэка в список"}
-                desc={"Не передается с бэка в список"}
+                additional={lesson.note}
+                desc={lesson.description}
                 age={"от " + lesson.ageBefore + " до " + lesson.ageAfter}
                 conds={lesson.finance}
                 code={lesson.codEs3}
