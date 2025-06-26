@@ -18,7 +18,6 @@ export default function MasterClass() {
       .get(apiUrl + `api/master-class/${params.get("id")}`)
       .then((response) => {
         setData(response.data);
-        console.log(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
       })

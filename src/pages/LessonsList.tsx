@@ -6,15 +6,28 @@ import type { Unity } from "../types";
 import LessonCard from "../comps/LessonCard";
 import axios from "axios";
 import Loading from "../comps/Loading";
+import FilterModal from "../comps/FilterModal";
 
 export default function LessonsList() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [teachersList, setTeachersList] = useState<string[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     axios
       .get(apiUrl + "api/unity")
       .then((response) => {
         setLessonClasses(response.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+    axios
+      .get(apiUrl + "api/teacher")
+      .then((response) => {
+        const r = response.data;
+        setTeachersList(r.map((item:any) => item.fullName));
         setIsLoading(false);
       })
       .catch(() => {
@@ -75,11 +88,35 @@ export default function LessonsList() {
           </div>
         </div>
       </div>
+      {isFilterOpen && (
+        <FilterModal
+          filters={[
+            {
+              title: "Группа",
+              type: "check",
+              options: [""],
+            },
+            {
+              title: "Кружок",
+              type: "list",
+              options: lessonsList.map((item:any) => item.title),
+            },
+            {
+              title: "Направлениеы",
+              type: "list",
+              options: teachersList,
+            },
+          ]}
+          onSelect={() => setFilterOpen(false)}
+          onClose={() => setFilterOpen(false)}
+        />
+      )}
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />
         </div>
       )}
+
     </div>
   );
 }

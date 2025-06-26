@@ -20,7 +20,6 @@ export default function Lesson() {
       .then((response) => {
         setData(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
-        console.log(response.data);
         setLoading(false);
       })
       .catch(() => {

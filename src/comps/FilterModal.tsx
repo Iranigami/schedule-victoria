@@ -5,6 +5,7 @@ import { useState } from "react";
 import Slider from "./Slider";
 
 type Props = {
+  selected?: { group: string; option: string | [number, number] }[],
   onSelect: (
     selected: { group: string; option: string | [number, number] }[],
   ) => void;
@@ -16,12 +17,11 @@ type Props = {
   }[];
 };
 
-export default function FilterModal({ onSelect, onClose, filters }: Props) {
+export default function FilterModal({ selected, onSelect, onClose, filters }: Props) {
   const [currFilters, setCurrFilters] = useState<
     { group: string; option: string | [number, number] }[]
-  >([]);
+  >(selected || []);
   const [isPreClosed, setPreClosed] = useState(false);
-  const [isListPreClosed, setListPreClosed] = useState(false);
   const [indexOfOpenedList, setIndexOfOpenedList] = useState(-1);
   return (
     <div className="w-[1568px] h-[1080px] fixed top-0 left-[352px] flex justify-center items-center">
@@ -35,7 +35,6 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
             <button
               hidden={indexOfOpenedList == -1}
               onClick={() => {
-                setListPreClosed(true);
                 setTimeout(() => setIndexOfOpenedList(-1), 150);
               }}
               className="size-[56px] rounded-[20px] bg-white p-[16px]"
@@ -125,7 +124,6 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
               {filter.type === "list" && (
                 <div
                   onClick={() => {
-                    setListPreClosed(false);
                     setIndexOfOpenedList(index);
                   }}
                   className={`mt-[20px] w-[704px] h-[60px] rounded-[20px] bg-white text-text text-[28px] leading-[100%] font-bold flex justify-between p-[16px] items-center`}
@@ -202,9 +200,9 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
         </div>
         {indexOfOpenedList !== -1 && (
           <div
-            className={`animate-expand ${isListPreClosed && "duration-300 scale-y-0"} p-[16px] w-[704x] h-[728px] mt-[24px] overflow-y-auto overflow-x-hidden rounded-[20px] bg-white`}
+            className={`animate-expand p-[16px] w-[704x] max-h-[728px] mt-[24px] overflow-y-auto overflow-x-hidden rounded-[20px] bg-white`}
           >
-            <div className="w-[648px] h-[696px]">
+            <div className="w-[648px] max-h-[696px]">
               {filters[indexOfOpenedList].options.map(
                 (option, optIndex: number) => (
                   <div
@@ -270,8 +268,13 @@ export default function FilterModal({ onSelect, onClose, filters }: Props) {
         )}
         <div className="mt-[24px] flex gap-[8px]">
           <button
-            onClick={() => setCurrFilters([])}
+            onClick={() => {
+              setCurrFilters([]);
+              onSelect([]);
+              onClose();
+            }}
             disabled={!currFilters[0]}
+            
             className="disabled:opacity-[20%] w-[348px] h-[52px] rounded-[16px] border-[2px] border-orange text-orange text-[20px] font-semibold leading-[100%] flex items-center justify-center"
           >
             Очистить фильтры

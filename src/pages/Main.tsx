@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import searchIcon from "../assets/images/icons/search.svg";
 import filterIcon from "../assets/images/icons/filter.svg";
+import filterActiveIcon from "../assets/images/icons/FilterAct.svg";
 import Search from "../comps/Search";
 import type { LessonSection } from "../types";
 import FilterModal from "../comps/FilterModal";
@@ -9,26 +10,34 @@ import Loading from "../comps/Loading";
 import SchedulePart from "../comps/SchedulePart";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
-  //const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState<{
+    group: string;
+    option: string | [number, number];
+  }[]>([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
-  const [teachersList] = useState<string[]>([]);
-  const [lessonsList] = useState<string[]>([]);
+  const [teachersList, setTeachersList] = useState<string[]>([]);
+  const [lessonsList, setLessonsList] = useState<string[]>([]);
   const [groups, setGroups] = useState<string[]>([]);
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection>([]);
   const [isLoading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
-/*   const parseFilters = (
+  const parseFilters = (
     data: {
       group: string;
       option: string | [number, number];
     }[],
-  ) => {}; */
+  ) => {
+    const group = data.filter(item => item.group === 'Группа').map(item => item.option);
+    const unity = data.filter(item => item.group === 'Кружок').map(item => item.option);
+    const teacher = data.filter(item => item.group === 'Педагог').map(item => item.option);
+
+    console.log(`group: ${group},\nunity: ${unity},\nteacher: ${teacher}`);
+  }; 
 
   useEffect(() => {
     axios
       .get(apiUrl + "api/lessons")
       .then((response) => {
-        console.log(response.data)
         setLessonSectionList(response.data);
         setLoading(false);
       })
@@ -38,8 +47,28 @@ export default function Main() {
     axios
       .get(apiUrl + "api/group")
       .then((response) => {
-        console.log(response.data);
-        setGroups(response.data);
+        const r = response.data;
+        setGroups(r.map((item:any) => item.title));
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+    axios
+      .get(apiUrl + "api/unity")
+      .then((response) => {
+        const r = response.data;
+        setLessonsList(r.map((item:any) => item.title));
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+    axios
+      .get(apiUrl + "api/teacher")
+      .then((response) => {
+        const r = response.data;
+        setTeachersList(r.map((item:any) => item.fullName));
         setLoading(false);
       })
       .catch(() => {
@@ -49,9 +78,17 @@ export default function Main() {
 
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
+      {lessonSectionList.length === 0 && 
+        <div>
+          Ничего не найдено
+        </div>
+      }
       {isFiltersOpen && (
         <FilterModal
-          onSelect={(selected) => console.log(selected)}
+          selected = {selectedFilters}
+          onSelect={(selected) => {
+            setSelectedFilters(selected);
+            parseFilters(selected);}}
           onClose={() => setFiltersOpen(false)}
           filters={[
             {
@@ -83,9 +120,13 @@ export default function Main() {
             onClick={() => {
               setFiltersOpen(true);
             }}
-            className="size-[64px] rounded-[20px] p-[20px] bg-white"
+            className={`size-[64px] rounded-[20px] p-[20px] bg-white relative ${isFiltersOpen && "z-[-1]"}`}
           >
-            <img src={filterIcon} alt="filter" className="size-[24px]" />
+            <img hidden={selectedFilters.length!==0} src={filterIcon} alt="filter" className="size-[24px]" />
+            <img hidden={selectedFilters.length===0} src={filterActiveIcon} alt="filter" className="size-[24px]" />
+            <div hidden={selectedFilters.length===0} className="absolute top-[-4px] right-[-4px] size-[24px] bg-orange rounded-full flex justify-center items-center text-white text-[16px] font-bold leading-[100%]">
+              {selectedFilters.length}
+            </div>
           </button>
           <button
             onClick={() => {
