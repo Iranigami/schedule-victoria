@@ -8,32 +8,40 @@ import FilterModal from "../comps/FilterModal";
 import axios from "axios";
 import Loading from "../comps/Loading";
 import SchedulePart from "../comps/SchedulePart";
+import NothingFound from "../comps/NothingFound";
 export default function Main() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<{
     group: string;
-    option: string | [number, number];
+    option: {id: number, title: string};
   }[]>([]);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
-  const [teachersList, setTeachersList] = useState<string[]>([]);
-  const [lessonsList, setLessonsList] = useState<string[]>([]);
-  const [groups, setGroups] = useState<string[]>([]);
+  const [teachersList, setTeachersList] = useState<{id: number, title: string}[]>([]);
+  const [lessonsList, setLessonsList] = useState<{id: number, title: string}[]>([]);
+  const [groups, setGroups] = useState<{id: number, title: string}[]>([]);
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection>([]);
   const [isLoading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
   const parseFilters = (
     data: {
       group: string;
-      option: string | [number, number];
+      option: {id: number, title: string};
     }[],
   ) => {
-    const group = data.filter(item => item.group === 'Группа').map(item => item.option);
-    const unity = data.filter(item => item.group === 'Кружок').map(item => item.option);
-    const teacher = data.filter(item => item.group === 'Педагог').map(item => item.option);
-
-    console.log(`group: ${group},\nunity: ${unity},\nteacher: ${teacher}`);
+    const group = data.filter(item => item.group === 'Группа').map(item => item.option.id);
+    const unity = data.filter(item => item.group === 'Кружок').map(item => item.option.id);
+    const teacher = data.filter(item => item.group === 'Педагог').map(item => item.option.id);
+    const filter = `?group=${group}&unity=${unity}&teacher=${teacher}`;
+    axios
+      .get(apiUrl + "api/lessons" + filter)
+      .then((response) => {
+        setLessonSectionList(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
   }; 
-
   useEffect(() => {
     axios
       .get(apiUrl + "api/lessons")
@@ -47,8 +55,7 @@ export default function Main() {
     axios
       .get(apiUrl + "api/group")
       .then((response) => {
-        const r = response.data;
-        setGroups(r.map((item:any) => item.title));
+        setGroups(response.data);
         setLoading(false);
       })
       .catch(() => {
@@ -57,8 +64,7 @@ export default function Main() {
     axios
       .get(apiUrl + "api/unity")
       .then((response) => {
-        const r = response.data;
-        setLessonsList(r.map((item:any) => item.title));
+        setLessonsList(response.data);
         setLoading(false);
       })
       .catch(() => {
@@ -67,8 +73,7 @@ export default function Main() {
     axios
       .get(apiUrl + "api/teacher")
       .then((response) => {
-        const r = response.data;
-        setTeachersList(r.map((item:any) => item.fullName));
+        setTeachersList(response.data.map((item:any) => ({id: item.id, title: item.fullName})));
         setLoading(false);
       })
       .catch(() => {
@@ -78,11 +83,6 @@ export default function Main() {
 
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
-      {lessonSectionList.length === 0 && 
-        <div>
-          Ничего не найдено
-        </div>
-      }
       {isFiltersOpen && (
         <FilterModal
           selected = {selectedFilters}
@@ -93,7 +93,7 @@ export default function Main() {
           filters={[
             {
               title: "Группа",
-              type: "check",
+              type: "list",
               options: groups,
             },
             {
@@ -138,7 +138,18 @@ export default function Main() {
           </button>
         </div>
       </div>
-      <Search isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search onSearch={(search)=>{
+            axios
+            .get(apiUrl + `api/lessons?search=${search}`)
+            .then((response) => {
+              setLessonSectionList(response.data);
+              setLoading(false);
+            })
+            .catch(() => {
+              console.error("Ошибка получения информации");
+            });
+      
+      }} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] h-[944px] mt-[24px] px-[16px] pb-[16px] bg-white rounded-[20px]">
         <div className="w-[1488px] text-left w-full h-[48px] flex gap-[32px] p-[16px] font-bold text-[#848484] text-[16px] leading-[100%]">
           <div className="w-[208px] h-[16px]">Кружок</div>
@@ -153,6 +164,7 @@ export default function Main() {
           <div className="w-[120px] h-[16px]">Воскресенье</div>
         </div>
         <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
+          {lessonSectionList.length === 0 && <NothingFound/>}
           {lessonSectionList.map((lesson, index: number) => (
             <div
               key={index}

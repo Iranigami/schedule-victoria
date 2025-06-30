@@ -3,24 +3,27 @@ import checkIcon from "../assets/images/icons/checked.svg";
 import arrIcon from "../assets/images/icons/arrow.svg";
 import { useState } from "react";
 import Slider from "./Slider";
+import CalendarInput from "./CalendarInput";
 
 type Props = {
-  selected?: { group: string; option: string | [number, number] }[],
+  selected: { group: string; option: {id: number, title: string}}[];
   onSelect: (
-    selected: { group: string; option: string | [number, number] }[],
+    selected: { group: string; option: {id: number, title: string}}[],
   ) => void;
   onClose: () => void;
   filters: {
+    min?: number;
+    max?: number;
     title: string;
     type: string; //типы: slider - слайдер выбора чисел, check - выбирать прямо в меню, list - выбирать в отдельном списке
-    options: string[]; //для slider - первый элемент - минимальное число, второй - максимальное
+    options?: {id: number, title: string}[];
   }[];
 };
 
 export default function FilterModal({ selected, onSelect, onClose, filters }: Props) {
   const [currFilters, setCurrFilters] = useState<
-    { group: string; option: string | [number, number] }[]
-  >(selected || []);
+    { group: string; option: {id: number, title: string}}[]
+  >(selected);
   const [isPreClosed, setPreClosed] = useState(false);
   const [indexOfOpenedList, setIndexOfOpenedList] = useState(-1);
   return (
@@ -62,14 +65,13 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                 <div className="mt-[20px] text-text text-[28px] font-bold leading-[100%]">
                   {filter.title}
                   <div className="flex w-[704px] gap-[8px] flex-wrap mt-[8px]">
-                    {filter.options.map((option, optIndex: number) => (
+                    {filter.options!.map((option, optIndex: number) => (
                       <div
                         onClick={() => {
                           if (
                             !currFilters.some(
                               (item) =>
-                                item.group === filter.title &&
-                                item.option === option,
+                                item.group === filter.title
                             )
                           ) {
                             setCurrFilters([
@@ -80,12 +82,25 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                             const updatedFilters = currFilters.filter(
                               (item) =>
                                 !(
-                                  item.group === filter.title &&
-                                  item.option === option
+                                  item.group === filter.title
                                 ),
                             );
+                            if (
+                              currFilters.some(
+                                (item) =>
+                                  item.option === option
+                              )
+                            )
+                            {
                             setCurrFilters(updatedFilters);
                           }
+                          else {
+                            setCurrFilters([
+                              ...updatedFilters,
+                              { group: filter.title, option: option },
+                            ]);
+                          }
+                        }
                         }}
                         key={optIndex}
                         className="h-[56px] p-[16px] bg-white rounded-[20px] flex gap-[8px]"
@@ -113,7 +128,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                           />
                         </div>
                         <span className="text-[20px] font-normal">
-                          {option}
+                          {option.title}
                         </span>
                       </div>
                     ))}
@@ -146,7 +161,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                   </div>
                 </div>
               )}
-              {filter.type === "slider" && (
+               {filter.type === "slider" && (
                 <div className="w-[678px] ml-[16px]">
                   <div className="mt-[20px] ml-[-16px] text-text text-[28px] leading-[100%] font-bold">
                     {filter.title}
@@ -154,8 +169,8 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                   <Slider
                     onChange={(min, max) => {
                       if (
-                        min === Number(filter.options[0]) &&
-                        max === Number(filter.options[1])
+                        min === filter.min &&
+                        max === filter.max
                       ) {
                         const updatedFilters = currFilters.filter(
                           (item) => !(item.group === filter.title),
@@ -165,34 +180,47 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                         {
                           if (
                             !currFilters.some(
-                              (item) => item.group === filter.title,
+                              (item) => item.group === (filter.title + `min`) || item.group === (filter.title + `max`),
                             )
                           ) {
                             setCurrFilters([
                               ...currFilters,
                               {
-                                group: filter.title,
-                                option: [min, max],
+                                group: filter.title + 'min',
+                                option: {id: 0, title: min.toString()},
+                              },
+                              {
+                                group: filter.title + 'max',
+                                option: {id: 0, title: max.toString()},
                               },
                             ]);
                           } else {
                             const updatedFilters = currFilters.filter(
-                              (item) => !(item.group === filter.title),
+                              (item) => !(item.group === filter.title+`min` || item.group === filter.title+`max`),
                             );
                             setCurrFilters([
                               ...updatedFilters,
                               {
-                                group: filter.title,
-                                option: [min, max],
+                                group: filter.title+`min`,
+                                option: {id: 0, title: min.toString()},
+                              },
+                              {
+                                group: filter.title+`max`,
+                                option: {id: 0, title: max.toString()},
                               },
                             ]);
                           }
                         }
                       }
                     }}
-                    min={Number(filter.options[0])}
-                    max={Number(filter.options[1])}
+                    min={filter.min!}
+                    max={filter.max!}
                   />
+                </div>
+              )}
+              {filter.type === "calendar" && (
+                <div>
+                  <CalendarInput onClose={()=>console.log("closed")} title="test" onClear={()=>console.log("cleared")} selected="11.11.2011" onSelect={(text)=>console.log(text)}/>
                 </div>
               )}
             </div>
@@ -203,35 +231,44 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
             className={`animate-expand p-[16px] w-[704x] max-h-[728px] mt-[24px] overflow-y-auto overflow-x-hidden rounded-[20px] bg-white`}
           >
             <div className="w-[648px] max-h-[696px]">
-              {filters[indexOfOpenedList].options.map(
+              {filters[indexOfOpenedList].options!.map(
                 (option, optIndex: number) => (
                   <div
-                    onClick={() => {
+                  onClick={() => {
+                    if (
+                      !currFilters.some(
+                        (item) =>
+                          item.group === filters[indexOfOpenedList].title
+                      )
+                    ) {
+                      setCurrFilters([
+                        ...currFilters,
+                        { group: filters[indexOfOpenedList].title, option: option },
+                      ]);
+                    } else {
+                      const updatedFilters = currFilters.filter(
+                        (item) =>
+                          !(
+                            item.group === filters[indexOfOpenedList].title
+                          ),
+                      );
                       if (
-                        !currFilters.some(
+                        currFilters.some(
                           (item) =>
-                            item.group === filters[indexOfOpenedList].title &&
-                            item.option === option,
+                            item.option === option
                         )
-                      ) {
-                        setCurrFilters([
-                          ...currFilters,
-                          {
-                            group: filters[indexOfOpenedList].title,
-                            option: option,
-                          },
-                        ]);
-                      } else {
-                        const updatedFilters = currFilters.filter(
-                          (item) =>
-                            !(
-                              item.group === filters[indexOfOpenedList].title &&
-                              item.option === option
-                            ),
-                        );
-                        setCurrFilters(updatedFilters);
-                      }
-                    }}
+                      )
+                      {
+                      setCurrFilters(updatedFilters);
+                    }
+                    else {
+                      setCurrFilters([
+                        ...updatedFilters,
+                        { group: filters[indexOfOpenedList].title, option: option },
+                      ]);
+                    }
+                  }
+                  }}
                     key={optIndex}
                     className="h-[56px] p-[16px] justify-left items-center flex gap-[8px] leading-[100%]"
                   >
@@ -258,7 +295,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                       />
                     </div>
                     <span className="text-[20px] font-normal text-text leading-[100%]">
-                      {option}
+                      {option.title}
                     </span>
                   </div>
                 ),

@@ -1,18 +1,29 @@
 import searchIcon from "../assets/images/icons/search.svg";
 import closeIcon from "../assets/images/icons/close.svg";
 import Keyboard from "./Keyboard";
-import { useState, type ChangeEvent } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  onSearch: (search: string) => void;
 };
 
-export default function Search({ isOpen, onClose }: Props) {
+export default function Search({ onSearch, isOpen, onClose }: Props) {
+  const queryTimeout = useRef<any>(null);
+  const searchQuery = useRef("");
+
+  const getSearchResults = () => {
+    clearTimeout(queryTimeout.current);
+    queryTimeout.current = setTimeout(async () => {
+      onSearch(searchQuery.current);
+    }, 500);
+  };
   const [text, setText] = useState("");
   const [isKeyboardOpen, setKeyboardOpen] = useState(true);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
+    searchQuery.current = event.target.value;
   };
   return (
     <>
@@ -35,17 +46,29 @@ export default function Search({ isOpen, onClose }: Props) {
           src={closeIcon}
           alt="close"
           className="size-[24px]"
-          onClick={onClose}
+          onClick={() => {
+            if (text !== "") {
+              setText("");
+              searchQuery.current = "";
+              onSearch("");
+              }
+            onClose();
+          }}
         />
       </div>
       <Keyboard
         opened={isKeyboardOpen && isOpen}
         enterButton={(button: string) => {
           setText((prev) => prev + button);
+          searchQuery.current = searchQuery.current + button;
+          getSearchResults();
         }}
         onClose={() => setKeyboardOpen(false)}
         onBackspace={() => {
           setText((prev) => prev.slice(0, -1));
+          searchQuery.current = searchQuery.current.slice(0, -1);
+          getSearchResults();
+
         }}
       />
     </>
