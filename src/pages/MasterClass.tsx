@@ -73,8 +73,8 @@ export default function MasterClass() {
               </div>
               <div className="mt-[8px] text-orange text-[48px] font-normal leading-[100%]">
                 {moment(data?.date).format("D MMM")} с{" "}
-                {moment(data?.endAt).add(20, "hours").format("HH:mm")} до{" "}
-                {moment(data?.startAt).add(20, "hours").format("HH:mm")}
+                {moment(data?.endAt).format("HH:mm")} до{" "}
+                {moment(data?.startAt).format("HH:mm")}
               </div>
               <div className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
                 {data?.smallDescription}

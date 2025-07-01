@@ -65,7 +65,7 @@ export default function Lesson() {
               Адрес
             </div>
             <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-              {data?.title}
+              {data?.division}
             </div>
           </div>
           <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
@@ -182,7 +182,7 @@ export default function Lesson() {
               </div>
           <div className="rounded-[12px] w-[1488px] max-h-[912px] overflow-hidden">
             <div className="w-full">
-
+              
             </div>
           </div>
         </div>

@@ -93,19 +93,20 @@ export default function LessonsList() {
           selected={[]}
           filters={[
             {
-              title: "Группа",
+              title: "Адрес",
               type: "check",
-              options: [""],
+              options: [{id: 0, title: "Газопровод"}, {id: 1, title: "Юный техник"}, {id: 2, title: "Аннино"}, {id: 3, title: "Щербинка"}, {id: 4, title: "Другое"}],
             },
             {
-              title: "Кружок",
-              type: "list",
-              options: lessonsList.map((item:any) => item.title),
+              title: "Тип услуги",
+              type: "check",
+              options: [{id: 0, title: "Бюджет"}, {id: 1, title: "Внебюджет"}],
             },
             {
               title: "Направление",
-              type: "list",
-              options: teachersList,
+              type: "slider",
+              min: 0,
+              max: 18,
             },
           ]}
           onSelect={() => setFilterOpen(false)}
