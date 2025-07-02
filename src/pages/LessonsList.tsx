@@ -7,6 +7,7 @@ import LessonCard from "../comps/LessonCard";
 import axios from "axios";
 import Loading from "../comps/Loading";
 import FilterModal from "../comps/FilterModal";
+import NothingFound from "../comps/NothingFound";
 
 export default function LessonsList() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -76,9 +77,21 @@ export default function LessonsList() {
           </button>
         </div>
       </div>
-      <Search onSearch={()=>{}} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search onSearch={(search)=>{
+        axios
+        .get(apiUrl + `api/unity?title=${search}`)
+        .then((response) => {
+          setLessonClasses(response.data);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          console.error("Ошибка получения информации");
+          setLessonClasses([]);
+        });
+      }} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] max-h-[944px] mt-[24px] p-[20px] bg-[#FFFFFF80] rounded-[20px]">
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
+           {lessonsList.length === 0 && <NothingFound/>}
           <div className="w-[1460px] grid grid-cols-1 gap-[16px]">
             {lessonsList.map((lesson, index: number) => (
               <LessonCard

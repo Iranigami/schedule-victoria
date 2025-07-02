@@ -7,6 +7,7 @@ import TeacherCard from "../comps/TeacherCard";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "../comps/Loading";
+import NothingFound from "../comps/NothingFound";
 
 export default function TeachersList() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -77,9 +78,22 @@ export default function TeachersList() {
           </button>
         </div>
       </div>
-      <Search onSearch={() => {}} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search onSearch={(search) => {
+        axios
+        .get(apiUrl + `api/teacher?name=${search}`)
+        .then((response) => {
+          setTeachersList(response.data);
+          setLoading(false);
+        })
+        .catch(() => {
+          console.error("Ошибка получения информации");
+        });
+  
+      }} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] max-h-[944px] mt-[24px] p-[20px] bg-[#FFFFFF80] rounded-[20px]">
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
+          {teachersList.length === 0 && <NothingFound/>}
+          
           <div className="w-[1460px] grid grid-cols-2 gap-[16px]">
             {teachersList.map((teacher, index: number) => (
               <TeacherCard
