@@ -40,7 +40,7 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
     return(
         <div className="w-[752px] h-[458px] ">
             <div className="w-[752px] h-[382px] rounded-[24px] bg-[#FAFAFA] mx-auto p-[24px]">
-                <div className="flex justify-between items-start w-[704px] h-[40px] mx-auto">
+                <div className="flex justify-between items-start w-[704px] h-[40px] mx-auto border-b-[2px] border-[#F0F0F0]">
                     <div className="font-bold text-[20px] text-[#1d1d1b] leading-[100%]">
                         {title}
                     </div>
@@ -140,6 +140,13 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
                         </div>
                      
                     </div>
+                </div>
+                <div className="w-[704px] h-[38px] mt-[28px] flex justify-left items-end border-t-[2px] border-[#F0F0F0]">
+                    <button 
+                        onClick={onClear}
+                        className="w-[143px] h-[22px] text-orange text-[18px] leading-[100%] font-bold">
+                        Очистить дату
+                    </button>
                 </div>
             </div>
             <button 
