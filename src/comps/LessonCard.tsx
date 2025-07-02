@@ -2,6 +2,7 @@ import mapIcon from "../assets/images/icons/map.svg";
 import userIcon from "../assets/images/icons/user.svg";
 import timeIcon from "../assets/images/icons/time.svg";
 import walletIcon from "../assets/images/icons/wallet.svg";
+import levelIcon from "../assets/images/icons/level.svg"
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -15,6 +16,7 @@ type Props = {
   age: string;
   time: number;
   conds: boolean;
+  level: string;
 };
 
 export default function LessonCard({
@@ -27,11 +29,12 @@ export default function LessonCard({
   additional,
   age,
   conds,
+  level,
 }: Props) {
   const navigate = useNavigate();
   useEffect(()=>{
     document.getElementById(`desc${id}`)!.innerHTML = desc;
-  },[])
+  },[title])
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
@@ -71,6 +74,12 @@ export default function LessonCard({
             <img src={walletIcon} alt="wallet" className="size-[24px]" />
             <div className="text-text text-[20px] font-normal leading-[100%]">
               {conds ? "Внебюджет" : "Бюджет"}
+            </div>
+          </div>
+          <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
+            <img src={levelIcon} alt="level" className="size-[24px]" />
+            <div className="text-text text-[20px] font-normal leading-[100%]">
+              {level}
             </div>
           </div>
         </div>

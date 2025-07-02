@@ -3,15 +3,18 @@ import arrIcon from "../assets/images/icons/arrow.svg";
 import { useEffect, useState } from "react";
 import linkIcon from "../assets/images/icons/link.svg";
 import Loading from "../comps/Loading";
-import type { Unity } from "../types";
+import type { LessonSection, Unity } from "../types";
 import photoPlaceholder from "../assets/images/user none.png";
 import axios from "axios";
+import SchedulePart from "../comps/SchedulePart";
+import NothingFound from "../comps/NothingFound";
 
 export default function Lesson() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<Unity>();
+  const [schedule, setSchedule] = useState<LessonSection>()
   const [params] = useSearchParams();
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
@@ -21,6 +24,19 @@ export default function Lesson() {
         setData(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
+        console.log(response.data)
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+
+    axios
+      .get(apiUrl + `api/lessons?unity=${params.get("id")}`)
+      .then((response) => {
+        setSchedule(response.data);
+        document.getElementById("desc")!.innerHTML = response.data.description;
+        setLoading(false);
+        console.log(response.data)
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -182,7 +198,51 @@ export default function Lesson() {
               </div>
           <div className="rounded-[12px] w-[1488px] max-h-[912px] overflow-hidden">
             <div className="w-full">
+                      <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
+                        {schedule!.length === 0 && <NothingFound/>}
+                        {schedule!.map((lesson, index: number) => (
+                          <div
+                            key={index}
+                            className="w-[1468px] mb-[16px] overflow-hidden rounded-[12px]"
+                          >
+                            {lesson.groups.map((group, lessonIndex: number) => (
+                              <div
+                                key={lessonIndex}
+                                className={`text-[16px] text-text font-normal leading-[100%] w-[1468px] h-[96px] flex gap-[32px] ${!((index + lessonIndex) % 2) ? "bg-[#FFF9F3]" : "bg-[#FFEFDF]"}`}
+                              >
+                                <div className="w-[84px] h-[96px] pl-[16px] py-[16px] items-center">
+                                  {1}
+                                </div>
+                                <div className="w-[54px] h-[96px] flex items-center justify-left text-left">
+                                  {group.group_name}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.monday && <SchedulePart startTime={group.schedule.monday![0].start_time} endTime={group.schedule.monday![0].end_time} teacher={group.schedule.monday![0].teacher} cab={group.schedule.monday![0].cabinet}/>}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.tuesday && <SchedulePart startTime={group.schedule.tuesday![0].start_time} endTime={group.schedule.tuesday![0].end_time} teacher={group.schedule.tuesday![0].teacher} cab={group.schedule.tuesday![0].cabinet}/>}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.wednesday && <SchedulePart startTime={group.schedule.wednesday![0].start_time} endTime={group.schedule.wednesday![0].end_time} teacher={group.schedule.wednesday![0].teacher} cab={group.schedule.wednesday![0].cabinet}/>}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.thursday && <SchedulePart startTime={group.schedule.thursday![0].start_time} endTime={group.schedule.thursday![0].end_time} teacher={group.schedule.thursday![0].teacher} cab={group.schedule.thursday![0].cabinet}/>}
               
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.friday && <SchedulePart startTime={group.schedule.friday![0].start_time} endTime={group.schedule.friday![0].end_time} teacher={group.schedule.friday![0].teacher} cab={group.schedule.friday![0].cabinet}/>}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                {group.schedule.saturday && <SchedulePart startTime={group.schedule.saturday![0].start_time} endTime={group.schedule.saturday![0].end_time} teacher={group.schedule.saturday![0].teacher} cab={group.schedule.saturday![0].cabinet}/>}
+                                </div>
+                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                                  {group.schedule.sunday && <SchedulePart startTime={group.schedule.sunday![0].start_time} endTime={group.schedule.sunday![0].end_time} teacher={group.schedule.sunday![0].teacher} cab={group.schedule.sunday![0].cabinet}/>}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
             </div>
           </div>
         </div>

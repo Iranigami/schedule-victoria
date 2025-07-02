@@ -10,9 +10,32 @@ import FilterModal from "../comps/FilterModal";
 
 export default function LessonsList() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [teachersList, setTeachersList] = useState<string[]>([]);
-
+  const [selectedFilters, setSelectedFilters] = useState<{
+    group: string;
+    option: {id: number, title: string, type?: string};
+  }[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const parseFilters = (
+    data: {
+      group: string;
+      option: {id: number, title: string, type?: string};
+    }[],
+  ) => {
+    const division = data.filter(item => item.group === 'Адрес').map(item => item.option.title);
+    const finance = data.filter(item => item.group === 'Тип услуги').map(item => item.option.type);
+    const ageBefore = data.filter(item => item.group === 'Возрастmin').map(item => item.option.title);
+    const ageAfter = data.filter(item => item.group === 'Возрастmax').map(item => item.option.title);
+    const filter = `?division=${division}&finance=${finance}&ageBefore=${ageBefore}&ageAfter=${ageAfter}`;
+    axios
+      .get(apiUrl + "api/unity" + filter)
+      .then((response) => {
+        setLessonClasses(response.data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+  }; 
   useEffect(() => {
     axios
       .get(apiUrl + "api/unity")
@@ -23,24 +46,10 @@ export default function LessonsList() {
       .catch(() => {
         console.error("Ошибка получения информации");
       });
-    axios
-      .get(apiUrl + "api/teacher")
-      .then((response) => {
-        const r = response.data;
-        setTeachersList(r.map((item:any) => item.fullName));
-        setIsLoading(false);
-      })
-      .catch(() => {
-        console.error("Ошибка получения информации");
-      });
   }, []);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
-  //const [selectedLesson, setSelectedLesson] = useState<string | undefined>(
-  //  undefined,
-  //);
   const [lessonsList, setLessonClasses] = useState<Unity[]>([]);
-  isFilterOpen; //lmao
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div
@@ -83,6 +92,7 @@ export default function LessonsList() {
                 age={"от " + lesson.ageBefore + " до " + lesson.ageAfter}
                 conds={lesson.finance}
                 code={lesson.codEs3}
+                level={lesson.level}
               />
             ))}
           </div>
@@ -90,7 +100,7 @@ export default function LessonsList() {
       </div>
       {isFilterOpen && (
         <FilterModal
-          selected={[]}
+          selected={selectedFilters}
           filters={[
             {
               title: "Адрес",
@@ -100,16 +110,21 @@ export default function LessonsList() {
             {
               title: "Тип услуги",
               type: "check",
-              options: [{id: 0, title: "Бюджет"}, {id: 1, title: "Внебюджет"}],
+              options: [{type: "false", title: "Бюджет", id: 0}, {type: "true", title: "Внебюджет", id: 1}],
             },
             {
-              title: "Направление",
+              title: "Возраст",
               type: "slider",
               min: 0,
               max: 18,
             },
           ]}
-          onSelect={() => setFilterOpen(false)}
+          onSelect={(data) => {
+            console.log(data);
+            setSelectedFilters(data);
+            parseFilters(data);
+          }
+          }
           onClose={() => setFilterOpen(false)}
         />
       )}

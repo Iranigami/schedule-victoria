@@ -6,6 +6,7 @@ import Slider from "./Slider";
 import CalendarInput from "./CalendarInput";
 
 type Props = {
+  className?: string;
   selected: { group: string; option: {id: number, title: string}}[];
   onSelect: (
     selected: { group: string; option: {id: number, title: string}}[],
@@ -16,7 +17,7 @@ type Props = {
     max?: number;
     title: string;
     type: string; //типы: slider - слайдер выбора чисел, check - выбирать прямо в меню, list - выбирать в отдельном списке
-    options?: {id: number, title: string}[];
+    options?: {id: number, title: string, type?: string}[];
   }[];
 };
 

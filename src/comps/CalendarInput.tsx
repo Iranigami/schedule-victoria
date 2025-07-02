@@ -42,15 +42,21 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
                     <div className="decorative absolute bottom-[-3px] w-full h-[64px] z-10 bg-linear-to-t from-[#FAFAFA] to-[#FAFAFA00]"/>
                     <div className="w-full h-full flex justify-center pr-[32px]">                   
                         <div id='day' 
-                            onScrollEnd={(e)=>{
+                            onScrollEnd={()=>{
                                 const temp = document.getElementById("day");
+                                let currCenter = Number(((temp!.scrollTop)/40).toFixed(0))-5;
+                                temp!.scrollTo(0, (currCenter+5)*40)
+                                if (currCenter<0) currCenter += 31;
+                                
+                                console.log(currCenter);
+                                
                                 if(temp!.scrollTop === temp!.scrollHeight - 200 )
                                 {
                                     temp!.scrollTo(0, 90);
                                 }
                             }}
                             className={`w-[94px] h-full bg-green-300 overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center`}>
-                                <div hidden={shortMonth.includes(selectedMonth) || selectedMonth==="февраль"}>
+                                <div hidden={false}>
                                 {[25, 26, 27, 28, 29, 30, 31].map((day, index: number)=>(
                                 <div key={index} hidden={false} className="w-full h-[24px] text-[20px] leading-[100%] font-medium mt-[16px]">
                                     {day}
