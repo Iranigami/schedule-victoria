@@ -57,7 +57,7 @@ export default function MasterClassesList() {
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >
         <span className="text-orange text-[48px] font-bold leading-[100%]">
-          Мастер классы
+          Мастер-классы
         </span>
         <div className="flex gap-[16px]">
           <button

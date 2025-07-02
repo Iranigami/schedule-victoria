@@ -4,6 +4,7 @@ import arrIcon from "../assets/images/icons/arrow.svg";
 import { useState } from "react";
 import Slider from "./Slider";
 import CalendarInput from "./CalendarInput";
+import moment from "moment";
 
 type Props = {
   className?: string;
@@ -22,6 +23,11 @@ type Props = {
 };
 
 export default function FilterModal({ selected, onSelect, onClose, filters }: Props) {
+  const [currDate, setCurrDate] = useState({
+    day: Number(moment().format('DD')),
+    month: Number(moment().format('MM')),
+    year: Number(moment().format('YYYY'))
+  });
   const [currFilters, setCurrFilters] = useState<
     { group: string; option: {id: number, title: string}}[]
   >(selected);
@@ -32,7 +38,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
       <div className="w-full h-full bg-black opacity-40 absolute z-0" />
 
       <div
-        className={`animate-appear ${isPreClosed && "translate-y-[1000px]"} duration-300 w-[752px] rounded-[36px] bg-[#EDEDED] z-10 p-[24px] transition`}
+        className={`animate-appear ${isPreClosed && "translate-y-[1000px]"} duration-300 min-w-[752px] rounded-[36px] bg-[#EDEDED] z-10 p-[24px] transition`}
       >
         <div className="w-full justify-between flex">
           <div className="text-orange text-[48px] font-bold leading-[100%] flex items-center justify-left gap-[16px]">
@@ -221,7 +227,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
               )}
               {filter.type === "calendar" && (
                 <div>
-                  <CalendarInput onClose={()=>console.log("closed")} title="test" onClear={()=>console.log("cleared")} selected="11.11.2011" onSelect={(text)=>console.log(text)}/>
+                  <CalendarInput onClose={()=>console.log("closed")} title="test" onClear={()=>console.log("cleared")} selected={currDate} onSelect={(text)=>console.log(text)}/>
                 </div>
               )}
             </div>

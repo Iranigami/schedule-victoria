@@ -60,7 +60,7 @@ export default function MasterClass() {
                   Сканируй код
                 </div>
                 <div className="mt-[16px] text-text text-[32px] font-normal leading-[100%]">
-                  Запишись на мастер класс и погрузись в мир творчества вместе с
+                  Запишись на мастер-класс и погрузись в мир творчества вместе с
                   нами
                 </div>
               </div>

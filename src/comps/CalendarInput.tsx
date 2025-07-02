@@ -1,19 +1,32 @@
+import moment from "moment";
 import closeIcon from "../assets/images/icons/bigclose.svg"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
     onClose: () => void;
     title: string;
-    selected: string;
+    selected: {
+        day: number,
+        month: number,
+        year: number
+    };
     onClear: () => void;
-    onSelect: (date: string) => void;
+    onSelect: (date: {
+        day: number,
+        month: number,
+        year: number
+    }) => void;
 }
 
-//@ts-ignore
 export default function CalendarInput({onClose, title, selected, onClear, onSelect}: Props){
-    
-    const [selectedMonth, setSelectedMonth] = useState("февраль");
-    selectedMonth;
+    useEffect(()=>{
+        document.getElementById("day")!.scrollTo(0, (Number(selected.day)+4)*40);
+        document.getElementById("month")!.scrollTo(0, (Number(selected.month)-3)*40);
+        document.getElementById("year")!.scrollTo(0, (Number(selected.year)-2000)*40)
+    },[])
+    const [selectedMonth, setSelectedMonth] = useState(selected.month);
+    const [selectedDay, setSelectedDay] = useState(selected.day);
+    const [selectedYear, setSelectedYear] = useState(selected.year);
     const createArray = (length: number, add = 0): number[] =>
         Array.from({ length }, (_, i) => {
           const value = i + add;
@@ -22,12 +35,8 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
           );
         });
     const days = createArray(31, 1);
-    //const shortDays = createArray(30, 1);
-    //const febDays = createArray(28, 1);
     const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
-    //const shortMonth = ["апрель", "июнь", "сентябрь", "ноябрь"];
-    //const years = createArray(2000, 1);
-    //const [currDays, setCurrDays] = useState(days);
+    const years = createArray(405, 1998);
     return(
         <div className="w-[752px] h-[458px] ">
             <div className="w-[752px] h-[382px] rounded-[24px] bg-[#FAFAFA] mx-auto p-[24px]">
@@ -36,28 +45,32 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
                         {title}
                     </div>
                     <div className="font-medium text-[18px] text-orange leading-[100%]">
-                        {selected}
+                        {moment(`${selectedMonth}.${selectedDay}.${selectedYear}`).format('DD MMMM YYYY')}
                     </div>
                 </div>
-                <div className="mt-[28px] w-[316px] h-[200px] bg-black relative mx-auto ">
+                <div className="mt-[28px] w-[316px] h-[200px] relative mx-auto ">
+                    <div className="decorative absolute my-auto top-0 translate-y-[5px] bottom-0 z-0 w-[316px] h-[40px] bg-white rounded-[8px]"/>
                     <div className="decorative absolute top-[-3px] w-full h-[64px] z-10 bg-linear-to-b from-[#FAFAFA] to-[#FAFAFA00]"/>
                     <div className="decorative absolute bottom-[-3px] w-full h-[64px] z-10 bg-linear-to-t from-[#FAFAFA] to-[#FAFAFA00]"/>
-                    <div className="w-full h-full flex justify-center pr-[32px]">                   
-                        <div id='day' 
+                    <div className="w-full h-full flex justify-center pr-[32px] absolute">
+                        <div id='day'
                             onScrollEnd={()=>{
                                 const temp = document.getElementById("day");
                                 let currCenter = Number(((temp!.scrollTop)/40).toFixed(0))-5;
                                 temp!.scrollTo(0, (currCenter+5)*40)
                                 if (currCenter<0) currCenter += 31;
-                                
-                                console.log(currCenter);
-                                
+                                setSelectedDay(currCenter+1);
+                                onSelect({
+                                    day: currCenter+1,
+                                    month: selectedMonth,
+                                    year: selectedYear,
+                                })
                                 if(temp!.scrollTop === temp!.scrollHeight - 200 )
                                 {
                                     temp!.scrollTo(0, 90);
                                 }
                             }}
-                            className={`w-[94px] h-full bg-green-300 overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center`}>
+                            className={`w-[94px] h-full overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center`}>
                                 <div hidden={false}>
                                 {[25, 26, 27, 28, 29, 30, 31].map((day, index: number)=>(
                                 <div key={index} hidden={false} className="w-full h-[24px] text-[20px] leading-[100%] font-medium mt-[16px]">
@@ -71,15 +84,18 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
                                 ))}
                                     </div>
                         </div>
-                        <div id='month' className="w-[98px] mr-[32px] h-full bg-green-100 overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center"
+                        <div id='month' className="w-[98px] mr-[32px] h-full overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center"
                             onScrollEnd={()=>{
                                 const temp = document.getElementById("month");
                                 let currCenter = Number(((temp!.scrollTop)/40).toFixed(0))+2;
                                 temp!.scrollTo(0, (currCenter-2)*40)
                                 if (currCenter>=12) currCenter -= 12;
-                                
-                                console.log(months[currCenter]);
-                                setSelectedMonth(months[currCenter]);
+                                setSelectedMonth(currCenter+1);
+                                onSelect({
+                                    day: selectedDay,
+                                    month: currCenter+1,
+                                    year: selectedYear,
+                                })
                                  if(temp!.scrollTop === temp!.scrollHeight - 200 )
                                 {
                                     
@@ -103,8 +119,24 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
                             ))}
                                     
                         </div>
-                        <div id='year' className="w-[60px] h-full bg-green-100">
-
+                        <div id='year' 
+                        onScrollEnd={()=>{
+                            const temp = document.getElementById("year");
+                            let currCenter = Number(((temp!.scrollTop)/40).toFixed(0))+2;
+                            temp!.scrollTo(0, (currCenter-2)*40)
+                            setSelectedYear(years[currCenter]);
+                            onSelect({
+                                day: selectedDay,
+                                month: selectedMonth,
+                                year: years[currCenter],
+                            })
+                        }}
+                        className="w-[60px] h-full overflow-y-scroll overflow-x-hidden text-black hide-scroll text-center">
+                            {years.map((year, index: number)=>(
+                                <div key={index} hidden={false} className="w-full h-[24px] text-[20px] leading-[100%] font-medium mt-[16px]">
+                                    {year}
+                                </div>
+                            ))}
                         </div>
                      
                     </div>
