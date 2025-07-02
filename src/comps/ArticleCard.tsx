@@ -26,7 +26,7 @@ export default function ArticleCard({ id, onClick, photo, title, desc }: Props) 
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="w-[514px] h-[60px]">
+      <div className="w-[514px] h-[220px] overflow-hidden">
         <div className="text-[32px] text-orange font-bold leading-[100%] mt-[16px]">
           {title}
         </div>
