@@ -3,14 +3,12 @@ import checkIcon from "../assets/images/icons/checked.svg";
 import arrIcon from "../assets/images/icons/arrow.svg";
 import { useState } from "react";
 import Slider from "./Slider";
-import CalendarInput from "./CalendarInput";
-import moment from "moment";
 
 type Props = {
   className?: string;
-  selected: { group: string; option: {id: number, title: string}}[];
+  selected: { group: string; option: { id: number; title: string } }[];
   onSelect: (
-    selected: { group: string; option: {id: number, title: string}}[],
+    selected: { group: string; option: { id: number; title: string } }[],
   ) => void;
   onClose: () => void;
   filters: {
@@ -18,19 +16,20 @@ type Props = {
     max?: number;
     title: string;
     type: string; //типы: slider - слайдер выбора чисел, check - выбирать прямо в меню, list - выбирать в отдельном списке
-    options?: {id: number, title: string, type?: string}[];
+    options?: { id: number; title: string; type?: string }[];
   }[];
 };
 
-export default function FilterModal({ selected, onSelect, onClose, filters }: Props) {
-  const [currDate, setCurrDate] = useState({
-    day: Number(moment().format('DD')),
-    month: Number(moment().format('MM')),
-    year: Number(moment().format('YYYY'))
-  });
-  const [currFilters, setCurrFilters] = useState<
-    { group: string; option: {id: number, title: string}}[]
-  >(selected);
+export default function FilterModal({
+  selected,
+  onSelect,
+  onClose,
+  filters,
+}: Props) {
+  const [currFilters, setCurrFilters] =
+    useState<{ group: string; option: { id: number; title: string } }[]>(
+      selected,
+    );
   const [isPreClosed, setPreClosed] = useState(false);
   const [indexOfOpenedList, setIndexOfOpenedList] = useState(-1);
   return (
@@ -77,8 +76,7 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                         onClick={() => {
                           if (
                             !currFilters.some(
-                              (item) =>
-                                item.group === filter.title
+                              (item) => item.group === filter.title,
                             )
                           ) {
                             setCurrFilters([
@@ -87,27 +85,19 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                             ]);
                           } else {
                             const updatedFilters = currFilters.filter(
-                              (item) =>
-                                !(
-                                  item.group === filter.title
-                                ),
+                              (item) => !(item.group === filter.title),
                             );
                             if (
-                              currFilters.some(
-                                (item) =>
-                                  item.option === option
-                              )
-                            )
-                            {
-                            setCurrFilters(updatedFilters);
+                              currFilters.some((item) => item.option === option)
+                            ) {
+                              setCurrFilters(updatedFilters);
+                            } else {
+                              setCurrFilters([
+                                ...updatedFilters,
+                                { group: filter.title, option: option },
+                              ]);
+                            }
                           }
-                          else {
-                            setCurrFilters([
-                              ...updatedFilters,
-                              { group: filter.title, option: option },
-                            ]);
-                          }
-                        }
                         }}
                         key={optIndex}
                         className="h-[56px] p-[16px] bg-white rounded-[20px] flex gap-[8px]"
@@ -168,17 +158,14 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                   </div>
                 </div>
               )}
-               {filter.type === "slider" && (
+              {filter.type === "slider" && (
                 <div className="w-[678px] ml-[16px]">
                   <div className="mt-[20px] ml-[-16px] text-text text-[28px] leading-[100%] font-bold">
                     {filter.title}
                   </div>
                   <Slider
                     onChange={(min, max) => {
-                      if (
-                        min === filter.min &&
-                        max === filter.max
-                      ) {
+                      if (min === filter.min && max === filter.max) {
                         const updatedFilters = currFilters.filter(
                           (item) => !(item.group === filter.title),
                         );
@@ -187,33 +174,39 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                         {
                           if (
                             !currFilters.some(
-                              (item) => item.group === (filter.title + `min`) || item.group === (filter.title + `max`),
+                              (item) =>
+                                item.group === filter.title + `min` ||
+                                item.group === filter.title + `max`,
                             )
                           ) {
                             setCurrFilters([
                               ...currFilters,
                               {
-                                group: filter.title + 'min',
-                                option: {id: 0, title: min.toString()},
+                                group: filter.title + "min",
+                                option: { id: 0, title: min.toString() },
                               },
                               {
-                                group: filter.title + 'max',
-                                option: {id: 0, title: max.toString()},
+                                group: filter.title + "max",
+                                option: { id: 0, title: max.toString() },
                               },
                             ]);
                           } else {
                             const updatedFilters = currFilters.filter(
-                              (item) => !(item.group === filter.title+`min` || item.group === filter.title+`max`),
+                              (item) =>
+                                !(
+                                  item.group === filter.title + `min` ||
+                                  item.group === filter.title + `max`
+                                ),
                             );
                             setCurrFilters([
                               ...updatedFilters,
                               {
-                                group: filter.title+`min`,
-                                option: {id: 0, title: min.toString()},
+                                group: filter.title + `min`,
+                                option: { id: 0, title: min.toString() },
                               },
                               {
-                                group: filter.title+`max`,
-                                option: {id: 0, title: max.toString()},
+                                group: filter.title + `max`,
+                                option: { id: 0, title: max.toString() },
                               },
                             ]);
                           }
@@ -223,11 +216,6 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
                     min={filter.min!}
                     max={filter.max!}
                   />
-                </div>
-              )}
-              {filter.type === "calendar" && (
-                <div>
-                  <CalendarInput onClose={()=>console.log("closed")} title="test" onClear={()=>console.log("cleared")} selected={currDate} onSelect={(text)=>console.log(text)}/>
                 </div>
               )}
             </div>
@@ -241,41 +229,40 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
               {filters[indexOfOpenedList].options!.map(
                 (option, optIndex: number) => (
                   <div
-                  onClick={() => {
-                    if (
-                      !currFilters.some(
-                        (item) =>
-                          item.group === filters[indexOfOpenedList].title
-                      )
-                    ) {
-                      setCurrFilters([
-                        ...currFilters,
-                        { group: filters[indexOfOpenedList].title, option: option },
-                      ]);
-                    } else {
-                      const updatedFilters = currFilters.filter(
-                        (item) =>
-                          !(
-                            item.group === filters[indexOfOpenedList].title
-                          ),
-                      );
+                    onClick={() => {
                       if (
-                        currFilters.some(
+                        !currFilters.some(
                           (item) =>
-                            item.option === option
+                            item.group === filters[indexOfOpenedList].title,
                         )
-                      )
-                      {
-                      setCurrFilters(updatedFilters);
-                    }
-                    else {
-                      setCurrFilters([
-                        ...updatedFilters,
-                        { group: filters[indexOfOpenedList].title, option: option },
-                      ]);
-                    }
-                  }
-                  }}
+                      ) {
+                        setCurrFilters([
+                          ...currFilters,
+                          {
+                            group: filters[indexOfOpenedList].title,
+                            option: option,
+                          },
+                        ]);
+                      } else {
+                        const updatedFilters = currFilters.filter(
+                          (item) =>
+                            !(item.group === filters[indexOfOpenedList].title),
+                        );
+                        if (
+                          currFilters.some((item) => item.option === option)
+                        ) {
+                          setCurrFilters(updatedFilters);
+                        } else {
+                          setCurrFilters([
+                            ...updatedFilters,
+                            {
+                              group: filters[indexOfOpenedList].title,
+                              option: option,
+                            },
+                          ]);
+                        }
+                      }
+                    }}
                     key={optIndex}
                     className="h-[56px] p-[16px] justify-left items-center flex gap-[8px] leading-[100%]"
                   >
@@ -318,7 +305,6 @@ export default function FilterModal({ selected, onSelect, onClose, filters }: Pr
               onClose();
             }}
             disabled={!currFilters[0]}
-            
             className="disabled:opacity-[20%] w-[348px] h-[52px] rounded-[16px] border-[2px] border-orange text-orange text-[20px] font-semibold leading-[100%] flex items-center justify-center"
           >
             Очистить фильтры

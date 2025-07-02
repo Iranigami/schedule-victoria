@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import filterIcon from "../assets/images/icons/filter.svg";
+import filterIcon from "../assets/images/icons/Calendar Search.svg";
 import filterActiveIcon from "../assets/images/icons/FilterAct.svg";
 import searchIcon from "../assets/images/icons/search.svg";
 import Search from "../comps/Search";
 import MCCard from "../comps/MCCard";
 import { useNavigate } from "react-router-dom";
 import type { MCClass } from "../types";
-import FilterModal from "../comps/FilterModal";
 import axios from "axios";
 import Loading from "../comps/Loading";
-//фильтры: дата, название (поиск), кабинет, время
+import CalendarSearchModal from "../comps/CalendarSearchModal";
+
 export default function MasterClassesList() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [selectedFilters, setSelectedFilters] = useState<{
-    group: string;
-    option: {id: number, title: string};
-  }[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<
+    {
+      group: string;
+      option: { id: number; title: string };
+    }[]
+  >([]);
   const apiUrl = import.meta.env.VITE_API_URL;
   const [MCList, setMCList] = useState<MCClass[]>([]);
   useEffect(() => {
@@ -35,16 +37,8 @@ export default function MasterClassesList() {
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       {isFilterOpen && (
-        <FilterModal
+        <CalendarSearchModal
           selected={selectedFilters}
-          filters={[
-            {
-              title: "Дата",
-              type: "calendar",
-              min: 0,
-              max: 18,
-            },
-          ]}
           onSelect={(selected) => {
             setSelectedFilters(selected);
             setFilterOpen(false);
@@ -64,9 +58,22 @@ export default function MasterClassesList() {
             onClick={() => setFilterOpen(true)}
             className={`size-[64px] rounded-[20px] p-[20px] bg-white relative ${isFilterOpen && "z-[-1]"}`}
           >
-            <img hidden={selectedFilters.length!==0} src={filterIcon} alt="filter" className="size-[24px]" />
-            <img hidden={selectedFilters.length===0} src={filterActiveIcon} alt="filter" className="size-[24px]" />
-            <div hidden={selectedFilters.length===0} className="absolute top-[-4px] right-[-4px] size-[24px] bg-orange rounded-full flex justify-center items-center text-white text-[16px] font-bold leading-[100%]">
+            <img
+              hidden={selectedFilters.length !== 0}
+              src={filterIcon}
+              alt="filter"
+              className="size-[24px]"
+            />
+            <img
+              hidden={selectedFilters.length === 0}
+              src={filterActiveIcon}
+              alt="filter"
+              className="size-[24px]"
+            />
+            <div
+              hidden={selectedFilters.length === 0}
+              className="absolute top-[-4px] right-[-4px] size-[24px] bg-orange rounded-full flex justify-center items-center text-white text-[16px] font-bold leading-[100%]"
+            >
               {selectedFilters.length}
             </div>
           </button>
@@ -81,19 +88,21 @@ export default function MasterClassesList() {
           </button>
         </div>
       </div>
-      <Search 
-      onSearch={(search)=>{
-        axios
-        .get(apiUrl + `api/master-class?title=${search}`)
-        .then((response) => {
-          setMCList(response.data);
-          setLoading(false);
-        })
-        .catch(() => {
-          console.error("Ошибка получения информации");
-        });
-  }}
-      isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search
+        onSearch={(search) => {
+          axios
+            .get(apiUrl + `api/master-class?title=${search}`)
+            .then((response) => {
+              setMCList(response.data);
+              setLoading(false);
+            })
+            .catch(() => {
+              console.error("Ошибка получения информации");
+            });
+        }}
+        isOpen={isSearchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
       <div className="w-[1520px] max-h-[944px] mt-[24px] p-[20px] bg-[#FFFFFF80] rounded-[20px]">
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
           <div className="w-[1460px] grid grid-cols-2 gap-[16px]">

@@ -14,7 +14,7 @@ export default function Lesson() {
   const [page, setPage] = useState(1);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<Unity>();
-  const [schedule, setSchedule] = useState<LessonSection>()
+  const [schedule, setSchedule] = useState<LessonSection>();
   const [params] = useSearchParams();
   const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Lesson() {
         setData(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -36,7 +36,7 @@ export default function Lesson() {
         setSchedule(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
-        console.log(response.data)
+        console.log(response.data);
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -72,181 +72,212 @@ export default function Lesson() {
           </button>
         </div>
       </div>
-      {page === 1 && <div
-        className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]"
-      >
-        <div className="w-[1480px] flex gap-[16px]">
-          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-              Адрес
-            </div>
-            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-              {data?.division}
-            </div>
-          </div>
-          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-              Возраст
-            </div>
-            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-              {data?.ageBefore + " - " + data?.ageAfter + " лет"}
-            </div>
-          </div>
-          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-              Длительность обучения
-            </div>
-            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-              {data?.years}
-            </div>
-          </div>
-          <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
-            <div className="text-text text-[20px] font-normal leading-[100%] text-center">
-              Условия
-            </div>
-            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
-              {data?.finance ? "Внебюджет" : "Бюджет"}
-            </div>
-          </div>
-        </div>
-        <div
-          id="desc"
-          className="mt-[20px] text-[24px] text-text font-normal leading-[100%]"
-        ></div>
-        <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
-          {data?.note}
-        </div>
-        <div className="w-full grid grid-cols-2 gap-[16px] mt-[20px]">
-          {data?.teachers.map((teacher, index: number) => (
-            <div
-              key={index}
-              className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center"
-            >
-              <div className="bg-[#ededed] size-[120px] rounded-full overflow-hidden">
-                <img
-                  src={!!teacher.photo ? teacher.photo : photoPlaceholder}
-                  alt="photo"
-                  className="w-full h-full object-cover"
-                />
+      {page === 1 && (
+        <div className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]">
+          <div className="w-[1480px] flex gap-[16px]">
+            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+                Адрес
               </div>
-              <div className="text-[#848484] text-[20px] font-bold leading-[100%] text-left">
-                Педагог
-                <div className="mt-[8px] text-orange text-[32px] font-semibold leading-[100%] flex gap-[16px] items-center">
-                  {teacher.surname +
-                    " " +
-                    teacher.name +
-                    " " +
-                    teacher.patronymic}
+              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+                {data?.division}
+              </div>
+            </div>
+            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+                Возраст
+              </div>
+              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+                {data?.ageBefore + " - " + data?.ageAfter + " лет"}
+              </div>
+            </div>
+            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+                Длительность обучения
+              </div>
+              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+                {data?.years}
+              </div>
+            </div>
+            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+                Условия
+              </div>
+              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+                {data?.finance ? "Внебюджет" : "Бюджет"}
+              </div>
+            </div>
+          </div>
+          <div
+            id="desc"
+            className="mt-[20px] text-[24px] text-text font-normal leading-[100%]"
+          ></div>
+          <div className="mt-[20px] text-[28px] text-[#BFBFBF] font-bold leading-[100%]">
+            {data?.note}
+          </div>
+          <div className="w-full grid grid-cols-2 gap-[16px] mt-[20px]">
+            {data?.teachers.map((teacher, index: number) => (
+              <div
+                key={index}
+                className="w-[730px] h-[120px] flex justify-left gap-[16px] items-center"
+              >
+                <div className="bg-[#ededed] size-[120px] rounded-full overflow-hidden">
                   <img
-                    onClick={() => navigate(`/teacher?id=${teacher.id}`)}
-                    src={linkIcon}
-                    alt="img"
-                    className="size-[24px]"
+                    src={!!teacher.photo ? teacher.photo : photoPlaceholder}
+                    alt="photo"
+                    className="w-full h-full object-cover"
                   />
                 </div>
+                <div className="text-[#848484] text-[20px] font-bold leading-[100%] text-left">
+                  Педагог
+                  <div className="mt-[8px] text-orange text-[32px] font-semibold leading-[100%] flex gap-[16px] items-center">
+                    {teacher.surname +
+                      " " +
+                      teacher.name +
+                      " " +
+                      teacher.patronymic}
+                    <img
+                      onClick={() => navigate(`/teacher?id=${teacher.id}`)}
+                      src={linkIcon}
+                      alt="img"
+                      className="size-[24px]"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
-          <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
-            <div className="size-[104px] rounded-[14px] bg-white flex justify-center items-center">
-              <img
-                src={apiUrl + data?.qr}
-                alt="qr-code"
-                className="size-[98px]"
-              />
-            </div>
-            <div className="text-orange text-[32px] font-bold leading-[100%]">
-              Сканируй код
-              <div className="mt-[8px] text-text font-normal leading-[100%]">
-                Для записи на кружок
+            ))}
+            <div className="w-[730px] h-[120px] rounded-[20px] bg-[#F1852233] p-[8px] gap-[16px] flex items-center">
+              <div className="size-[104px] rounded-[14px] bg-white flex justify-center items-center">
+                <img
+                  src={apiUrl + data?.qr}
+                  alt="qr-code"
+                  className="size-[98px]"
+                />
+              </div>
+              <div className="text-orange text-[32px] font-bold leading-[100%]">
+                Сканируй код
+                <div className="mt-[8px] text-text font-normal leading-[100%]">
+                  Для записи на кружок
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      }
-      {page === 0 && 
+      )}
+      {page === 0 && (
         <div className="w-[1520px] max-h-[944px] bg-white rounded-[20px] mt-[24px] p-[16px]">
-              <div className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold">
-                <div className="leading-[100%] w-[68px] h-[16px]">
-                  Кабинет
-                </div>
-                <div className="leading-[100%] w-[54px] h-[16px]">
-                  Группа
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Понедельник
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Вторник
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Среда
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Четверг
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Пятница
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Суббота
-                </div>
-                <div className="leading-[100%] w-[154px] h-[16px]">
-                  Воскресенье
-                </div>
-              </div>
+          <div className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold">
+            <div className="leading-[100%] w-[68px] h-[16px]">Кабинет</div>
+            <div className="leading-[100%] w-[54px] h-[16px]">Группа</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Понедельник</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Вторник</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Среда</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Четверг</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Пятница</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Суббота</div>
+            <div className="leading-[100%] w-[154px] h-[16px]">Воскресенье</div>
+          </div>
           <div className="rounded-[12px] w-[1488px] max-h-[912px] overflow-hidden">
             <div className="w-full">
-                      <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
-                        {schedule!.length === 0 && <NothingFound/>}
-                        {schedule!.map((lesson, index: number) => (
-                          <div
-                            key={index}
-                            className="w-[1468px] mb-[16px] overflow-hidden rounded-[12px]"
-                          >
-                            {lesson.groups.map((group, lessonIndex: number) => (
-                              <div
-                                key={lessonIndex}
-                                className={`text-[16px] text-text font-normal leading-[100%] w-[1468px] h-[96px] flex gap-[32px] ${!((index + lessonIndex) % 2) ? "bg-[#FFF9F3]" : "bg-[#FFEFDF]"}`}
-                              >
-                                <div className="w-[84px] h-[96px] pl-[16px] py-[16px] items-center">
-                                  {1}
-                                </div>
-                                <div className="w-[54px] h-[96px] flex items-center justify-left text-left">
-                                  {group.group_name}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.monday && <SchedulePart startTime={group.schedule.monday![0].start_time} endTime={group.schedule.monday![0].end_time} teacher={group.schedule.monday![0].teacher} cab={group.schedule.monday![0].cabinet}/>}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.tuesday && <SchedulePart startTime={group.schedule.tuesday![0].start_time} endTime={group.schedule.tuesday![0].end_time} teacher={group.schedule.tuesday![0].teacher} cab={group.schedule.tuesday![0].cabinet}/>}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.wednesday && <SchedulePart startTime={group.schedule.wednesday![0].start_time} endTime={group.schedule.wednesday![0].end_time} teacher={group.schedule.wednesday![0].teacher} cab={group.schedule.wednesday![0].cabinet}/>}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.thursday && <SchedulePart startTime={group.schedule.thursday![0].start_time} endTime={group.schedule.thursday![0].end_time} teacher={group.schedule.thursday![0].teacher} cab={group.schedule.thursday![0].cabinet}/>}
-              
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.friday && <SchedulePart startTime={group.schedule.friday![0].start_time} endTime={group.schedule.friday![0].end_time} teacher={group.schedule.friday![0].teacher} cab={group.schedule.friday![0].cabinet}/>}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                {group.schedule.saturday && <SchedulePart startTime={group.schedule.saturday![0].start_time} endTime={group.schedule.saturday![0].end_time} teacher={group.schedule.saturday![0].teacher} cab={group.schedule.saturday![0].cabinet}/>}
-                                </div>
-                                <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
-                                  {group.schedule.sunday && <SchedulePart startTime={group.schedule.sunday![0].start_time} endTime={group.schedule.sunday![0].end_time} teacher={group.schedule.sunday![0].teacher} cab={group.schedule.sunday![0].cabinet}/>}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        ))}
+              <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
+                {schedule!.length === 0 && <NothingFound />}
+                {schedule!.map((lesson, index: number) => (
+                  <div
+                    key={index}
+                    className="w-[1468px] mb-[16px] overflow-hidden rounded-[12px]"
+                  >
+                    {lesson.groups.map((group, lessonIndex: number) => (
+                      <div
+                        key={lessonIndex}
+                        className={`text-[16px] text-text font-normal leading-[100%] w-[1468px] h-[96px] flex gap-[32px] ${!((index + lessonIndex) % 2) ? "bg-[#FFF9F3]" : "bg-[#FFEFDF]"}`}
+                      >
+                        <div className="w-[84px] h-[96px] pl-[16px] py-[16px] items-center">
+                          {1}
+                        </div>
+                        <div className="w-[54px] h-[96px] flex items-center justify-left text-left">
+                          {group.group_name}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.monday && (
+                            <SchedulePart
+                              startTime={group.schedule.monday![0].start_time}
+                              endTime={group.schedule.monday![0].end_time}
+                              teacher={group.schedule.monday![0].teacher}
+                              cab={group.schedule.monday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.tuesday && (
+                            <SchedulePart
+                              startTime={group.schedule.tuesday![0].start_time}
+                              endTime={group.schedule.tuesday![0].end_time}
+                              teacher={group.schedule.tuesday![0].teacher}
+                              cab={group.schedule.tuesday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.wednesday && (
+                            <SchedulePart
+                              startTime={
+                                group.schedule.wednesday![0].start_time
+                              }
+                              endTime={group.schedule.wednesday![0].end_time}
+                              teacher={group.schedule.wednesday![0].teacher}
+                              cab={group.schedule.wednesday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.thursday && (
+                            <SchedulePart
+                              startTime={group.schedule.thursday![0].start_time}
+                              endTime={group.schedule.thursday![0].end_time}
+                              teacher={group.schedule.thursday![0].teacher}
+                              cab={group.schedule.thursday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.friday && (
+                            <SchedulePart
+                              startTime={group.schedule.friday![0].start_time}
+                              endTime={group.schedule.friday![0].end_time}
+                              teacher={group.schedule.friday![0].teacher}
+                              cab={group.schedule.friday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.saturday && (
+                            <SchedulePart
+                              startTime={group.schedule.saturday![0].start_time}
+                              endTime={group.schedule.saturday![0].end_time}
+                              teacher={group.schedule.saturday![0].teacher}
+                              cab={group.schedule.saturday![0].cabinet}
+                            />
+                          )}
+                        </div>
+                        <div className="w-[154px] h-[96px] flex items-center justify-left text-left">
+                          {group.schedule.sunday && (
+                            <SchedulePart
+                              startTime={group.schedule.sunday![0].start_time}
+                              endTime={group.schedule.sunday![0].end_time}
+                              teacher={group.schedule.sunday![0].teacher}
+                              cab={group.schedule.sunday![0].cabinet}
+                            />
+                          )}
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      }
+      )}
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />

@@ -9,11 +9,17 @@ type Props = {
   desc: string;
 };
 
-export default function ArticleCard({ id, onClick, photo, title, desc }: Props) {
+export default function ArticleCard({
+  id,
+  onClick,
+  photo,
+  title,
+  desc,
+}: Props) {
   const apiUrl = import.meta.env.VITE_API_URL;
-  useEffect(()=>{
+  useEffect(() => {
     document.getElementById(`desc${id}`)!.innerHTML = desc;
-  }, [])
+  }, []);
   return (
     <div
       onClick={onClick}
@@ -30,8 +36,10 @@ export default function ArticleCard({ id, onClick, photo, title, desc }: Props) 
         <div className="text-[32px] text-orange font-bold leading-[100%]">
           {title}
         </div>
-        <div id={`desc${id}`} className="text-[24px] text-text font-normal leading-[100%] mt-[10px]">
-        </div>
+        <div
+          id={`desc${id}`}
+          className="text-[24px] text-text font-normal leading-[100%] mt-[10px]"
+        ></div>
       </div>
     </div>
   );

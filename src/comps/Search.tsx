@@ -51,7 +51,7 @@ export default function Search({ onSearch, isOpen, onClose }: Props) {
               setText("");
               searchQuery.current = "";
               onSearch("");
-              }
+            }
             onClose();
           }}
         />
@@ -68,7 +68,6 @@ export default function Search({ onSearch, isOpen, onClose }: Props) {
           setText((prev) => prev.slice(0, -1));
           searchQuery.current = searchQuery.current.slice(0, -1);
           getSearchResults();
-
         }}
       />
     </>

@@ -11,21 +11,31 @@ import NothingFound from "../comps/NothingFound";
 
 export default function LessonsList() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [selectedFilters, setSelectedFilters] = useState<{
-    group: string;
-    option: {id: number, title: string, type?: string};
-  }[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<
+    {
+      group: string;
+      option: { id: number; title: string; type?: string };
+    }[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const parseFilters = (
     data: {
       group: string;
-      option: {id: number, title: string, type?: string};
+      option: { id: number; title: string; type?: string };
     }[],
   ) => {
-    const division = data.filter(item => item.group === 'Адрес').map(item => item.option.title);
-    const finance = data.filter(item => item.group === 'Тип услуги').map(item => item.option.type);
-    const ageBefore = data.filter(item => item.group === 'Возрастmin').map(item => item.option.title);
-    const ageAfter = data.filter(item => item.group === 'Возрастmax').map(item => item.option.title);
+    const division = data
+      .filter((item) => item.group === "Адрес")
+      .map((item) => item.option.title);
+    const finance = data
+      .filter((item) => item.group === "Тип услуги")
+      .map((item) => item.option.type);
+    const ageBefore = data
+      .filter((item) => item.group === "Возрастmin")
+      .map((item) => item.option.title);
+    const ageAfter = data
+      .filter((item) => item.group === "Возрастmax")
+      .map((item) => item.option.title);
     const filter = `?division=${division}&finance=${finance}&ageBefore=${ageBefore}&ageAfter=${ageAfter}`;
     axios
       .get(apiUrl + "api/unity" + filter)
@@ -36,7 +46,7 @@ export default function LessonsList() {
       .catch(() => {
         console.error("Ошибка получения информации");
       });
-  }; 
+  };
   useEffect(() => {
     axios
       .get(apiUrl + "api/unity")
@@ -77,21 +87,25 @@ export default function LessonsList() {
           </button>
         </div>
       </div>
-      <Search onSearch={(search)=>{
-        axios
-        .get(apiUrl + `api/unity?title=${search}`)
-        .then((response) => {
-          setLessonClasses(response.data);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          console.error("Ошибка получения информации");
-          setLessonClasses([]);
-        });
-      }} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search
+        onSearch={(search) => {
+          axios
+            .get(apiUrl + `api/unity?title=${search}`)
+            .then((response) => {
+              setLessonClasses(response.data);
+              setIsLoading(false);
+            })
+            .catch(() => {
+              console.error("Ошибка получения информации");
+              setLessonClasses([]);
+            });
+        }}
+        isOpen={isSearchOpen}
+        onClose={() => setSearchOpen(false)}
+      />
       <div className="w-[1520px] max-h-[944px] mt-[24px] p-[20px] bg-[#FFFFFF80] rounded-[20px]">
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
-           {lessonsList.length === 0 && <NothingFound/>}
+          {lessonsList.length === 0 && <NothingFound />}
           <div className="w-[1460px] grid grid-cols-1 gap-[16px]">
             {lessonsList.map((lesson, index: number) => (
               <LessonCard
@@ -118,12 +132,21 @@ export default function LessonsList() {
             {
               title: "Адрес",
               type: "check",
-              options: [{id: 0, title: "Газопровод"}, {id: 1, title: "Юный техник"}, {id: 2, title: "Аннино"}, {id: 3, title: "Щербинка"}, {id: 4, title: "Другое"}],
+              options: [
+                { id: 0, title: "Газопровод" },
+                { id: 1, title: "Юный техник" },
+                { id: 2, title: "Аннино" },
+                { id: 3, title: "Щербинка" },
+                { id: 4, title: "Другое" },
+              ],
             },
             {
               title: "Тип услуги",
               type: "check",
-              options: [{type: "false", title: "Бюджет", id: 0}, {type: "true", title: "Внебюджет", id: 1}],
+              options: [
+                { type: "false", title: "Бюджет", id: 0 },
+                { type: "true", title: "Внебюджет", id: 1 },
+              ],
             },
             {
               title: "Возраст",
@@ -136,8 +159,7 @@ export default function LessonsList() {
             console.log(data);
             setSelectedFilters(data);
             parseFilters(data);
-          }
-          }
+          }}
           onClose={() => setFilterOpen(false)}
         />
       )}
@@ -146,7 +168,6 @@ export default function LessonsList() {
           <Loading />
         </div>
       )}
-
     </div>
   );
 }

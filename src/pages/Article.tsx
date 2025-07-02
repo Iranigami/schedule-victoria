@@ -18,7 +18,8 @@ export default function Article() {
       .then((response) => {
         setData(response.data);
         setLoading(false);
-        document.getElementById("textField")!.innerHTML = response.data.description;
+        document.getElementById("textField")!.innerHTML =
+          response.data.description;
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -48,9 +49,10 @@ export default function Article() {
             />
           </div>
           <div className="w-[786px] h-[904px] overflow-x-hidden overflow-y-auto">
-            <div id="textField" className="w-[766px] text-text text-[24px]">
-
-            </div>
+            <div
+              id="textField"
+              className="w-[766px] text-text text-[24px]"
+            ></div>
           </div>
         </div>
       </div>

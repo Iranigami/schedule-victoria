@@ -9,12 +9,7 @@ function WheelPickerWrapper({
   className,
   ...props
 }: React.ComponentProps<typeof WheelPickerPrimitive.WheelPickerWrapper>) {
-  return (
-    <WheelPickerPrimitive.WheelPickerWrapper
-      
-      {...props}
-    />
-  );
+  return <WheelPickerPrimitive.WheelPickerWrapper {...props} />;
 }
 
 function WheelPicker({

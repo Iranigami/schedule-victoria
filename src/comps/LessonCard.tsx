@@ -2,7 +2,7 @@ import mapIcon from "../assets/images/icons/map.svg";
 import userIcon from "../assets/images/icons/user.svg";
 import timeIcon from "../assets/images/icons/time.svg";
 import walletIcon from "../assets/images/icons/wallet.svg";
-import levelIcon from "../assets/images/icons/level.svg"
+import levelIcon from "../assets/images/icons/level.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -32,9 +32,9 @@ export default function LessonCard({
   level,
 }: Props) {
   const navigate = useNavigate();
-  useEffect(()=>{
+  useEffect(() => {
     document.getElementById(`desc${id}`)!.innerHTML = desc;
-  },[title])
+  }, [title]);
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
@@ -43,8 +43,10 @@ export default function LessonCard({
         </div>
         <div>Код для записи на mos.ru {code}</div>
       </div>
-      <div id={`desc${id}`} className="mt-[20px] text-text text-[24px] font-normal leading-[100%]">
-      </div>
+      <div
+        id={`desc${id}`}
+        className="mt-[20px] text-text text-[24px] font-normal leading-[100%]"
+      ></div>
       {additional && (
         <div className="mt-[8px] text-[#BFBFBF] text-[20px] font-bold">
           {additional}
