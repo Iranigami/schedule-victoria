@@ -27,7 +27,7 @@ export default function ArticleCard({ id, onClick, photo, title, desc }: Props) 
         />
       </div>
       <div className="w-[514px] h-[220px] overflow-hidden">
-        <div className="text-[32px] text-orange font-bold leading-[100%] mt-[16px]">
+        <div className="text-[32px] text-orange font-bold leading-[100%]">
           {title}
         </div>
         <div id={`desc${id}`} className="text-[24px] text-text font-normal leading-[100%] mt-[10px]">
