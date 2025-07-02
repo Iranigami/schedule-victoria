@@ -77,7 +77,7 @@ export default function TeachersList() {
           </button>
         </div>
       </div>
-      <Search isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
+      <Search onSearch={() => {}} isOpen={isSearchOpen} onClose={() => setSearchOpen(false)} />
       <div className="w-[1520px] max-h-[944px] mt-[24px] p-[20px] bg-[#FFFFFF80] rounded-[20px]">
         <div className="w-[1480px] h-[904px] overflow-x-hidden overflow-y-auto">
           <div className="w-[1460px] grid grid-cols-2 gap-[16px]">

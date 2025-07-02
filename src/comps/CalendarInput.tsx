@@ -9,9 +9,11 @@ type Props = {
     onSelect: (date: string) => void;
 }
 
+//@ts-ignore
 export default function CalendarInput({onClose, title, selected, onClear, onSelect}: Props){
     
     const [selectedMonth, setSelectedMonth] = useState("февраль");
+    selectedMonth;
     const createArray = (length: number, add = 0): number[] =>
         Array.from({ length }, (_, i) => {
           const value = i + add;
@@ -20,12 +22,12 @@ export default function CalendarInput({onClose, title, selected, onClear, onSele
           );
         });
     const days = createArray(31, 1);
-    const shortDays = createArray(30, 1);
-    const febDays = createArray(28, 1);
+    //const shortDays = createArray(30, 1);
+    //const febDays = createArray(28, 1);
     const months = ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
-    const shortMonth = ["апрель", "июнь", "сентябрь", "ноябрь"];
-    const years = createArray(2000, 1);
-    const [currDays, setCurrDays] = useState(days);
+    //const shortMonth = ["апрель", "июнь", "сентябрь", "ноябрь"];
+    //const years = createArray(2000, 1);
+    //const [currDays, setCurrDays] = useState(days);
     return(
         <div className="w-[752px] h-[458px] ">
             <div className="w-[752px] h-[382px] rounded-[24px] bg-[#FAFAFA] mx-auto p-[24px]">
