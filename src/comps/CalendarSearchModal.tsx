@@ -6,31 +6,37 @@ import moment from "moment";
 
 type Props = {
   selected?: {
-    after?: {
-      day: number,
-      month: number,
-      year: number,
-    } | undefined,
-    before?: {
-      day: number,
-      month: number,
-      year: number,
-    } | undefined,
-  }
-  onSelect: (
-    selected: {
-      after?: {
-        day: number,
-        month: number,
-        year: number,
-      } | undefined,
-      before?: {
-        day: number,
-        month: number,
-        year: number,
-      } | undefined,
-    }
-  ) => void;
+    after?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+    before?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+  };
+  onSelect: (selected: {
+    after?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+    before?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+  }) => void;
   onClose: () => void;
 };
 
@@ -40,16 +46,22 @@ export default function CalendarSearchModal({
   onClose,
 }: Props) {
   const [selectedField, setSelectedField] = useState<string | null>(null);
-  const [beforeDate, setBeforeDate] = useState<{
-    day: number,
-    month: number,
-    year: number,
-  } | undefined>(selected?.before);
-  const [afterDate, setAfterDate] = useState<{
-    day: number,
-    month: number,
-    year: number,
-  } | undefined>(selected?.after);
+  const [beforeDate, setBeforeDate] = useState<
+    | {
+        day: number;
+        month: number;
+        year: number;
+      }
+    | undefined
+  >(selected?.before);
+  const [afterDate, setAfterDate] = useState<
+    | {
+        day: number;
+        month: number;
+        year: number;
+      }
+    | undefined
+  >(selected?.after);
   const [isPreClosed, setPreClosed] = useState(false);
   return (
     <div className="w-[1568px] h-[1080px] fixed top-0 left-[352px] flex justify-center items-center">
@@ -72,52 +84,68 @@ export default function CalendarSearchModal({
           </button>
         </div>
         <div className="mt-[24px] w-full h-[64px] flex justify-between items-center">
-            <div
-                onClick={() => {
-                  setSelectedField("before");
-                }} 
-                className={`font-normal text-[20px] text-text leading-[100%]  gap-[8px] w-[216px] h-[64px] p-[16px] flex items-center justify-left rounded-[20px] bg-white ${selectedField==="before" && "border-[2px] border-orange"}`}>
-                <div>
-                    C
-                </div>
-                <input id="before" className="decorative" value={`${beforeDate ? `${beforeDate?.day.toString().padStart(2, '0')}.${beforeDate?.month.toString().padStart(2, '0')}.${beforeDate?.year}`: ""}`} disabled={true} placeholder="дд.мм.гггг"/>
-            </div>
-             <img 
-             onClick={() => {
-               setBeforeDate(undefined);
-               setSelectedField(null);
-             }}
-               hidden = {selectedField !== "before"}
-               src={circleClose} alt="clear" className="size-[24px] fixed ml-[176px]" />
-            <div 
-              onClick={() => {
-                setSelectedField("after");
-              }} 
-                className={`font-normal text-[20px] text-text leading-[100%]  gap-[8px] w-[216px] h-[64px] p-[16px] flex items-center justify-left rounded-[20px] bg-white ${selectedField==="after" && "border-[2px] border-orange"}`}>
-                <div>
-                    До
-                </div>
-                <input id="after" className="decorative" value={`${afterDate ? `${afterDate?.day.toString().padStart(2, '0')}.${afterDate?.month.toString().padStart(2, '0')}.${afterDate?.year}`: ""}`} disabled={true} placeholder="дд.мм.гггг"/>
-            </div>
-            <img 
-             onClick={() => {
-               setAfterDate(undefined);
-               setSelectedField(null);
-             }}
-               hidden = {selectedField !== "after"}
-               src={circleClose} alt="clear" className="size-[24px] fixed ml-[664px]" />
+          <div
+            onClick={() => {
+              setSelectedField("before");
+            }}
+            className={`font-normal text-[20px] text-text leading-[100%]  gap-[8px] w-[216px] h-[64px] p-[16px] flex items-center justify-left rounded-[20px] bg-white ${selectedField === "before" && "border-[2px] border-orange"}`}
+          >
+            <div>C</div>
+            <input
+              id="before"
+              className="decorative"
+              value={`${beforeDate ? `${beforeDate?.day.toString().padStart(2, "0")}.${beforeDate?.month.toString().padStart(2, "0")}.${beforeDate?.year}` : ""}`}
+              disabled={true}
+              placeholder="дд.мм.гггг"
+            />
+          </div>
+          <img
+            onClick={() => {
+              setBeforeDate(undefined);
+              setSelectedField(null);
+            }}
+            hidden={selectedField !== "before"}
+            src={circleClose}
+            alt="clear"
+            className="size-[24px] fixed ml-[176px]"
+          />
+          <div
+            onClick={() => {
+              setSelectedField("after");
+            }}
+            className={`font-normal text-[20px] text-text leading-[100%]  gap-[8px] w-[216px] h-[64px] p-[16px] flex items-center justify-left rounded-[20px] bg-white ${selectedField === "after" && "border-[2px] border-orange"}`}
+          >
+            <div>До</div>
+            <input
+              id="after"
+              className="decorative"
+              value={`${afterDate ? `${afterDate?.day.toString().padStart(2, "0")}.${afterDate?.month.toString().padStart(2, "0")}.${afterDate?.year}` : ""}`}
+              disabled={true}
+              placeholder="дд.мм.гггг"
+            />
+          </div>
+          <img
+            onClick={() => {
+              setAfterDate(undefined);
+              setSelectedField(null);
+            }}
+            hidden={selectedField !== "after"}
+            src={circleClose}
+            alt="clear"
+            className="size-[24px] fixed ml-[664px]"
+          />
         </div>
-        <div className={`absolute bottom-[-476px] opacity-0 z-100 ml-[-24px] duration-300 transition ${selectedField && "translate-y-[-500px] opacity-[100%]"}`}>
-         <CalendarInput
+        <div
+          className={`absolute bottom-[-476px] opacity-0 z-100 ml-[-24px] duration-300 transition ${selectedField && "translate-y-[-500px] opacity-[100%]"}`}
+        >
+          <CalendarInput
             onClose={() => {
               setSelectedField(null);
             }}
             title="test"
             onClear={() => {
-              if (selectedField === "after")
-                setAfterDate(undefined);
-              if (selectedField === "before")
-                setBeforeDate(undefined);
+              if (selectedField === "after") setAfterDate(undefined);
+              if (selectedField === "before") setBeforeDate(undefined);
             }}
             selected={{
               day: Number(moment().format("DD")),
@@ -125,10 +153,8 @@ export default function CalendarSearchModal({
               year: Number(moment().format("YYYY")),
             }}
             onSelect={(date) => {
-              if (selectedField === "after")
-                setAfterDate(date);
-              if (selectedField === "before")
-                setBeforeDate(date);
+              if (selectedField === "after") setAfterDate(date);
+              if (selectedField === "before") setBeforeDate(date);
             }}
           />
         </div>
@@ -148,7 +174,7 @@ export default function CalendarSearchModal({
           </button>
           <button
             onClick={() => {
-              onSelect({after: afterDate, before: beforeDate});
+              onSelect({ after: afterDate, before: beforeDate });
               setPreClosed(true);
               setTimeout(onClose, 200);
             }}

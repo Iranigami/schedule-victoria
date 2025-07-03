@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import filterIcon from "../assets/images/icons/filter.svg";
 import searchIcon from "../assets/images/icons/search.svg";
 import Search from "../comps/Search";
+import filterActiveIcon from "../assets/images/icons/FilterAct.svg";
 import type { Unity } from "../types";
 import LessonCard from "../comps/LessonCard";
 import axios from "axios";
@@ -45,6 +46,7 @@ export default function LessonsList() {
       })
       .catch(() => {
         console.error("Ошибка получения информации");
+        setLessonClasses([]);
       });
   };
   useEffect(() => {
@@ -71,14 +73,32 @@ export default function LessonsList() {
         </span>
         <div className="flex gap-[16px]">
           <button
-            onClick={() => setFilterOpen(true)}
-            className="size-[64px] rounded-[20px] p-[20px] bg-white"
+            onClick={() => {
+              setFilterOpen(true);
+            }}
+            className={`size-[64px] rounded-[20px] p-[20px] bg-white relative ${isFilterOpen && "z-[-1]"}`}
           >
-            <img src={filterIcon} alt="filter" className="size-[24px]" />
+            <img
+              hidden={selectedFilters.length !== 0}
+              src={filterIcon}
+              alt="filter"
+              className="size-[24px]"
+            />
+            <img
+              hidden={selectedFilters.length === 0}
+              src={filterActiveIcon}
+              alt="filter"
+              className="size-[24px]"
+            />
+            <div
+              hidden={selectedFilters.length === 0}
+              className="absolute top-[-4px] right-[-4px] size-[24px] bg-orange rounded-full flex justify-center items-center text-white text-[16px] font-bold leading-[100%]"
+            >
+              {selectedFilters.length}
+            </div>
           </button>
           <button
             onClick={() => {
-              setFilterOpen(false);
               setSearchOpen(true);
             }}
             className="size-[64px] rounded-[20px] p-[20px] bg-white"
@@ -155,10 +175,9 @@ export default function LessonsList() {
               max: 18,
             },
           ]}
-          onSelect={(data) => {
-            console.log(data);
-            setSelectedFilters(data);
-            parseFilters(data);
+          onSelect={(selected) => {
+            parseFilters(selected);
+            setSelectedFilters(selected);
           }}
           onClose={() => setFilterOpen(false)}
         />

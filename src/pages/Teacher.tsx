@@ -2,9 +2,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import arrIcon from "../assets/images/icons/arrow.svg";
 import photoPlaceholder from "../assets/images/user none 4_3.png";
 import { useEffect, useState } from "react";
-import type { Teacher } from "../types";
+import type { LessonSection, Teacher } from "../types";
 import axios from "axios";
 import Loading from "../comps/Loading";
+import NothingFound from "../comps/NothingFound";
 
 export default function Teacher() {
   const navigate = useNavigate();
@@ -12,13 +13,23 @@ export default function Teacher() {
   const [data, setData] = useState<Teacher>();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [isLoading, setLoading] = useState(true);
-
+  const [schedule, setSchedule] = useState<LessonSection>();
   const [params] = useSearchParams();
   useEffect(() => {
     axios
       .get(apiUrl + `api/teacher/${params.get("id")}`)
       .then((response) => {
         setData(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        console.error("Ошибка получения информации");
+      });
+    axios
+      .get(apiUrl + `api/lessons?teacher=${params.get("id")}`)
+      .then((response) => {
+        setSchedule(response.data);
+        console.log();
         setLoading(false);
       })
       .catch(() => {
@@ -147,6 +158,115 @@ export default function Teacher() {
           </div>
         </div>
       )}
+      {page === 0 && (
+        <div className="w-[1520px] max-h-[944px] bg-white rounded-[20px] mt-[24px] p-[16px]">
+          <div className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold mb-[16px]">
+            <div className="leading-[100%] w-[320px] h-[16px]">Кружок</div>
+            <div className="leading-[100%] w-[62px] h-[16px] ">Возраст</div>
+            <div className="leading-[100%] w-[54px] h-[16px]">Группа</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Понедельник</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Вторник</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Среда</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Четверг</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Пятница</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Суббота</div>
+            <div className="leading-[100%] w-[104px] h-[16px]">Воскресенье</div>
+          </div>
+          <div className="rounded-[12px] w-[1488px] max-h-[912px] overflow-hidden">
+            <div className="w-full">
+              <div className="w-[1488px] h-[872px] overflow-x-hidden overflow-y-auto rounded-[12px]">
+                {schedule!.length === 0 && <NothingFound />}
+                {schedule!.map((lesson, index: number) => (
+                  <div
+                    key={index}
+                    className="w-[1468px] mb-[16px] overflow-hidden rounded-[12px]"
+                  >
+                    {lesson.groups.map((group, lessonIndex: number) => (
+                      <div
+                        key={lessonIndex}
+                        className={`text-[16px] text-text font-normal leading-[100%] w-[1468px] h-[70px] flex gap-[32px] ${!((index + lessonIndex) % 2) ? "bg-[#FFF9F3]" : "bg-[#FFEFDF]"}`}
+                      >
+                        <div className=" w-[336px] h-[70px] pl-[16px] py-[16px]">
+                          <div className="h-[14px] text-[#848484] text-[14px] leading-[100%] font-normal text-left">
+                            {lesson.unity.code}
+                          </div>
+                          <div className="flex h-[16px] items-center justify-left text-left mt-[8px]">
+                            {lesson.unity.name} {group.group_name}
+                          </div>
+                        </div>
+                        <div className="w-[62px] h-[70px] flex items-center justify-left text-left">
+                          {lesson.unity.age_before} - {lesson.unity.age_after}{" "}
+                          лет
+                        </div>
+                        <div className="w-[54px] h-[70px] flex items-center justify-left text-left">
+                          {group.group_name}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.monday && (
+                            <div className="">
+                              {group.schedule.monday![0].start_time} -{" "}
+                              {group.schedule.monday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.tuesday && (
+                            <div className="">
+                              {group.schedule.tuesday![0].start_time} -{" "}
+                              {group.schedule.tuesday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.wednesday && (
+                            <div className="">
+                              {group.schedule.wednesday![0].start_time} -{" "}
+                              {group.schedule.wednesday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.thursday && (
+                            <div className="">
+                              {group.schedule.thursday![0].start_time} -{" "}
+                              {group.schedule.thursday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.friday && (
+                            <div className="">
+                              {group.schedule.friday![0].start_time} -{" "}
+                              {group.schedule.friday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.saturday && (
+                            <div className="">
+                              {group.schedule.saturday![0].start_time} -{" "}
+                              {group.schedule.saturday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                        <div className="w-[104px] h-[70px] flex items-center justify-left text-left">
+                          {group.schedule.sunday && (
+                            <div className="">
+                              {group.schedule.sunday![0].start_time} -{" "}
+                              {group.schedule.sunday![0].end_time}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />

@@ -64,9 +64,9 @@ export default function CalendarInput({
             {title}
           </div>
           <div className="font-medium text-[18px] text-orange leading-[100%]">
-            {moment(`${selectedYear}-${selectedMonth.toString().padStart(2, '0')}-${selectedDay.toString().padStart(2, '0')}`).format(
-              "DD MMMM YYYY",
-            )}
+            {moment(
+              `${selectedYear}-${selectedMonth.toString().padStart(2, "0")}-${selectedDay.toString().padStart(2, "0")}`,
+            ).format("DD MMMM YYYY")}
           </div>
         </div>
         <div className="mt-[28px] w-[316px] h-[200px] relative mx-auto ">

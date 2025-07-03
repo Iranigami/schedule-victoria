@@ -35,6 +35,14 @@ export default function LessonCard({
   useEffect(() => {
     document.getElementById(`desc${id}`)!.innerHTML = desc;
   }, [title]);
+  const plural = (number: number, titles = ["год", "года", "лет"]) => {
+    const cases = [2, 0, 1, 1, 1, 2];
+    return titles[
+      number % 100 > 4 && number % 100 < 20
+        ? 2
+        : cases[number % 10 < 5 ? number % 10 : 5]
+    ];
+  };
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
@@ -69,7 +77,7 @@ export default function LessonCard({
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
             <img src={timeIcon} alt="time" className="size-[24px]" />
             <div className="text-text text-[20px] font-normal leading-[100%]">
-              {time}
+              {time + " " + plural(time)}
             </div>
           </div>
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">

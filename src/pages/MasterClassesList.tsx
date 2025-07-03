@@ -13,20 +13,22 @@ export default function MasterClassesList() {
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [selectedFilters, setSelectedFilters] = useState<
-  {
-    after?: {
-      day: number,
-      month: number,
-      year: number,
-    } | undefined,
-    before?: {
-      day: number,
-      month: number,
-      year: number,
-    } | undefined,
-  }
-  >();
+  const [selectedFilters, setSelectedFilters] = useState<{
+    after?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+    before?:
+      | {
+          day: number;
+          month: number;
+          year: number;
+        }
+      | undefined;
+  }>();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [MCList, setMCList] = useState<MCClass[]>([]);
   useEffect(() => {
@@ -52,11 +54,14 @@ export default function MasterClassesList() {
             const startDate = `${selected.before ? `${selected.before.year}-${selected.before.month}-${selected.before.day}` : ""}`;
             const endDate = `${selected.after ? `${selected.after.year}-${selected.after.month}-${selected.after.day}` : ""}`;
             axios
-              .get(apiUrl + `api/master-class?startDate=${startDate}&endDate=${endDate}`)
+              .get(
+                apiUrl +
+                  `api/master-class?startDate=${startDate}&endDate=${endDate}`,
+              )
               .then((response) => {
                 setMCList(response.data);
                 setLoading(false);
-                console.log("filtered")
+                console.log("filtered");
               })
               .catch(() => {
                 console.error("Ошибка получения информации");
@@ -76,11 +81,7 @@ export default function MasterClassesList() {
             onClick={() => setFilterOpen(true)}
             className={`size-[64px] rounded-[20px] p-[20px] bg-white relative ${isFilterOpen && "z-[-1]"}`}
           >
-            <img
-              src={filterIcon}
-              alt="filter"
-              className="size-[24px]"
-            />
+            <img src={filterIcon} alt="filter" className="size-[24px]" />
           </button>
           <button
             onClick={() => {

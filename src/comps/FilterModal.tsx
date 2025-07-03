@@ -26,6 +26,7 @@ export default function FilterModal({
   onClose,
   filters,
 }: Props) {
+  console.log(selected);
   const [currFilters, setCurrFilters] =
     useState<{ group: string; option: { id: number; title: string } }[]>(
       selected,
