@@ -6,9 +6,9 @@ import Slider from "./Slider";
 
 type Props = {
   className?: string;
-  selected: { group: string; option: { id: number; title: string } }[];
+  selected: { group: string; option: { id: number; title: string; type?: string } }[];
   onSelect: (
-    selected: { group: string; option: { id: number; title: string } }[],
+    selected: { group: string; option: { id: number; title: string; type?: string} }[],
   ) => void;
   onClose: () => void;
   filters: {
@@ -26,9 +26,8 @@ export default function FilterModal({
   onClose,
   filters,
 }: Props) {
-  console.log(selected);
   const [currFilters, setCurrFilters] =
-    useState<{ group: string; option: { id: number; title: string } }[]>(
+    useState<{ group: string; option: { id: number; title: string, type?: string } }[]>(
       selected,
     );
   const [isPreClosed, setPreClosed] = useState(false);

@@ -68,6 +68,7 @@ export default function Main() {
       .get(apiUrl + "api/group")
       .then((response) => {
         setGroups(response.data);
+        console.log(response.data);
         setLoading(false);
       })
       .catch(() => {

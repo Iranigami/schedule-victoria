@@ -32,7 +32,6 @@ export default function Lesson() {
       .get(apiUrl + `api/lessons?unity=${params.get("id")}`)
       .then((response) => {
         setSchedule(response.data);
-        console.log();
         setLoading(false);
       })
       .catch(() => {

@@ -29,7 +29,6 @@ export default function Teacher() {
       .get(apiUrl + `api/lessons?teacher=${params.get("id")}`)
       .then((response) => {
         setSchedule(response.data);
-        console.log();
         setLoading(false);
       })
       .catch(() => {

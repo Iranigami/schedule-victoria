@@ -11,6 +11,17 @@ import FilterModal from "../comps/FilterModal";
 import NothingFound from "../comps/NothingFound";
 
 export default function LessonsList() {
+  const [address] = useState([
+    { id: 1, title: 'Газопровод' },
+    { id: 2, title: 'Юный техник' },
+    { id: 3, title: 'Аннино' },
+    { id: 4, title: 'Щербинка' },
+    { id: 5, title: 'Другое' },
+  ]);
+  const [financeCond] = useState([
+    { type: "false", title: 'Бюджет', id: 1 },
+    { type: "true", title: 'Внебюджет', id: 2 },
+  ]);
   const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedFilters, setSelectedFilters] = useState<
     {
@@ -65,6 +76,34 @@ export default function LessonsList() {
   const [lessonsList, setLessonClasses] = useState<Unity[]>([]);
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
+      {isFilterOpen && (
+        <FilterModal
+          selected={selectedFilters}
+          filters={[
+            {
+              title: "Адрес",
+              type: "check",
+              options: address,
+            },
+            {
+              title: "Тип услуги",
+              type: "check",
+              options: financeCond,
+            },
+            {
+              title: "Возраст",
+              type: "slider",
+              min: 0,
+              max: 18,
+            },
+          ]}
+          onSelect={(selected) => {
+            parseFilters(selected);
+            setSelectedFilters(selected);
+          }}
+          onClose={() => setFilterOpen(false)}
+        />
+      )}
       <div
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >
@@ -145,43 +184,6 @@ export default function LessonsList() {
           </div>
         </div>
       </div>
-      {isFilterOpen && (
-        <FilterModal
-          selected={selectedFilters}
-          filters={[
-            {
-              title: "Адрес",
-              type: "check",
-              options: [
-                { id: 0, title: "Газопровод" },
-                { id: 1, title: "Юный техник" },
-                { id: 2, title: "Аннино" },
-                { id: 3, title: "Щербинка" },
-                { id: 4, title: "Другое" },
-              ],
-            },
-            {
-              title: "Тип услуги",
-              type: "check",
-              options: [
-                { type: "false", title: "Бюджет", id: 0 },
-                { type: "true", title: "Внебюджет", id: 1 },
-              ],
-            },
-            {
-              title: "Возраст",
-              type: "slider",
-              min: 0,
-              max: 18,
-            },
-          ]}
-          onSelect={(selected) => {
-            parseFilters(selected);
-            setSelectedFilters(selected);
-          }}
-          onClose={() => setFilterOpen(false)}
-        />
-      )}
       {isLoading && (
         <div className="absolute top-0 left-[352px] w-[1568px] h-[1080px] bg-bg flex items-center justify-center">
           <Loading />

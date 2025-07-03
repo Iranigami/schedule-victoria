@@ -61,7 +61,6 @@ export default function MasterClassesList() {
               .then((response) => {
                 setMCList(response.data);
                 setLoading(false);
-                console.log("filtered");
               })
               .catch(() => {
                 console.error("Ошибка получения информации");
