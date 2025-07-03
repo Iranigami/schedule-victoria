@@ -24,7 +24,6 @@ export default function Lesson() {
         setData(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
-        console.log(response.data);
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -36,7 +35,6 @@ export default function Lesson() {
         setSchedule(response.data);
         document.getElementById("desc")!.innerHTML = response.data.description;
         setLoading(false);
-        console.log(response.data);
       })
       .catch(() => {
         console.error("Ошибка получения информации");
@@ -75,7 +73,7 @@ export default function Lesson() {
       {page === 1 && (
         <div className="mt-[24px] w-[1520px] max-h-[944px] rounded-[36px] bg-white p-[20px]">
           <div className="w-[1480px] flex gap-[16px]">
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
               <div className="text-text text-[20px] font-normal leading-[100%] text-center">
                 Адрес
               </div>
@@ -83,7 +81,7 @@ export default function Lesson() {
                 {data?.division}
               </div>
             </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
               <div className="text-text text-[20px] font-normal leading-[100%] text-center">
                 Возраст
               </div>
@@ -91,7 +89,7 @@ export default function Lesson() {
                 {data?.ageBefore + " - " + data?.ageAfter + " лет"}
               </div>
             </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
               <div className="text-text text-[20px] font-normal leading-[100%] text-center">
                 Длительность обучения
               </div>
@@ -99,12 +97,20 @@ export default function Lesson() {
                 {data?.years}
               </div>
             </div>
-            <div className="w-[358px] h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+            <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
               <div className="text-text text-[20px] font-normal leading-[100%] text-center">
                 Условия
               </div>
               <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
                 {data?.finance ? "Внебюджет" : "Бюджет"}
+              </div>
+            </div>
+            <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+              <div className="text-text text-[20px] font-normal leading-[100%] text-center">
+                Уровень
+              </div>
+              <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+                {data?.level}
               </div>
             </div>
           </div>

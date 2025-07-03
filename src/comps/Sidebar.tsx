@@ -6,10 +6,23 @@ import { useEffect, useState } from "react";
 //@ts-ignore
 import "moment/dist/locale/ru";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Sidebar() {
-  const phoneExample = "+0 000 000 00 00";
-  const mailExample = "Example@ex.ru";
+  const [contacts, setContacts] = useState<{id: number, email: string, phone: string}>();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  useEffect(() => {
+    axios
+    .get(apiUrl + `api/contacts`)
+    .then((response) => {
+      setContacts(response.data[0]);
+    })
+    .catch(() => {
+      console.error("Ошибка получения информации");
+    });
+
+  }, [])
+
   const navigate = useNavigate();
   moment.locale("ru");
   useEffect(() => {
@@ -132,18 +145,18 @@ export default function Sidebar() {
         </svg>
         Новости
       </button>
-      <div className="mt-[350.29px] w-[304px] h-[85px] bg-[#F1852233] rounded-[16px] p-[20px] leading-[100%]">
+      <div hidden={!contacts} className="mt-[350.29px] w-[304px] h-[85px] bg-[#F1852233] rounded-[16px] p-[20px] leading-[100%]">
         <div className="text-[16px] font-semibold text-[#848484]">Телефон</div>
         <div className="mt-[5px] text-[20px] font-semibold text-text flex gap-[10px] items-center">
           <img src={phoneIcon} alt="phone" className="size-[24px]" />
-          {phoneExample}
+          {contacts?.phone}
         </div>
       </div>
-      <div className="mt-[10px] w-[304px] h-[85px] bg-[#F1852233] rounded-[16px] p-[20px] leading-[100%]">
+      <div hidden={!contacts} className="mt-[10px] w-[304px] h-[85px] bg-[#F1852233] rounded-[16px] p-[20px] leading-[100%]">
         <div className="text-[16px] font-semibold text-[#848484]">Почта</div>
         <div className="mt-[5px] text-[20px] font-semibold text-text flex gap-[10px] items-center">
           <img src={mailIcon} alt="phone" className="size-[24px]" />
-          {mailExample}
+          {contacts?.email}
         </div>
       </div>
     </div>

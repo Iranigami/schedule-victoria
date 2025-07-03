@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import filterIcon from "../assets/images/icons/Calendar Search.svg";
-import filterActiveIcon from "../assets/images/icons/FilterAct.svg";
 import searchIcon from "../assets/images/icons/search.svg";
 import Search from "../comps/Search";
 import MCCard from "../comps/MCCard";
@@ -15,11 +14,19 @@ export default function MasterClassesList() {
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [selectedFilters, setSelectedFilters] = useState<
-    {
-      group: string;
-      option: { id: number; title: string };
-    }[]
-  >([]);
+  {
+    after?: {
+      day: number,
+      month: number,
+      year: number,
+    } | undefined,
+    before?: {
+      day: number,
+      month: number,
+      year: number,
+    } | undefined,
+  }
+  >();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [MCList, setMCList] = useState<MCClass[]>([]);
   useEffect(() => {
@@ -42,7 +49,18 @@ export default function MasterClassesList() {
           onSelect={(selected) => {
             setSelectedFilters(selected);
             setFilterOpen(false);
-            console.log(selected);
+            const startDate = `${selected.before ? `${selected.before.year}-${selected.before.month}-${selected.before.day}` : ""}`;
+            const endDate = `${selected.after ? `${selected.after.year}-${selected.after.month}-${selected.after.day}` : ""}`;
+            axios
+              .get(apiUrl + `api/master-class?startDate=${startDate}&endDate=${endDate}`)
+              .then((response) => {
+                setMCList(response.data);
+                setLoading(false);
+                console.log("filtered")
+              })
+              .catch(() => {
+                console.error("Ошибка получения информации");
+              });
           }}
           onClose={() => setFilterOpen(false)}
         />
@@ -59,23 +77,10 @@ export default function MasterClassesList() {
             className={`size-[64px] rounded-[20px] p-[20px] bg-white relative ${isFilterOpen && "z-[-1]"}`}
           >
             <img
-              hidden={selectedFilters.length !== 0}
               src={filterIcon}
               alt="filter"
               className="size-[24px]"
             />
-            <img
-              hidden={selectedFilters.length === 0}
-              src={filterActiveIcon}
-              alt="filter"
-              className="size-[24px]"
-            />
-            <div
-              hidden={selectedFilters.length === 0}
-              className="absolute top-[-4px] right-[-4px] size-[24px] bg-orange rounded-full flex justify-center items-center text-white text-[16px] font-bold leading-[100%]"
-            >
-              {selectedFilters.length}
-            </div>
           </button>
           <button
             onClick={() => {
