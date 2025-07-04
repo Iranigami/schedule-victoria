@@ -11,7 +11,8 @@ export default function MasterClass() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<MCClass>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [params] = useSearchParams();
   useEffect(() => {
     axios

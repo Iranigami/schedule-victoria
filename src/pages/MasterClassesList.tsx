@@ -29,7 +29,8 @@ export default function MasterClassesList() {
         }
       | undefined;
   }>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [MCList, setMCList] = useState<MCClass[]>([]);
   useEffect(() => {
     axios

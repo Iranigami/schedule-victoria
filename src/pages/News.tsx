@@ -9,8 +9,8 @@ export default function News() {
   const [newsList, setNewsList] = useState<News[]>([]);
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
-
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
     axios
       .get(apiUrl + "api/news")

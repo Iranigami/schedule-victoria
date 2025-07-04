@@ -10,7 +10,8 @@ import Loading from "../comps/Loading";
 import NothingFound from "../comps/NothingFound";
 
 export default function TeachersList() {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [filterList, setFilterList] = useState<Unity[]>([]);

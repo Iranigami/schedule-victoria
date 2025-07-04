@@ -27,7 +27,8 @@ export default function Main() {
   const [groups, setGroups] = useState<{ id: number; title: string }[]>([]);
   const [lessonSectionList, setLessonSectionList] = useState<LessonSection>([]);
   const [isLoading, setLoading] = useState(true);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const parseFilters = (
     data: {
       group: string;

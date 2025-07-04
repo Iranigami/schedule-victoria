@@ -16,7 +16,8 @@ export default function ArticleCard({
   title,
   desc,
 }: Props) {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
     document.getElementById(`desc${id}`)!.innerHTML = desc;
   }, []);
@@ -32,7 +33,7 @@ export default function ArticleCard({
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="w-[514px] h-[220px] overflow-hidden">
+      <div className="w-[514px] h-[220px] overflow-hidden text-ellipsis">
         <div className="text-[32px] text-orange font-bold leading-[100%]">
           {title}
         </div>

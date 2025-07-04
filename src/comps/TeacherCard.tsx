@@ -8,7 +8,9 @@ type Props = {
 };
 
 export default function TeacherCard({ onClick, photo, lesson, name }: Props) {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
+
   return (
     <div
       onClick={onClick}

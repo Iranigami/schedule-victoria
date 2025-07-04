@@ -11,7 +11,8 @@ export default function Article() {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<News>();
   const [params] = useSearchParams();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
     axios
       .get(apiUrl + `api/news/${params.get("id")}`)

@@ -187,7 +187,7 @@ export interface Unity {
     name: string;
     surname: string;
     patronymic: string;
-    photo: string;
+    image: string;
   }[];
   url: string;
   description: string;

@@ -15,7 +15,8 @@ export default function Lesson() {
   const [data, setData] = useState<Unity>();
   const [schedule, setSchedule] = useState<LessonSection>();
   const [params] = useSearchParams();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
     axios
       .get(apiUrl + `api/unity/${params.get("id")}`)
@@ -142,7 +143,9 @@ export default function Lesson() {
             >
               <div className="bg-[#ededed] size-[120px] rounded-full overflow-hidden">
                 <img
-                  src={!!teacher.photo ? teacher.photo : photoPlaceholder}
+                  src={
+                    !!teacher.image ? apiUrl + teacher.image : photoPlaceholder
+                  }
                   alt="photo"
                   className="w-full h-full object-cover"
                 />

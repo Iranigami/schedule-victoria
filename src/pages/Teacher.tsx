@@ -11,7 +11,8 @@ export default function Teacher() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [data, setData] = useState<Teacher>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [isLoading, setLoading] = useState(true);
   const [schedule, setSchedule] = useState<LessonSection>();
   const [params] = useSearchParams();

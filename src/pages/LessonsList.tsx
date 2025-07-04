@@ -22,7 +22,8 @@ export default function LessonsList() {
     { type: "false", title: "Бюджет", id: 1 },
     { type: "true", title: "Внебюджет", id: 2 },
   ]);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   const [selectedFilters, setSelectedFilters] = useState<
     {
       group: string;

@@ -14,7 +14,8 @@ export default function Sidebar() {
     email: string;
     phone: string;
   }>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+  //@ts-ignore
+  const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
     axios
       .get(apiUrl + `api/contacts`)
