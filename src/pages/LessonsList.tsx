@@ -12,15 +12,15 @@ import NothingFound from "../comps/NothingFound";
 
 export default function LessonsList() {
   const [address] = useState([
-    { id: 1, title: 'Газопровод' },
-    { id: 2, title: 'Юный техник' },
-    { id: 3, title: 'Аннино' },
-    { id: 4, title: 'Щербинка' },
-    { id: 5, title: 'Другое' },
+    { id: 1, title: "Газопровод" },
+    { id: 2, title: "Юный техник" },
+    { id: 3, title: "Аннино" },
+    { id: 4, title: "Щербинка" },
+    { id: 5, title: "Другое" },
   ]);
   const [financeCond] = useState([
-    { type: "false", title: 'Бюджет', id: 1 },
-    { type: "true", title: 'Внебюджет', id: 2 },
+    { type: "false", title: "Бюджет", id: 1 },
+    { type: "true", title: "Внебюджет", id: 2 },
   ]);
   const apiUrl = import.meta.env.VITE_API_URL;
   const [selectedFilters, setSelectedFilters] = useState<

@@ -6,9 +6,15 @@ import Slider from "./Slider";
 
 type Props = {
   className?: string;
-  selected: { group: string; option: { id: number; title: string; type?: string } }[];
+  selected: {
+    group: string;
+    option: { id: number; title: string; type?: string };
+  }[];
   onSelect: (
-    selected: { group: string; option: { id: number; title: string; type?: string} }[],
+    selected: {
+      group: string;
+      option: { id: number; title: string; type?: string };
+    }[],
   ) => void;
   onClose: () => void;
   filters: {
@@ -27,9 +33,9 @@ export default function FilterModal({
   filters,
 }: Props) {
   const [currFilters, setCurrFilters] =
-    useState<{ group: string; option: { id: number; title: string, type?: string } }[]>(
-      selected,
-    );
+    useState<
+      { group: string; option: { id: number; title: string; type?: string } }[]
+    >(selected);
   const [isPreClosed, setPreClosed] = useState(false);
   const [indexOfOpenedList, setIndexOfOpenedList] = useState(-1);
   return (

@@ -214,6 +214,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.monday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.monday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.monday![0].start_time} -{" "}
                               {group.schedule.monday![0].end_time}
                             </div>
@@ -222,6 +225,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.tuesday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.tuesday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.tuesday![0].start_time} -{" "}
                               {group.schedule.tuesday![0].end_time}
                             </div>
@@ -230,6 +236,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.wednesday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.wednesday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.wednesday![0].start_time} -{" "}
                               {group.schedule.wednesday![0].end_time}
                             </div>
@@ -238,6 +247,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.thursday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.thursday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.thursday![0].start_time} -{" "}
                               {group.schedule.thursday![0].end_time}
                             </div>
@@ -246,6 +258,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.friday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.friday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.friday![0].start_time} -{" "}
                               {group.schedule.friday![0].end_time}
                             </div>
@@ -254,6 +269,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.saturday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.saturday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.saturday![0].start_time} -{" "}
                               {group.schedule.saturday![0].end_time}
                             </div>
@@ -262,6 +280,9 @@ export default function Lesson() {
                         <div className="w-[170px] h-[88px] flex items-center justify-left text-left">
                           {group.schedule.sunday && (
                             <div className="">
+                              <div className="h-[16px] text-[16px] leading-[100%] text-text font-normal opacity-[50%] mb-[4px]">
+                                {group.schedule.sunday![0].cabinet} кабинет
+                              </div>
                               {group.schedule.sunday![0].start_time} -{" "}
                               {group.schedule.sunday![0].end_time}
                             </div>
