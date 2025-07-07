@@ -53,14 +53,14 @@ export default function Sidebar() {
         </span>
       </div>
       <button
-        onClick={() => navigate("/main")}
-        className={`${location.pathname.includes("main") ? "bg-orange text-white" : "bg-white text-[#848484]"} mt-[20px] w-[304px] h-[56px] flex justify-left items-center p-[16px] gap-[8px] rounded-[16px] font-semibold text-[20px] leading-[100%]`}
+        onClick={() => navigate("/")}
+        className={`${location.pathname === "/" ? "bg-orange text-white" : "bg-white text-[#848484]"} mt-[20px] w-[304px] h-[56px] flex justify-left items-center p-[16px] gap-[8px] rounded-[16px] font-semibold text-[20px] leading-[100%]`}
       >
         <svg
           width="24"
           height="25"
           viewBox="0 0 24 25"
-          fill={`${location.pathname.includes("main") ? "white" : "#1D1D1B"}`}
+          fill={`${location.pathname === "/" ? "white" : "#1D1D1B"}`}
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M7.25 7.71289C7.25 7.29868 7.58579 6.96289 8 6.96289H16C16.4142 6.96289 16.75 7.29868 16.75 7.71289C16.75 8.12711 16.4142 8.46289 16 8.46289H8C7.58579 8.46289 7.25 8.12711 7.25 7.71289Z" />
