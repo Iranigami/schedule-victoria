@@ -21,8 +21,8 @@ export default function App() {
       <div className="w-[1920px] h-[1080px] fixed top-0 left-0 flex">
         <Sidebar />
         <Routes>
-          <Route path="*" element={<Navigate to="/main" />} />
-          <Route path="/main" element={<Main />} />
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/" element={<Main />} />
           <Route path="/teachers" element={<TeachersList />} />
           <Route path="/teacher" element={<Teacher />} />
           <Route path="/masterclasses" element={<MasterClassesList />} />
