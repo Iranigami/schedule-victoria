@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 type Props = {
   onClose: () => void;
-  title: string;
   selected: {
     day: number;
     month: number;
@@ -16,7 +15,6 @@ type Props = {
 
 export default function CalendarInput({
   onClose,
-  title,
   selected,
   onClear,
   onSelect,
@@ -61,7 +59,7 @@ export default function CalendarInput({
       <div className="w-[752px] h-[382px] rounded-[24px] bg-[#FAFAFA] mx-auto p-[24px]">
         <div className="flex justify-between items-start w-[704px] h-[40px] mx-auto border-b-[2px] border-[#F0F0F0]">
           <div className="font-bold text-[20px] text-[#1d1d1b] leading-[100%]">
-            {title}
+            Дата
           </div>
           <div className="font-medium text-[18px] text-orange leading-[100%]">
             {moment(

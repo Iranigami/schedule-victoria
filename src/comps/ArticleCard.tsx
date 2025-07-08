@@ -16,10 +16,12 @@ export default function ArticleCard({
   title,
   desc,
 }: Props) {
+  const swiftInsert = (original: string, index: number, insert: string) => original.substring(0, index) + insert + original.substring(index);
   //@ts-ignore
   const apiUrl = window.__API_CONFIG__.apiUrl;
   useEffect(() => {
-    document.getElementById(`desc${id}`)!.innerHTML = desc;
+    const temp = swiftInsert(desc, 4, " className='multiline-ellipsis'");
+    document.getElementById(`desc${id}`)!.innerHTML = temp;
   }, []);
   return (
     <div
@@ -33,13 +35,13 @@ export default function ArticleCard({
           className="object-cover w-full h-full"
         />
       </div>
-      <div className="w-[514px] h-[220px] overflow-hidden text-ellipsis">
-        <div className="text-[32px] text-orange font-bold leading-[100%]">
+      <div className="w-[514px] h-[220px] overflow-hidden">
+        <div className="whitespace-nowrap w-[450px] h-[32px] hide-text-overflow text-[32px] text-orange font-bold leading-[100%]">
           {title}
         </div>
         <div
           id={`desc${id}`}
-          className="text-[24px] text-text font-normal leading-[100%] mt-[10px]"
+          className=" multiline-ellipsis text-[24px] text-text font-normal leading-[100%] mt-[10px]"
         ></div>
       </div>
     </div>

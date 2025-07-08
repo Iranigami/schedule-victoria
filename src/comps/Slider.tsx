@@ -6,14 +6,16 @@ type Props = {
   onChange: (min: number, max: number) => void;
   min: number;
   max: number;
+  started?: number;
+  ended?: number;
 };
 
-export default function Slider({ min, max, onChange }: Props) {
+export default function Slider({ min, max, started, ended, onChange }: Props) {
   const [isMin, setIsMin] = useState(false);
   isMin;
   var slider = document.getElementById("slider");
-  const start = useRef(min);
-  const end = useRef(max);
+  const start = useRef(started || min);
+  const end = useRef(ended || max);
   const formatForSlider = {
     from: function (formattedValue: number) {
       return Number(formattedValue);

@@ -141,3 +141,15 @@ strong {
 .decorative {
   pointer-events: none;
 }
+
+.hide-text-overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.multiline-ellipsis {
+  display: -webkit-box;  
+  -webkit-line-clamp: 7;  
+  -webkit-box-orient: vertical;    
+  overflow: hidden;   
+}

@@ -170,6 +170,8 @@ export default function FilterModal({
                     {filter.title}
                   </div>
                   <Slider
+                    started={Number(selected.find(item => item.group === (filter.title + 'min'))?.option.title)}
+                    ended={Number(selected.find(item => item.group === (filter.title + 'max'))?.option.title)}
                     onChange={(min, max) => {
                       if (min === filter.min && max === filter.max) {
                         const updatedFilters = currFilters.filter(

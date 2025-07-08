@@ -1,7 +1,7 @@
 import searchIcon from "../assets/images/icons/search.svg";
 import closeIcon from "../assets/images/icons/close.svg";
 import Keyboard from "./Keyboard";
-import { useRef, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -12,7 +12,9 @@ type Props = {
 export default function Search({ onSearch, isOpen, onClose }: Props) {
   const queryTimeout = useRef<any>(null);
   const searchQuery = useRef("");
-
+  useEffect(()=>{
+    setKeyboardOpen(true);
+  }, [isOpen])
   const getSearchResults = () => {
     clearTimeout(queryTimeout.current);
     queryTimeout.current = setTimeout(async () => {

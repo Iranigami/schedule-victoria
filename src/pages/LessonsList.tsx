@@ -172,7 +172,7 @@ export default function LessonsList() {
                 id={lesson.id}
                 key={index}
                 title={lesson.title}
-                time={lesson.years}
+                years={lesson.years}
                 address={lesson.division}
                 additional={lesson.note}
                 desc={lesson.description}

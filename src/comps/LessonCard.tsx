@@ -14,14 +14,14 @@ type Props = {
   additional?: string;
   address: string;
   age: string;
-  time: number;
+  years: number;
   conds: boolean;
   level: string;
 };
 
 export default function LessonCard({
   id,
-  time,
+  years,
   title,
   code,
   desc,
@@ -77,7 +77,7 @@ export default function LessonCard({
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
             <img src={timeIcon} alt="time" className="size-[24px]" />
             <div className="text-text text-[20px] font-normal leading-[100%]">
-              {time + " " + plural(time)}
+              {years + " " + plural(years)}
             </div>
           </div>
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">

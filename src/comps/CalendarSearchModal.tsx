@@ -142,7 +142,6 @@ export default function CalendarSearchModal({
             onClose={() => {
               setSelectedField(null);
             }}
-            title="test"
             onClear={() => {
               if (selectedField === "after") setAfterDate(undefined);
               if (selectedField === "before") setBeforeDate(undefined);

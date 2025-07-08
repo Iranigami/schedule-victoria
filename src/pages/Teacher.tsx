@@ -160,7 +160,7 @@ export default function Teacher() {
       )}
       {page === 0 && (
         <div className="w-[1520px] max-h-[944px] bg-white rounded-[20px] mt-[24px] p-[16px]">
-          <div className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold mb-[16px]">
+          <div hidden={schedule!.length === 0} className="flex text-left w-full gap-[32px] px-[16px] text-[#848484] text-[16px] font-bold mb-[16px]">
             <div className="leading-[100%] w-[320px] h-[16px]">Кружок</div>
             <div className="leading-[100%] w-[62px] h-[16px] ">Возраст</div>
             <div className="leading-[100%] w-[54px] h-[16px]">Группа</div>

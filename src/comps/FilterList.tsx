@@ -22,7 +22,7 @@ export default function FilterList({
     <div>
       <button
         onClick={onButtonClick}
-        className={`${isOpen && "shadow-[0_2px_12px_0_#00000026]"} w-[368px] h-[64px] bg-white rounded-[20px] flex justify-between items-center px-[26px] text-[20px] text-[#848484] leading-[100%] font-bold`}
+        className={`${isOpen && "shadow-[0_2px_12px_0_#00000026]"} w-[368px] min-h-[64px] text-left bg-white rounded-[20px] flex justify-between items-center px-[26px] text-[20px] text-[#848484] leading-[100%] font-bold`}
       >
         <span hidden={!!selectedOption}>{optionPlaceholder}</span>
         {!!selectedOption && selectedOption.title}
@@ -39,7 +39,7 @@ export default function FilterList({
           <div
             key={index}
             onClick={() => onSelectOption(option)}
-            className={`${selectedOption === option ? "bg-orange text-white" : "bg-white text-[#848484]"} w-[336px] h-[52px] rounded-[12px] p-[16px] text-[20px] font-semibold leading-[100%]`}
+            className={`${selectedOption === option ? "bg-orange text-white" : "bg-white text-[#848484]"} w-[336px] min-h-[52px] rounded-[12px] p-[16px] text-[20px] font-semibold leading-[100%]`}
           >
             {option.title}
           </div>
