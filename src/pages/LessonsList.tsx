@@ -169,6 +169,7 @@ export default function LessonsList() {
           <div className="w-[1460px] grid grid-cols-1 gap-[16px]">
             {lessonsList.map((lesson, index: number) => (
               <LessonCard
+                hours = {lesson.hours}
                 id={lesson.id}
                 key={index}
                 title={lesson.title}

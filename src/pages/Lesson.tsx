@@ -52,6 +52,17 @@ export default function Lesson() {
       ];
     }
   };
+
+  const pluralHours = (number: number | undefined, titles = ["час", "часа", "часов"]) => {
+    const cases = [2, 0, 1, 1, 1, 2];
+    if (number)
+    return titles[
+      number % 100 > 4 && number % 100 < 20
+        ? 2
+        : cases[number % 10 < 5 ? number % 10 : 5]
+    ];
+  };
+
   return (
     <div className="w-[1568px] h-[1080px] p-[24px]">
       <div className="w-[1520px] h-[64px] flex gap-[16px] justify-left items-center">
@@ -103,12 +114,15 @@ export default function Lesson() {
               {data?.ageBefore + " - " + data?.ageAfter + " лет"}
             </div>
           </div>
-          <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
+          <div hidden={!data?.hours && !data?.years} className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">
             <div className="text-text text-[20px] font-normal leading-[100%] text-center">
               Длительность обучения
             </div>
-            <div className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+            <div hidden={!data?.years} className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
               {data?.years + " " + plural(data?.years)}
+            </div>
+            <div hidden={!data?.hours || !!data?.years} className="text-text text-[28px] font-semibold leading-[100%] text-center mt-[8px]">
+              {data?.hours + " " + pluralHours(data?.hours)}
             </div>
           </div>
           <div className="w-full h-[104px] rounded-[20px] bg-[#F1852233] p-[24px]">

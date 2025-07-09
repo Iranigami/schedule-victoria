@@ -182,6 +182,7 @@ export interface Unity {
   ageAfter: number;
   finance: boolean;
   years: number;
+  hours: number;
   teachers: {
     id: number;
     name: string;

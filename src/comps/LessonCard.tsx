@@ -15,6 +15,7 @@ type Props = {
   address: string;
   age: string;
   years: number;
+  hours: number;
   conds: boolean;
   level: string;
 };
@@ -22,6 +23,7 @@ type Props = {
 export default function LessonCard({
   id,
   years,
+  hours,
   title,
   code,
   desc,
@@ -43,6 +45,16 @@ export default function LessonCard({
         : cases[number % 10 < 5 ? number % 10 : 5]
     ];
   };
+
+  const pluralHours = (number: number, titles = ["час", "часа", "часов"]) => {
+    const cases = [2, 0, 1, 1, 1, 2];
+    return titles[
+      number % 100 > 4 && number % 100 < 20
+        ? 2
+        : cases[number % 10 < 5 ? number % 10 : 5]
+    ];
+  };
+
   return (
     <div className="w-[1469px] rounded-[20px] bg-white p-[16px]">
       <div className="flex justify-between w-full text-[20px] text-[#848484] font-bold leading-[100%]">
@@ -74,10 +86,13 @@ export default function LessonCard({
               {age}
             </div>
           </div>
-          <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
+          <div hidden={!years && !hours} className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
             <img src={timeIcon} alt="time" className="size-[24px]" />
-            <div className="text-text text-[20px] font-normal leading-[100%]">
+            <div hidden={!years} className="text-text text-[20px] font-normal leading-[100%]">
               {years + " " + plural(years)}
+            </div>
+            <div hidden={!hours || !!years} className="text-text text-[20px] font-normal leading-[100%]">
+              {hours + " " + pluralHours(hours)}
             </div>
           </div>
           <div className="flex justify-center items-center h-[44px] px-[16px] gap-[8px]  bg-[#F1852233] rounded-[22px]">
