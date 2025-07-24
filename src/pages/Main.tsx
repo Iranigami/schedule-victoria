@@ -9,7 +9,9 @@ import axios from "axios";
 import Loading from "../comps/Loading";
 import SchedulePart from "../comps/SchedulePart";
 import NothingFound from "../comps/NothingFound";
+import { useNavigate } from "react-router-dom";
 export default function Main() {
+  const navigate = useNavigate();
   const [isSearchOpen, setSearchOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<
     {
@@ -44,7 +46,7 @@ export default function Main() {
     const teacher = data
       .filter((item) => item.group === "Педагог")
       .map((item) => item.option.id);
-    const filter = `?group=${group}&unity=${unity}&teacher=${teacher}`;
+    const filter = `?groups=${group}&unities=${unity}&teachers=${teacher}`;
     axios
       .get(apiUrl + "api/lessons" + filter)
       .then((response) => {
@@ -60,6 +62,7 @@ export default function Main() {
       .get(apiUrl + "api/lessons")
       .then((response) => {
         setLessonSectionList(response.data);
+        console.log(response.data);
         setLoading(false);
       })
       .catch(() => {
@@ -68,8 +71,7 @@ export default function Main() {
     axios
       .get(apiUrl + "api/group")
       .then((response) => {
-        setGroups(response.data);
-        console.log(response.data);
+        setGroups(response.data.items);
         setLoading(false);
       })
       .catch(() => {
@@ -132,10 +134,25 @@ export default function Main() {
       <div
         className={`flex justify-between w-[1520px] h-[64px] duration-150 ${isSearchOpen && "translate-y-[-100px]"}`}
       >
-        <span className="text-orange text-[48px] font-bold leading-[100%]">
-          Расписание
-        </span>
-        <div className="flex gap-[16px]">
+        <div className=" flex justify-left gap-[10px] items-center">
+          <div className="text-orange text-[48px] font-bold leading-[100%] w-[293px] h-[48px]">
+            Расписание
+          </div>
+          <div className="w-[286px] h-[32px] text-[16px] text-[#848484] leading-[100%] font-bold">
+            Нажмите на кружок, чтобы <br/>посмотреть подробную инофрмацию
+          </div>
+        </div>
+        <div className="flex gap-[16px] items-center">
+          <button
+            onClick={() => {
+              setSelectedFilters([]);
+              parseFilters([]);
+            }}
+            hidden={selectedFilters.length===0}
+            className="disabled:opacity-[20%] w-[348px] h-[52px] rounded-[16px] border-[2px] border-orange text-orange text-[20px] font-semibold leading-[100%] flex items-center justify-center"
+          >
+            Очистить фильтры
+          </button>
           <button
             onClick={() => {
               setFiltersOpen(true);
@@ -184,7 +201,8 @@ export default function Main() {
             });
         }}
         isOpen={isSearchOpen}
-        onClose={() => setSearchOpen(false)}
+        onClose={() => {setSearchOpen(false); setSelectedFilters([]);
+          parseFilters([]);}}
       />
       <div className="w-[1520px] h-[944px] mt-[24px] px-[16px] pb-[16px] bg-white rounded-[20px]">
         <div className="w-[1488px] text-left w-full h-[48px] flex gap-[32px] p-[16px] font-bold text-[#848484] text-[16px] leading-[100%]">
@@ -215,7 +233,7 @@ export default function Main() {
                     <div className="text-[#848484] text-[14px]">
                       {lesson.unity.code}
                     </div>
-                    <div className="mt-[8px]">{lesson.unity.name}</div>
+                    <div onClick={() => navigate(`/lesson?id=${lesson.unity.id}`)} className="mt-[8px] text-orange underline">{lesson.unity.name}</div>
                   </div>
                   <div className="w-[94px] mr-[-32px] h-[96px] flex items-center justify-left text-left">
                     {lesson.unity.age_before} - {lesson.unity.age_after} лет

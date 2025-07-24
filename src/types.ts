@@ -280,6 +280,7 @@ export interface Group {
 
 export interface LessonClass {
   unity: {
+    id: number;
     code: string;
     name: string;
     age_before: number;
